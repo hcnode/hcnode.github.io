@@ -26,7 +26,7 @@
 
 
 
-  <meta name="keywords" content="node.js," />
+  <meta name="keywords" content="old blog," />
 
 
 
@@ -35,25 +35,22 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="关于AlexGallery AlexGallery是一款图片浏览、预览、批量处理、编辑的开源图片桌面应用，它是基于node.js环境，使用nw封装，可以在mac、windows等系统使用。
- 因为自从我使用Mac后，发现没有一款工具或者软件可以快速浏览和预览图片，虽然系统自带图片预览工具也是可用，但是始终很不方便，我需要快速进入文件夹浏览图片的工具，也用过Google的Picasa，功能很多，但是">
+<meta name="description" content="这是我三年前写的blog，原文在这里
+作为一个苦逼前端开发工程师，不得不面对各种cross，比如面对五花八门的浏览器我们必须cross browser，面对各种终端，我们必须cross device，在这么多年的前端开发经历中，在不同的域之间穿越中，遭受各种折磨，所以这次和大家分享的是cross domain。
+这次分享的cross domain，是包括所有跨域调用，无论是跨域获取数据，还是跨域跨">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AlexGallery：一款基于node.js和nw的图片浏览、预览、批量处理、编辑的开源桌面应用">
-<meta property="og:url" content="https://www.github.com/hcnode/2015/08/21/alexgallery/index.html">
+<meta property="og:title" content="前端开发各种cross之cross domain(一)">
+<meta property="og:url" content="https://www.github.com/hcnode/2012/05/10/cross-domain-1/index.html">
 <meta property="og:site_name" content="hcnode's blog">
-<meta property="og:description" content="关于AlexGallery AlexGallery是一款图片浏览、预览、批量处理、编辑的开源图片桌面应用，它是基于node.js环境，使用nw封装，可以在mac、windows等系统使用。
- 因为自从我使用Mac后，发现没有一款工具或者软件可以快速浏览和预览图片，虽然系统自带图片预览工具也是可用，但是始终很不方便，我需要快速进入文件夹浏览图片的工具，也用过Google的Picasa，功能很多，但是">
-<meta property="og:image" content="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot1.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot1.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot2.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot3.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot4.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot5.png">
-<meta property="og:updated_time" content="2015-08-21T04:39:28.000Z">
+<meta property="og:description" content="这是我三年前写的blog，原文在这里
+作为一个苦逼前端开发工程师，不得不面对各种cross，比如面对五花八门的浏览器我们必须cross browser，面对各种终端，我们必须cross device，在这么多年的前端开发经历中，在不同的域之间穿越中，遭受各种折磨，所以这次和大家分享的是cross domain。
+这次分享的cross domain，是包括所有跨域调用，无论是跨域获取数据，还是跨域跨">
+<meta property="og:updated_time" content="2015-08-28T10:41:50.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AlexGallery：一款基于node.js和nw的图片浏览、预览、批量处理、编辑的开源桌面应用">
-<meta name="twitter:description" content="关于AlexGallery AlexGallery是一款图片浏览、预览、批量处理、编辑的开源图片桌面应用，它是基于node.js环境，使用nw封装，可以在mac、windows等系统使用。
- 因为自从我使用Mac后，发现没有一款工具或者软件可以快速浏览和预览图片，虽然系统自带图片预览工具也是可用，但是始终很不方便，我需要快速进入文件夹浏览图片的工具，也用过Google的Picasa，功能很多，但是">
+<meta name="twitter:title" content="前端开发各种cross之cross domain(一)">
+<meta name="twitter:description" content="这是我三年前写的blog，原文在这里
+作为一个苦逼前端开发工程师，不得不面对各种cross，比如面对五花八门的浏览器我们必须cross browser，面对各种终端，我们必须cross device，在这么多年的前端开发经历中，在不同的域之间穿越中，遭受各种折磨，所以这次和大家分享的是cross domain。
+这次分享的cross domain，是包括所有跨域调用，无论是跨域获取数据，还是跨域跨">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -63,7 +60,7 @@
   };
 </script>
 
-  <title> AlexGallery：一款基于node.js和nw的图片浏览、预览、批量处理、编辑的开源桌面应用 | hcnode's blog </title>
+  <title> 前端开发各种cross之cross domain(一) | hcnode's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -181,7 +178,7 @@
           
           
             
-              AlexGallery：一款基于node.js和nw的图片浏览、预览、批量处理、编辑的开源桌面应用
+              前端开发各种cross之cross domain(一)
             
           
         </h1>
@@ -190,8 +187,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-08-21T10:37:40+08:00" content="2015-08-21">
-            2015-08-21
+          <time itemprop="dateCreated" datetime="2012-05-10T11:52:29+08:00" content="2012-05-10">
+            2012-05-10
           </time>
         </span>
 
@@ -201,8 +198,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/08/21/alexgallery/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/21/alexgallery/" itemprop="commentsCount"></span>
+              <a href="/2012/05/10/cross-domain-1/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2012/05/10/cross-domain-1/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -216,52 +213,55 @@
       
 
       
-        <span itemprop="articleBody"><p><img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot1.png" alt="screenshot1"></p>
-<h1 id="关于AlexGallery">关于AlexGallery</h1><p> <a href="https://github.com/hcnode/AlexGallery" target="_blank" rel="external">AlexGallery</a>是一款图片浏览、预览、批量处理、编辑的开源图片桌面应用，它是基于node.js环境，使用nw封装，可以在mac、windows等系统使用。</p>
-<p> 因为自从我使用Mac后，发现没有一款工具或者软件可以快速浏览和预览图片，虽然系统自带图片预览工具也是可用，但是始终很不方便，我需要快速进入文件夹浏览图片的工具，也用过Google的Picasa，功能很多，但是也还是没有我需要的简单快速浏览方式，其他的比如acdsee又要收费</p>
-<p> 所以我决定自己做一个图片预览的工具，而且因为在这之前，我有留意到2个开源库，一个是轻量的图片处理node库<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>，另一个是<a href="https://github.com/nwjs/nw.js" target="_blank" rel="external">nw</a>，在做<a href="https://github.com/hcnode/AlexGallery" target="_blank" rel="external">AlexGallery</a>之前，我没用过这两个库做过任何东西，但是当我第一次看到<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>的介绍和例子后，我就有个自己写个图片处理工具的想法，两周之前工作忙完差不多就开始动工，因为用了不少开源前端web组件，所以做了一周左右功能基本都出来了<br><a id="more"></a></p>
-<h1 id="lwip的特点">lwip的特点</h1><p>因为有<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>我才有做这个app的想法，所以这里介绍一下它的特点，也非常感谢<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>和它的作者<a href="https://github.com/EyalAr" target="_blank" rel="external">Eyal Arubas</a></p>
+        <span itemprop="articleBody"><p>这是我三年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/165468542012410115229581/" target="_blank" rel="external">这里</a></p>
+<p>作为一个苦逼前端开发工程师，不得不面对各种cross，比如面对五花八门的浏览器我们必须cross browser，面对各种终端，我们必须cross device，在这么多年的前端开发经历中，在不同的域之间穿越中，遭受各种折磨，所以这次和大家分享的是cross domain。</p>
+<p>这次分享的cross domain，是包括所有跨域调用，无论是跨域获取数据，还是跨域跨frame调用，所以会分为两部分，这次会先分享跨域获取数据，跨域获取数据大概有以下方式。</p>
+<h3 id="jsonp方式">jsonp方式</h3><p>这是最简单，也是最实用的跨域获取数据方式，原理是在浏览器端通过生成script标签，并通过js callback的形式实现跨域访问，比如一个jsonp接口是这样：</p>
+<pre><code><span class="string">http:</span><span class="comment">//mail.163.com/someapp/jsonp?somequery=<span class="doctag"><span class="keyword">xxx</span></span>&amp;callback=fSomeMethod</span>
+</code></pre><p>然后服务器端会通过以下方式返回数据：</p>
+<pre><code><span class="function"><span class="title">fSomeMethod</span><span class="params">({返回的json数据对象})</span></span>
+</code></pre><ul>
+<li>优点：实现简单，使用灵活，并且原生cross all browser</li>
+<li>缺点：只能get方式获取数据，某些浏览器会显示加载中提示</li>
+</ul>
+<h3 id="表单post方式">表单post方式</h3><p>这个方式会复杂一点点，原理是post表单到一个隐藏的iframe，然后iframe将数据post回来同域的一个url，这时候就可以直接调用同域的回调：</p>
 <ul>
-<li>轻量级、简单易用的图片处理库</li>
-<li>没有依赖任何第三方库，这意味着build和distribution会简单很多</li>
-<li>更重要的是，<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>不是简单的对第三方库比如imagemagick进行封装，而是自己实现所有的功能</li>
-<li>api使用简单，看一次readme上的示例就只有怎么用了</li>
+<li><p>首先post表单到如：</p>
+<p> <a href="http://other.domain.com/someapp?somequery=xxx&amp;callback=fSomeMethod&amp;backurl=http://mail.163.com/proxy" target="_blank" rel="external">http://other.domain.com/someapp?somequery=xxx&amp;callback=fSomeMethod&amp;backurl=http://mail.163.com/proxy</a></p>
+</li>
+<li><p>这个接口返回的内容:</p>
+</li>
 </ul>
-<h1 id="AlexGallery的特点">AlexGallery的特点</h1><ul>
-<li>可以快速简单浏览本地文件夹，以树的结构显示在左侧</li>
-<li>选择一个含有图片的文件夹后，会自动生成缩略图并显示出来，并提供两个尺寸的缩略图显示方式</li>
-<li>可以对当前选择的文件进行图片批量处理，并可以选择缩放，和增加亮度，并且缩放提供三种方式</li>
-<li>可以对图片进行幻灯片方式预览</li>
-<li>图片处理，可以对图片进行缩放、选择、翻转、效果处理（模糊、锐化、增加亮度等）</li>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">form</span> <span class="attribute">action</span>=<span class="value">"$&#123;backurl&#125;"</span> <span class="attribute">method</span>=<span class="value">"post"</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"hidden"</span> <span class="attribute">value</span>=<span class="value">"返回的数据"</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"hidden"</span> <span class="attribute">name</span>=<span class="value">"callback"</span> <span class="attribute">value</span>=<span class="value">"$&#123;callback&#125;"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="css"><span class="tag">document</span><span class="class">.getElementsByTagName</span>("<span class="tag">FORM</span>")<span class="attr_selector">[0]</span><span class="class">.submit</span>();</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>然后post到<a href="http://mail.163.com/proxy后，返回：" target="_blank" rel="external">http://mail.163.com/proxy后，返回：</a></li>
 </ul>
-<h1 id="使用方法">使用方法</h1><ul>
-<li>假设你已经有node.js环境并安装了<a href="https://github.com/nwjs/nw.js" target="_blank" rel="external">nw</a>和<a href="https://github.com/bower/bower" target="_blank" rel="external">bower</a>，如果没有的话，先安装<code>npm install nw bower -g</code></li>
-<li>git 下载 <code>git clone https://github.com/hcnode/AlexGallery</code> 然后 <code>cd AlexGallery</code></li>
-<li>安装node依赖库 <code>npm install</code></li>
-<li>安装浏览器依赖框架和组件 <code>bower install</code></li>
-<li><strong>当安装node依赖库时，node会自动使用node-gyp来build <a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>内部c写的库，如果只是在node下使用没有<a href="https://github.com/nwjs/nw.js" target="_blank" rel="external">nw</a>封装，是可以正常使用<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>，但是如果在<a href="https://github.com/nwjs/nw.js" target="_blank" rel="external">nw</a>下，则需要手动调用nw-gyp手动来build</strong><ul>
-<li>先安装 nw-gyp <code>npm install nw-gyp -g</code></li>
-<li>进入lwip目录 <code>cd node_module/lwip</code></li>
-<li>初始化 build 所需要文件 <code>nw-gyp configure</code></li>
-<li>build <code>nw-gyp build</code></li>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="apache"></span><br><span class="line"><span class="keyword">parent</span>.<span class="cbracket">$&#123;param.callback&#125;</span>(<span class="string">"返回的数据"</span>)</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>这样就完成整个跨域获取数据的过程<ul>
+<li>优点：支持post方式，并且原生cross all browser</li>
+<li>缺点：实现有点复杂，并且流程有点曲折，需要两次请求，而且表单post方式会引起刷新提示的问题</li>
 </ul>
 </li>
-<li>回到AlexGallery根目录后运行 <code>nw</code> 即可运行AlexGallery</li>
 </ul>
-<h1 id="注意">注意</h1><ul>
-<li>这个应用暂时只在我的Mac机器上运行过，并且没有任何问题，所以我不清楚在windows下是否有问题，不过理论上<a href="https://github.com/nwjs/nw.js" target="_blank" rel="external">nw</a>和node都是跨系统支持的</li>
-<li>AlexGallery会在使用时候创建$HOME/AlexGallery目录来保存缩略图和编辑时候临时保存的文件，除此之外不会调用你的机器任何东西</li>
-<li>首次进入文件夹预览图片时候，AlexGallery会自动生成最大200px尺寸的缩略图，所以第一次浏览的时候需要点时间来生成</li>
+<h3 id="服务器代理">服务器代理</h3><p>服务器代理方式跨域调用也是使用的比较广泛的方式，原理就是在服务器端来获取跨域数据，然后在同域里ajax方式或者其他方式返回给浏览器。</p>
+<ul>
+<li>优点：客户端实现简单，没有cross browser问题</li>
+<li>缺点：需要在服务器端实现模拟请求获取数据</li>
 </ul>
-<h1 id="截图">截图</h1><p> <img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot1.png" alt="screenshot1"><br> <img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot2.png" alt="screenshot2"><br> <img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot3.png" alt="screenshot3"><br> <img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot4.png" alt="screenshot4"><br> <img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot5.png" alt="screenshot5"></p>
-<h1 id="Libraries_dependencies">Libraries dependencies</h1><ul>
-<li><a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a> Light Weight Image Processor for NodeJS</li>
-<li><a href="https://github.com/nickperkinslondon/angular-bootstrap-nav-tree" target="_blank" rel="external">angular-bootstrap-nav-tree</a> An AngularJS directive that creates a Tree based on a Bootstrap “nav” list.</li>
-<li><a href="https://github.com/jkuri/ngGallery" target="_blank" rel="external">ngGallery</a> AngularJS Image Gallery Slideshow</li>
-<li><a href="https://github.com/fengyuanchen/cropper" target="_blank" rel="external">cropper</a> A simple jQuery image cropping plugin.</li>
-<li><a href="https://github.com/seiyria/bootstrap-slider" target="_blank" rel="external">seiyria-bootstrap-slider</a> A complete rewrite of the original bootstrap-slider by Stefan Petre.</li>
-<li><a href="https://github.com/FortAwesome/Font-Awesome" target="_blank" rel="external">font-awesome</a> The iconic font and CSS toolkit</li>
+<h3 id="html5的XDomainRequest">html5的XDomainRequest</h3><p>终于在html5迎来了对跨域的ajax，泪牛满脸啊，这下完全可以通过浏览器的原生方式跨域ajax获取数据，这里一个对浏览器的各种跨域ajax的测试：<br><a href="http://www.debugtheweb.com/test/teststreaming.aspx" target="_blank" rel="external">http://www.debugtheweb.com/test/teststreaming.aspx</a></p>
+<ul>
+<li>优点：浏览器原生支持跨域方式ajax请求</li>
+<li>缺点：只能在支持html5的高级浏览器中支持</li>
 </ul>
+<h3 id="flash_request">flash request</h3><p>这个是目前跨域请求最好的一个解决方案，建议在不能用jsonp的方式时候，都可以使用flash request方式，而且flash request可以配置一个安全策略，可以允许哪些域可以调用，然后被跨域的调用需要配置一个crossdomain.xml，允许可以被那个域的flash跨域调用，内容如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0"?&gt;</span></span><br><span class="line"><span class="doctype">&lt;!DOCTYPE cross-domain-policy SYSTEM "http://www.adobe.com/xml/dtds/cross-domain-policy.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">cross-domain-policy</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="title">allow-access-from</span> <span class="attribute">domain</span>=<span class="value">"www.xxx.com"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">cross-domain-policy</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这种方式的局限就是必须依赖flash，我们这边在邮箱曾经做过一个统计，99%的用户可以通过这种方式获取到数据，另外1%的用户可能是没有安装flash或者flash版本有问题。</p>
+<ul>
+<li>优点：依赖flash下可以无视各个浏览器兼容问题</li>
+<li>缺点：正所谓成也萧何败也萧何，缺点也是因为要依赖flash</li>
+</ul>
+<p>以上是获取数据时需要cross domain的解决方案，下一篇是跨frame时候需要cross domain的分享。</p>
 </span>
       
     </div>
@@ -270,7 +270,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/node-js/" rel="tag">#node.js</a>
+            <a href="/tags/old-blog/" rel="tag">#old blog</a>
           
         </div>
       
@@ -279,13 +279,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/21/android-efficient-work/" rel="prev">Android高效开发实践之－消灭重复的体力活</a>
+              <a href="/2012/05/10/cross-domain-2/" rel="prev">前端开发各种cross之cross domain(二)</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
-            
-              <a href="/2015/08/17/ngnode/" rel="next">MEAN框架介绍：ngNode</a>
             
           </div>
         </div>
@@ -300,10 +298,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2015/08/21/alexgallery/"
-     data-title="AlexGallery：一款基于node.js和nw的图片浏览、预览、批量处理、编辑的开源桌面应用"
+        <div class="ds-share flat" data-thread-key="2012/05/10/cross-domain-1/"
+     data-title="前端开发各种cross之cross domain(一)"
      data-content=""
-     data-url="https://www.github.com/hcnode/2015/08/21/alexgallery/">
+     data-url="https://www.github.com/hcnode/2012/05/10/cross-domain-1/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -329,8 +327,8 @@
         
           <div class="comments" id="comments">
             
-              <div class="ds-thread" data-thread-key="2015/08/21/alexgallery/"
-                   data-title="AlexGallery：一款基于node.js和nw的图片浏览、预览、批量处理、编辑的开源桌面应用" data-url="https://www.github.com/hcnode/2015/08/21/alexgallery/">
+              <div class="ds-thread" data-thread-key="2012/05/10/cross-domain-1/"
+                   data-title="前端开发各种cross之cross domain(一)" data-url="https://www.github.com/hcnode/2012/05/10/cross-domain-1/">
               </div>
             
           </div>
@@ -418,7 +416,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于AlexGallery"><span class="nav-number">1.</span> <span class="nav-text">关于AlexGallery</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lwip的特点"><span class="nav-number">2.</span> <span class="nav-text">lwip的特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AlexGallery的特点"><span class="nav-number">3.</span> <span class="nav-text">AlexGallery的特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用方法"><span class="nav-number">4.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注意"><span class="nav-number">5.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#截图"><span class="nav-number">6.</span> <span class="nav-text">截图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Libraries_dependencies"><span class="nav-number">7.</span> <span class="nav-text">Libraries dependencies</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#jsonp方式"><span class="nav-number">1.</span> <span class="nav-text">jsonp方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表单post方式"><span class="nav-number">2.</span> <span class="nav-text">表单post方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器代理"><span class="nav-number">3.</span> <span class="nav-text">服务器代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#html5的XDomainRequest"><span class="nav-number">4.</span> <span class="nav-text">html5的XDomainRequest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flash_request"><span class="nav-number">5.</span> <span class="nav-text">flash request</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

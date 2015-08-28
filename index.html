@@ -476,9 +476,505 @@
 
 
     
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2013/10/19/stackoverflow-4/" itemprop="url">
+                (每周爆栈精选)如何向一个只有六岁的小孩解释什么是javascript闭包
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-10-19T17:23:59+08:00" content="2013-10-19">
+            2013-10-19
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2013/10/19/stackoverflow-4/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/19/stackoverflow-4/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/16546854201391952359197/" target="_blank" rel="external">这里</a></p>
+<p>来自爆栈<a href="http://stackoverflow.com/questions/111102/how-do-javascript-closures-work" target="_blank" rel="external">这里</a></p>
+<p>首先有人抱怨这个：</p>
+<blockquote>
+<p>“Like the old Albert Einstein said: “If you can’t explain it to a six-year old, you really don’t understand it yourself.”. Well, I tried to explain JavaScript closures to a 27-year old friend and completely failed.<br>How would you explain it to a 6-year old person that is strangely interested in that subject? ”</p>
+</blockquote>
+<p>这位楼主大概意思是：</p>
+<blockquote>
+<p>爱因斯坦说过：“如果你不能向一个六岁大的小孩解释清楚，那么你自己并不完全领悟”，好吧，当我向一个27岁的朋友尝试解释关于javascript中的闭包，尼玛他完全不懂。那还能如何指望一个六岁屁大的孩子能够听懂？</p>
+</blockquote>
+<p> 楼下一位非常有想象力的码农贴出了以下：</p>
+<p>很久以前：</p>
+<p>有一位公主…</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">princess</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 她住在一个充满其妙冒险的世界。她遇到一个非常有魅力的王子，骑着一个独角兽，她还遇到巨型战龙，甚至还有会说话的动物等不可思议的事情。</span></span><br><span class="line">    <span class="keyword">var</span> adventures = [];</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">princeCharming</span>(<span class="params"></span>) </span>&#123; <span class="comment">/* ... */</span> &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> unicorn = &#123; <span class="comment">/* ... */</span> &#125;,</span><br><span class="line">        dragons = [ <span class="comment">/* ... */</span> ],</span><br><span class="line">        squirrel = <span class="string">"Hello!"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 但是，这个小公主每次都不得不返回到现实世界，变成一个普通人，还要面对各种无趣的大人们。</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 她每一次回来，总会告诉这些大人，她所遇到各种非常令人惊讶的事情</span></span><br><span class="line">        story: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> adventures[adventures.length - <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是，大人们只是看到的是一个天真无邪的小女孩说…</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> littleGirl = princess();</span><br><span class="line">...这些只会发生在童话中的故事</span><br><span class="line">littleGirl.story();</span><br></pre></td></tr></table></figure>
+<p>就算他们相信存在真是的公主，但是他们不会相信独角兽和龙，因为他们永远看不到这些怪兽。大人们觉得这些只是存在小女孩的想象中。<br>但是我们都知道，其实这些都是真实存在…</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2013/10/19/stackoverflow-3/" itemprop="url">
+                (每周爆栈精选)javascript中“==”和“===”的性能对比
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-10-19T17:21:52+08:00" content="2013-10-19">
+            2013-10-19
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2013/10/19/stackoverflow-3/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/19/stackoverflow-3/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/16546854201391952152914/" target="_blank" rel="external">这里</a></p>
+<p>来自爆栈<a href="http://stackoverflow.com/questions/359494/does-it-matter-which-equals-operator-vs-i-use-in-javascript-comparisons" target="_blank" rel="external">这里</a></p>
+<p>以下是原文回答精选</p>
+<p>条件判断中的“===”操作符，相当于“==”操作符中没有类型转换的条件对比，并且类型必须是一样的。</p>
+<p>“==”操作符在判断是否相等之前会进行类型转换，“===”操作符则不会做任何类型转换，所以如果两个值的类型不一样，那么===会返回false，所以当这种情况下===效率会更加快，并且返回的结果可能会和==不一样，如果类型一样的话，则性能也将会一样。</p>
+<p>引用javascript大师Douglas Crockford的《JavaScript: The Good Parts》：<br>javascript中有两组相等判断的操作符：===、!==，和另外一个SB组合 ==、!=。如果两边的对象是相同的类型，并且是相同的值，那么===返回true，!==返回false，SB组合也是一样会返回同样的结果，但是如果他们不是一样的类型，那么会尝试强制转换类型，然后再进行比较，至于转换规则，是异常的复杂和坑爹。</p>
+<p>下面有些有趣的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">''</span> == <span class="string">'0'</span>           <span class="comment">// false</span></span><br><span class="line"><span class="number">0</span> == <span class="string">''</span>             <span class="comment">// true</span></span><br><span class="line"><span class="number">0</span> == <span class="string">'0'</span>            <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="literal">false</span> == <span class="string">'false'</span>    <span class="comment">// false</span></span><br><span class="line"><span class="literal">false</span> == <span class="string">'0'</span>        <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="literal">false</span> == <span class="literal">undefined</span>  <span class="comment">// false</span></span><br><span class="line"><span class="literal">false</span> == <span class="literal">null</span>       <span class="comment">// false</span></span><br><span class="line"><span class="literal">null</span> == <span class="literal">undefined</span>   <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="string">' \t\r\n '</span> == <span class="number">0</span>     <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>我的建议是不再使用SB组合，而是要使用===和!==。以上的例子，将==替换成===都将会返回false。</p>
+<p>关于性能的对比测试<br>回到主题，以下这个例子，我将原来的改了一下，<a href="http://jsperf.com/comparison-of-comparisons/16" target="_blank" rel="external">测试</a>这两种组合的效率，结果一定会使你和你的小伙伴们都惊呆了。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2013/10/19/stackoverflow-1/" itemprop="url">
+                (每周爆栈精选)javascript关于作用域的几个例子
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-10-19T17:19:44+08:00" content="2013-10-19">
+            2013-10-19
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2013/10/19/stackoverflow-1/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/19/stackoverflow-1/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/16546854201391951944863/" target="_blank" rel="external">这里</a></p>
+<p>来自爆栈<a href="http://stackoverflow.com/questions/500431/javascript-variable-scope" target="_blank" rel="external">这里</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 全局作用域变量定义</span></span><br><span class="line"><span class="keyword">var</span> a=<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 简单的例子：访问全局作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">one</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 简单的例子：访问的是局部作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">two</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">    alert(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 简单的例子：还是局部作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">three</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line">  alert(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 有点难度的例子：在函数内脚本块里面定义的局部变量，可以被函数内部访问的局部作用域的变量</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">four</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">        <span class="keyword">var</span> a=<span class="number">4</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    alert(a); <span class="comment">// alerts '4', not the global value of '1'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 有点难度的例子：对象属性作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Five</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.a = <span class="number">5</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 高级货: 闭包</span></span><br><span class="line"><span class="keyword">var</span> six = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> foo = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="comment">// javascript "闭包" 意思是我只能在这个函数里面访问到foo,</span></span><br><span class="line">        alert(foo);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 另外一个高级货: 基于prototype的作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Seven</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.a = <span class="number">7</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// [object].prototype.property 方式定义属性会在 [object].property 方式定义后丢失对应的属性</span></span><br><span class="line">Seven.prototype.a = -<span class="number">1</span>; <span class="comment">// 此值会被覆盖，因为构造函数会将a属性重新复制</span></span><br><span class="line">Seven.prototype.b = <span class="number">8</span>; <span class="comment">// 同理此b属性没有被覆盖，所以值为8</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 以上例子的值分别为 1-8</span></span><br><span class="line">one();</span><br><span class="line">two(<span class="number">2</span>);</span><br><span class="line">three();</span><br><span class="line">four();</span><br><span class="line">alert(<span class="keyword">new</span> Five().a);</span><br><span class="line">six();</span><br><span class="line">alert(<span class="keyword">new</span> Seven().a);</span><br><span class="line">alert(<span class="keyword">new</span> Seven().b);</span><br><span class="line">自己补充几个高级货：</span><br><span class="line"></span><br><span class="line"><span class="comment">// this作用域的区别</span></span><br><span class="line"><span class="keyword">var</span> nine = <span class="number">9</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Nine</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	alert(<span class="keyword">this</span>.nine); <span class="comment">// this指向window的全局作用域</span></span><br><span class="line">&#125;</span><br><span class="line">Nine();</span><br><span class="line"><span class="comment">// 以上的直接调用Nine()的效果，但是this对象作用域可以变的</span></span><br><span class="line">Nine.call(&#123;nine : <span class="number">10</span>&#125;);<span class="comment">// this对象指向参数的对象</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 除了call和apply，还有另外一种方式调用会导致不同的this引用对象</span></span><br><span class="line"><span class="keyword">var</span> Eleven = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">var</span> bar = &#123;</span><br><span class="line">	Eleven : <span class="number">11</span>,</span><br><span class="line">	foo : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		alert(<span class="keyword">this</span>.Eleven)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">bar.foo();<span class="comment">// this指向bar对象</span></span><br><span class="line"><span class="keyword">var</span> foo = bar.foo;</span><br><span class="line">foo();<span class="comment">// this指向window</span></span><br><span class="line"><span class="comment">// 以上例子分别输出9-12</span></span><br></pre></td></tr></table></figure></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2013/10/18/stackoverflow-2/" itemprop="url">
+                (每周爆栈精选)不同环境中的事件句柄中的return false区别
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-10-18T17:21:05+08:00" content="2013-10-18">
+            2013-10-18
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2013/10/18/stackoverflow-2/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/18/stackoverflow-2/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/1654685420139195215454/" target="_blank" rel="external">这里</a></p>
+<p>来自爆栈<a href="http://stackoverflow.com/questions/1357118/event-preventdefault-vs-return-false" target="_blank" rel="external">这里</a></p>
+<p>引出问题的是楼主问jquery环境下preventDefault和return false的区别。</p>
+<p>楼下有一位总结关于return false在各个环境下的区别，以下是节选和总结：</p>
+<ul>
+<li><p>在标准的DOM2 handler下(也就是使用addEventListener方式监听)，return false不会做任何事情（也就是不会阻止事件，也不会停止冒泡）</p>
+</li>
+<li><p>在Microsoft DOM2 handler下（也就是使用attachEvent方式监听），return false会阻止事件，但是不会停止冒泡</p>
+</li>
+<li><p>在标准的DOM0 handler下（也就是在html结构里面事件中return，如：<code>&lt;a onclick=&quot;return ...&quot;&gt;</code>）,return false会阻止事件，但是不会停止冒泡</p>
+</li>
+<li><p>以上都是原生方式return false，都是不能默认阻止事件冒泡</p>
+</li>
+<li><p>但是在jquery环境下监听事件（如：$(‘a’).click(…)）return false会同时阻止事件和停止事件冒泡。</p>
+</li>
+</ul>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2013/06/27/ajax-cross-domain/" itemprop="url">
+                跨域Ajax问题总结
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-06-27T15:50:12+08:00" content="2013-06-27">
+            2013-06-27
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2013/06/27/ajax-cross-domain/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2013/06/27/ajax-cross-domain/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/1654685420135273483575/" target="_blank" rel="external">这里</a></p>
+<p>最近在用xhr2做某个项目的后台，在这过程中遇到各种疑难杂症，对比起来，flash request的跨域其实是既简单又实用，而xhr2则有各种限制。</p>
+<h3 id="先来对比flash_request和xhr2的跨域策略区别">先来对比flash request和xhr2的跨域策略区别</h3><ul>
+<li><p>flash request：使用配置xml “crossdomain.xml”，来进行配置，不需要修改其他比如返回http头，flash会先获取这个xml查询http请求，是否有权限进行跨域。</p>
+</li>
+<li><p>xhr2：使用浏览器自带的xmlhttprequest level2来进行跨域ajax请求，浏览器和服务器需要发送和返回对应的http头来进行跨域策略。</p>
+</li>
+</ul>
+<h3 id="下面是在用到xhr2是遇到的问题：">下面是在用到xhr2是遇到的问题：</h3><ul>
+<li><p>首先遇到第一个问题，因为extjs框架进行跨域访问时，会自动带上自定义头：X-Requested-With，这时候浏览器会提示出错，原因是因为当有自定义头时，服务器端需要返回头：Access-Control-Allow-Headers:X-Requested-With，表示允许可以设置请求自定义头</p>
+</li>
+<li><p>第二个问题是发现跨域请求没有带上cookie，原因是因为在extjs的xhr2，withCredentials默认为false，需要加上这个属性请求才能带上cookie，但是加上withCredentials属性后发现还是出错，原因是当withCredentials为true时，返回的Access-Control-Allow-Origin的值不能为*，需要为一个特定的域名，最后把这个改为测试机的域名后，以为终于可以了吧，Holy Crap！还是不行，好吧，原因是服务器端http头也要返回Access-Control-Allow-Credentials:true</p>
+</li>
+</ul>
+<h3 id="总结：">总结：</h3><ul>
+<li><p>当xhr2跨域ajax时，不需要带上cookie，没有自定义头，只需要返回设置Access-Control-Allow-Origin头就可以。</p>
+</li>
+<li><p>如果需要设置自定义头，需要服务器端返回Access-Control-Allow-Headers:自定义头。</p>
+</li>
+<li><p>如果需要带上cookie，则xhr2对象需要设置withCredentials为true，并且服务器返回Access-Control-Allow-Credentials:true ，并且Access-Control-Allow-Origin不能为*</p>
+</li>
+</ul>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/11/08/observer/" itemprop="url">
+                javascript设计模式之“Observer”模式在网易邮箱中实践和分享
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-11-08T17:35:28+08:00" content="2012-11-08">
+            2012-11-08
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2012/11/08/observer/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2012/11/08/observer/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>这是我三年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/1654685420121085355140/" target="_blank" rel="external">这里</a></p>
+<h3 id="为什么要使用Observer模式">为什么要使用Observer模式</h3><p>在大型的ajax项目前端开发中，模块分得很细，多个开发者负责不同的业务逻辑模块开发，会需要不同模块之间互相调用接口，在网易邮箱的前端开发中遇到过这样的情况也是家常便饭，虽然我们可以将公共调用的功能分离出来到一个“公共库”，然后开发者需要实现某个功能时，可以去“公共库”找相关的接口，然后在自己的代码中调用。</p>
+<p>但是如果接口有变更、或者新需求需要增加调用，就导致各个模块负责人耦合维护，这种方式在小型的项目没有大问题，不过项目越做越大后，就会导致模块之间耦合越来越大，维护成本越来越高，在新的网易邮箱版本里面，使用了Observer的设计模式实现模块之间的解耦。</p>
+<h3 id="Observer模式的定义">Observer模式的定义</h3><p>Observer（观察者模式）：定义对象间的一种一对多的依赖关系,以便当一个对象的状态发生改变时,所有依赖于它的对象都得到通知并自动刷新。</p>
+<h3 id="举例说明">举例说明</h3><p>先举个例子：邮箱中的收件箱模块和读信模块，分别是程序员A和程序员B负责，在旧的模式里，收件箱读取一封新邮件后，B会调用A的接口.setRead(sMailId)实现去掉该邮件未读标记，然后有一天，负责左侧导航的同事C说：产品增加一个需求，读取新邮件后，左侧导航的收件箱的未读数需要更新。这时，C发给B一个更新导航的接口，然后B就要修改代码，加上C提供的接口.updateNav()。</p>
+<ul>
+<li>使用Observer模式后：</li>
+</ul>
+<p>首先定义了一个afterRead的事件，收件箱模块监听了这个事件：Listener.listen(“afterRead”, DoSetReadFunction)，新邮件读取之后，会触发一个事件：Listener.fire(“afterRead”)，这时，监听了这个事件的收件箱模块会调用接口，然后在新的需求里，C同事只需要监听：Listener.listen(“afterRead”, DoUpdateNavFunction)，就实现了左侧导航的新邮件数更新了。</p>
+<ul>
+<li><p>这个过程的变化相当于：<br><strong>旧的方式：</strong>读取一封新邮件后 -&gt; 调用收件箱接口 -&gt; 调用导航接口<br><strong>新的方式：</strong>读取一封新邮件后 -&gt; 告诉所有模块：我刚读了一封新邮件 -&gt; 其他监听了这个事件的模块被通知了 -&gt; 调用相关接口</p>
+</li>
+<li><p>简单的自定义事件实现</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Listener = &#123;</span><br><span class="line"> listen   : <span class="comment">// 实现自定义事件监听</span></span><br><span class="line"> unlisten  : <span class="comment">// 解除自定义事件监听</span></span><br><span class="line"> unlistenAll  : <span class="comment">// 解除所有自定义事件监听,</span></span><br><span class="line"> fire   : <span class="comment">// 触发事件发生</span></span><br><span class="line"> _events  : <span class="comment">// 相关监听的事件以及事件监听的句柄</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">_events的结构大致如下：</span><br><span class="line">_events : [</span><br><span class="line"> &#123;</span><br><span class="line">  name : <span class="string">"event0"</span>, <span class="comment">// 自定事件0</span></span><br><span class="line">  handlers : [</span><br><span class="line">   <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;...&#125;,<span class="comment">// 监听的句柄</span></span><br><span class="line">   <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;...&#125; <span class="comment">// 监听的句柄</span></span><br><span class="line">  ]</span><br><span class="line"> &#125;,</span><br><span class="line"> &#123;</span><br><span class="line">  name : <span class="string">"event1"</span>, <span class="comment">// 自定事件1</span></span><br><span class="line">  handlers : [</span><br><span class="line">   <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;...&#125;,<span class="comment">// 监听的句柄</span></span><br><span class="line">   <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;...&#125; <span class="comment">// 监听的句柄</span></span><br><span class="line">  ]</span><br><span class="line"> &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>上面的简单的自定义事件实现方式，就可以很好的解决模块之间耦合的问题，当然也可以做得功能更加强大，比如事件触发可以加上参数支持、实现调用句柄获取当前的event对象等。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
+  </nav>
+
  </div>
 
         
@@ -510,7 +1006,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -524,7 +1020,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

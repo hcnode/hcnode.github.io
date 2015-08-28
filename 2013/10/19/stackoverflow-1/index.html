@@ -26,7 +26,7 @@
 
 
 
-  <meta name="keywords" content="node.js," />
+  <meta name="keywords" content="old blog," />
 
 
 
@@ -35,25 +35,22 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="关于AlexGallery AlexGallery是一款图片浏览、预览、批量处理、编辑的开源图片桌面应用，它是基于node.js环境，使用nw封装，可以在mac、windows等系统使用。
- 因为自从我使用Mac后，发现没有一款工具或者软件可以快速浏览和预览图片，虽然系统自带图片预览工具也是可用，但是始终很不方便，我需要快速进入文件夹浏览图片的工具，也用过Google的Picasa，功能很多，但是">
+<meta name="description" content="这是我2年前写的blog，原文在这里
+来自爆栈这里
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889// 全局">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AlexGallery：一款基于node.js和nw的图片浏览、预览、批量处理、编辑的开源桌面应用">
-<meta property="og:url" content="https://www.github.com/hcnode/2015/08/21/alexgallery/index.html">
+<meta property="og:title" content="(每周爆栈精选)javascript关于作用域的几个例子">
+<meta property="og:url" content="https://www.github.com/hcnode/2013/10/19/stackoverflow-1/index.html">
 <meta property="og:site_name" content="hcnode's blog">
-<meta property="og:description" content="关于AlexGallery AlexGallery是一款图片浏览、预览、批量处理、编辑的开源图片桌面应用，它是基于node.js环境，使用nw封装，可以在mac、windows等系统使用。
- 因为自从我使用Mac后，发现没有一款工具或者软件可以快速浏览和预览图片，虽然系统自带图片预览工具也是可用，但是始终很不方便，我需要快速进入文件夹浏览图片的工具，也用过Google的Picasa，功能很多，但是">
-<meta property="og:image" content="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot1.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot1.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot2.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot3.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot4.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot5.png">
-<meta property="og:updated_time" content="2015-08-21T04:39:28.000Z">
+<meta property="og:description" content="这是我2年前写的blog，原文在这里
+来自爆栈这里
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889// 全局">
+<meta property="og:updated_time" content="2015-08-28T11:31:41.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AlexGallery：一款基于node.js和nw的图片浏览、预览、批量处理、编辑的开源桌面应用">
-<meta name="twitter:description" content="关于AlexGallery AlexGallery是一款图片浏览、预览、批量处理、编辑的开源图片桌面应用，它是基于node.js环境，使用nw封装，可以在mac、windows等系统使用。
- 因为自从我使用Mac后，发现没有一款工具或者软件可以快速浏览和预览图片，虽然系统自带图片预览工具也是可用，但是始终很不方便，我需要快速进入文件夹浏览图片的工具，也用过Google的Picasa，功能很多，但是">
+<meta name="twitter:title" content="(每周爆栈精选)javascript关于作用域的几个例子">
+<meta name="twitter:description" content="这是我2年前写的blog，原文在这里
+来自爆栈这里
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889// 全局">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -63,7 +60,7 @@
   };
 </script>
 
-  <title> AlexGallery：一款基于node.js和nw的图片浏览、预览、批量处理、编辑的开源桌面应用 | hcnode's blog </title>
+  <title> (每周爆栈精选)javascript关于作用域的几个例子 | hcnode's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -181,7 +178,7 @@
           
           
             
-              AlexGallery：一款基于node.js和nw的图片浏览、预览、批量处理、编辑的开源桌面应用
+              (每周爆栈精选)javascript关于作用域的几个例子
             
           
         </h1>
@@ -190,8 +187,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-08-21T10:37:40+08:00" content="2015-08-21">
-            2015-08-21
+          <time itemprop="dateCreated" datetime="2013-10-19T17:19:44+08:00" content="2013-10-19">
+            2013-10-19
           </time>
         </span>
 
@@ -201,8 +198,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/08/21/alexgallery/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/21/alexgallery/" itemprop="commentsCount"></span>
+              <a href="/2013/10/19/stackoverflow-1/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/19/stackoverflow-1/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -216,53 +213,9 @@
       
 
       
-        <span itemprop="articleBody"><p><img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot1.png" alt="screenshot1"></p>
-<h1 id="关于AlexGallery">关于AlexGallery</h1><p> <a href="https://github.com/hcnode/AlexGallery" target="_blank" rel="external">AlexGallery</a>是一款图片浏览、预览、批量处理、编辑的开源图片桌面应用，它是基于node.js环境，使用nw封装，可以在mac、windows等系统使用。</p>
-<p> 因为自从我使用Mac后，发现没有一款工具或者软件可以快速浏览和预览图片，虽然系统自带图片预览工具也是可用，但是始终很不方便，我需要快速进入文件夹浏览图片的工具，也用过Google的Picasa，功能很多，但是也还是没有我需要的简单快速浏览方式，其他的比如acdsee又要收费</p>
-<p> 所以我决定自己做一个图片预览的工具，而且因为在这之前，我有留意到2个开源库，一个是轻量的图片处理node库<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>，另一个是<a href="https://github.com/nwjs/nw.js" target="_blank" rel="external">nw</a>，在做<a href="https://github.com/hcnode/AlexGallery" target="_blank" rel="external">AlexGallery</a>之前，我没用过这两个库做过任何东西，但是当我第一次看到<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>的介绍和例子后，我就有个自己写个图片处理工具的想法，两周之前工作忙完差不多就开始动工，因为用了不少开源前端web组件，所以做了一周左右功能基本都出来了<br><a id="more"></a></p>
-<h1 id="lwip的特点">lwip的特点</h1><p>因为有<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>我才有做这个app的想法，所以这里介绍一下它的特点，也非常感谢<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>和它的作者<a href="https://github.com/EyalAr" target="_blank" rel="external">Eyal Arubas</a></p>
-<ul>
-<li>轻量级、简单易用的图片处理库</li>
-<li>没有依赖任何第三方库，这意味着build和distribution会简单很多</li>
-<li>更重要的是，<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>不是简单的对第三方库比如imagemagick进行封装，而是自己实现所有的功能</li>
-<li>api使用简单，看一次readme上的示例就只有怎么用了</li>
-</ul>
-<h1 id="AlexGallery的特点">AlexGallery的特点</h1><ul>
-<li>可以快速简单浏览本地文件夹，以树的结构显示在左侧</li>
-<li>选择一个含有图片的文件夹后，会自动生成缩略图并显示出来，并提供两个尺寸的缩略图显示方式</li>
-<li>可以对当前选择的文件进行图片批量处理，并可以选择缩放，和增加亮度，并且缩放提供三种方式</li>
-<li>可以对图片进行幻灯片方式预览</li>
-<li>图片处理，可以对图片进行缩放、选择、翻转、效果处理（模糊、锐化、增加亮度等）</li>
-</ul>
-<h1 id="使用方法">使用方法</h1><ul>
-<li>假设你已经有node.js环境并安装了<a href="https://github.com/nwjs/nw.js" target="_blank" rel="external">nw</a>和<a href="https://github.com/bower/bower" target="_blank" rel="external">bower</a>，如果没有的话，先安装<code>npm install nw bower -g</code></li>
-<li>git 下载 <code>git clone https://github.com/hcnode/AlexGallery</code> 然后 <code>cd AlexGallery</code></li>
-<li>安装node依赖库 <code>npm install</code></li>
-<li>安装浏览器依赖框架和组件 <code>bower install</code></li>
-<li><strong>当安装node依赖库时，node会自动使用node-gyp来build <a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>内部c写的库，如果只是在node下使用没有<a href="https://github.com/nwjs/nw.js" target="_blank" rel="external">nw</a>封装，是可以正常使用<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>，但是如果在<a href="https://github.com/nwjs/nw.js" target="_blank" rel="external">nw</a>下，则需要手动调用nw-gyp手动来build</strong><ul>
-<li>先安装 nw-gyp <code>npm install nw-gyp -g</code></li>
-<li>进入lwip目录 <code>cd node_module/lwip</code></li>
-<li>初始化 build 所需要文件 <code>nw-gyp configure</code></li>
-<li>build <code>nw-gyp build</code></li>
-</ul>
-</li>
-<li>回到AlexGallery根目录后运行 <code>nw</code> 即可运行AlexGallery</li>
-</ul>
-<h1 id="注意">注意</h1><ul>
-<li>这个应用暂时只在我的Mac机器上运行过，并且没有任何问题，所以我不清楚在windows下是否有问题，不过理论上<a href="https://github.com/nwjs/nw.js" target="_blank" rel="external">nw</a>和node都是跨系统支持的</li>
-<li>AlexGallery会在使用时候创建$HOME/AlexGallery目录来保存缩略图和编辑时候临时保存的文件，除此之外不会调用你的机器任何东西</li>
-<li>首次进入文件夹预览图片时候，AlexGallery会自动生成最大200px尺寸的缩略图，所以第一次浏览的时候需要点时间来生成</li>
-</ul>
-<h1 id="截图">截图</h1><p> <img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot1.png" alt="screenshot1"><br> <img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot2.png" alt="screenshot2"><br> <img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot3.png" alt="screenshot3"><br> <img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot4.png" alt="screenshot4"><br> <img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot5.png" alt="screenshot5"></p>
-<h1 id="Libraries_dependencies">Libraries dependencies</h1><ul>
-<li><a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a> Light Weight Image Processor for NodeJS</li>
-<li><a href="https://github.com/nickperkinslondon/angular-bootstrap-nav-tree" target="_blank" rel="external">angular-bootstrap-nav-tree</a> An AngularJS directive that creates a Tree based on a Bootstrap “nav” list.</li>
-<li><a href="https://github.com/jkuri/ngGallery" target="_blank" rel="external">ngGallery</a> AngularJS Image Gallery Slideshow</li>
-<li><a href="https://github.com/fengyuanchen/cropper" target="_blank" rel="external">cropper</a> A simple jQuery image cropping plugin.</li>
-<li><a href="https://github.com/seiyria/bootstrap-slider" target="_blank" rel="external">seiyria-bootstrap-slider</a> A complete rewrite of the original bootstrap-slider by Stefan Petre.</li>
-<li><a href="https://github.com/FortAwesome/Font-Awesome" target="_blank" rel="external">font-awesome</a> The iconic font and CSS toolkit</li>
-</ul>
-</span>
+        <span itemprop="articleBody"><p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/16546854201391951944863/" target="_blank" rel="external">这里</a></p>
+<p>来自爆栈<a href="http://stackoverflow.com/questions/500431/javascript-variable-scope" target="_blank" rel="external">这里</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 全局作用域变量定义</span></span><br><span class="line"><span class="keyword">var</span> a=<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 简单的例子：访问全局作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">one</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 简单的例子：访问的是局部作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">two</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">    alert(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 简单的例子：还是局部作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">three</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line">  alert(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 有点难度的例子：在函数内脚本块里面定义的局部变量，可以被函数内部访问的局部作用域的变量</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">four</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">        <span class="keyword">var</span> a=<span class="number">4</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    alert(a); <span class="comment">// alerts '4', not the global value of '1'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 有点难度的例子：对象属性作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Five</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.a = <span class="number">5</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 高级货: 闭包</span></span><br><span class="line"><span class="keyword">var</span> six = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> foo = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="comment">// javascript "闭包" 意思是我只能在这个函数里面访问到foo,</span></span><br><span class="line">        alert(foo);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 另外一个高级货: 基于prototype的作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Seven</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.a = <span class="number">7</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// [object].prototype.property 方式定义属性会在 [object].property 方式定义后丢失对应的属性</span></span><br><span class="line">Seven.prototype.a = -<span class="number">1</span>; <span class="comment">// 此值会被覆盖，因为构造函数会将a属性重新复制</span></span><br><span class="line">Seven.prototype.b = <span class="number">8</span>; <span class="comment">// 同理此b属性没有被覆盖，所以值为8</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 以上例子的值分别为 1-8</span></span><br><span class="line">one();</span><br><span class="line">two(<span class="number">2</span>);</span><br><span class="line">three();</span><br><span class="line">four();</span><br><span class="line">alert(<span class="keyword">new</span> Five().a);</span><br><span class="line">six();</span><br><span class="line">alert(<span class="keyword">new</span> Seven().a);</span><br><span class="line">alert(<span class="keyword">new</span> Seven().b);</span><br><span class="line">自己补充几个高级货：</span><br><span class="line"></span><br><span class="line"><span class="comment">// this作用域的区别</span></span><br><span class="line"><span class="keyword">var</span> nine = <span class="number">9</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Nine</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	alert(<span class="keyword">this</span>.nine); <span class="comment">// this指向window的全局作用域</span></span><br><span class="line">&#125;</span><br><span class="line">Nine();</span><br><span class="line"><span class="comment">// 以上的直接调用Nine()的效果，但是this对象作用域可以变的</span></span><br><span class="line">Nine.call(&#123;nine : <span class="number">10</span>&#125;);<span class="comment">// this对象指向参数的对象</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 除了call和apply，还有另外一种方式调用会导致不同的this引用对象</span></span><br><span class="line"><span class="keyword">var</span> Eleven = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">var</span> bar = &#123;</span><br><span class="line">	Eleven : <span class="number">11</span>,</span><br><span class="line">	foo : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		alert(<span class="keyword">this</span>.Eleven)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">bar.foo();<span class="comment">// this指向bar对象</span></span><br><span class="line"><span class="keyword">var</span> foo = bar.foo;</span><br><span class="line">foo();<span class="comment">// this指向window</span></span><br><span class="line"><span class="comment">// 以上例子分别输出9-12</span></span><br></pre></td></tr></table></figure></span>
       
     </div>
 
@@ -270,7 +223,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/node-js/" rel="tag">#node.js</a>
+            <a href="/tags/old-blog/" rel="tag">#old blog</a>
           
         </div>
       
@@ -279,13 +232,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/21/android-efficient-work/" rel="prev">Android高效开发实践之－消灭重复的体力活</a>
+              <a href="/2013/10/19/stackoverflow-3/" rel="prev">(每周爆栈精选)javascript中“==”和“===”的性能对比</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/17/ngnode/" rel="next">MEAN框架介绍：ngNode</a>
+              <a href="/2013/10/18/stackoverflow-2/" rel="next">(每周爆栈精选)不同环境中的事件句柄中的return false区别</a>
             
           </div>
         </div>
@@ -300,10 +253,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2015/08/21/alexgallery/"
-     data-title="AlexGallery：一款基于node.js和nw的图片浏览、预览、批量处理、编辑的开源桌面应用"
+        <div class="ds-share flat" data-thread-key="2013/10/19/stackoverflow-1/"
+     data-title="(每周爆栈精选)javascript关于作用域的几个例子"
      data-content=""
-     data-url="https://www.github.com/hcnode/2015/08/21/alexgallery/">
+     data-url="https://www.github.com/hcnode/2013/10/19/stackoverflow-1/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -329,8 +282,8 @@
         
           <div class="comments" id="comments">
             
-              <div class="ds-thread" data-thread-key="2015/08/21/alexgallery/"
-                   data-title="AlexGallery：一款基于node.js和nw的图片浏览、预览、批量处理、编辑的开源桌面应用" data-url="https://www.github.com/hcnode/2015/08/21/alexgallery/">
+              <div class="ds-thread" data-thread-key="2013/10/19/stackoverflow-1/"
+                   data-title="(每周爆栈精选)javascript关于作用域的几个例子" data-url="https://www.github.com/hcnode/2013/10/19/stackoverflow-1/">
               </div>
             
           </div>
@@ -418,7 +371,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于AlexGallery"><span class="nav-number">1.</span> <span class="nav-text">关于AlexGallery</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lwip的特点"><span class="nav-number">2.</span> <span class="nav-text">lwip的特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AlexGallery的特点"><span class="nav-number">3.</span> <span class="nav-text">AlexGallery的特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用方法"><span class="nav-number">4.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注意"><span class="nav-number">5.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#截图"><span class="nav-number">6.</span> <span class="nav-text">截图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Libraries_dependencies"><span class="nav-number">7.</span> <span class="nav-text">Libraries dependencies</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

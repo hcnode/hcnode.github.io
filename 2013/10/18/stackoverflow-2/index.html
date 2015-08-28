@@ -26,7 +26,7 @@
 
 
 
-  <meta name="keywords" content="node.js," />
+  <meta name="keywords" content="old blog," />
 
 
 
@@ -35,25 +35,31 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="关于AlexGallery AlexGallery是一款图片浏览、预览、批量处理、编辑的开源图片桌面应用，它是基于node.js环境，使用nw封装，可以在mac、windows等系统使用。
- 因为自从我使用Mac后，发现没有一款工具或者软件可以快速浏览和预览图片，虽然系统自带图片预览工具也是可用，但是始终很不方便，我需要快速进入文件夹浏览图片的工具，也用过Google的Picasa，功能很多，但是">
+<meta name="description" content="这是我2年前写的blog，原文在这里
+来自爆栈这里
+引出问题的是楼主问jquery环境下preventDefault和return false的区别。
+楼下有一位总结关于return false在各个环境下的区别，以下是节选和总结：
+
+在标准的DOM2 handler下(也就是使用addEventListener方式监听)，return false不会做任何事情（也就是不会阻止事件，也不会停止冒泡">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AlexGallery：一款基于node.js和nw的图片浏览、预览、批量处理、编辑的开源桌面应用">
-<meta property="og:url" content="https://www.github.com/hcnode/2015/08/21/alexgallery/index.html">
+<meta property="og:title" content="(每周爆栈精选)不同环境中的事件句柄中的return false区别">
+<meta property="og:url" content="https://www.github.com/hcnode/2013/10/18/stackoverflow-2/index.html">
 <meta property="og:site_name" content="hcnode's blog">
-<meta property="og:description" content="关于AlexGallery AlexGallery是一款图片浏览、预览、批量处理、编辑的开源图片桌面应用，它是基于node.js环境，使用nw封装，可以在mac、windows等系统使用。
- 因为自从我使用Mac后，发现没有一款工具或者软件可以快速浏览和预览图片，虽然系统自带图片预览工具也是可用，但是始终很不方便，我需要快速进入文件夹浏览图片的工具，也用过Google的Picasa，功能很多，但是">
-<meta property="og:image" content="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot1.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot1.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot2.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot3.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot4.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot5.png">
-<meta property="og:updated_time" content="2015-08-21T04:39:28.000Z">
+<meta property="og:description" content="这是我2年前写的blog，原文在这里
+来自爆栈这里
+引出问题的是楼主问jquery环境下preventDefault和return false的区别。
+楼下有一位总结关于return false在各个环境下的区别，以下是节选和总结：
+
+在标准的DOM2 handler下(也就是使用addEventListener方式监听)，return false不会做任何事情（也就是不会阻止事件，也不会停止冒泡">
+<meta property="og:updated_time" content="2015-08-28T11:32:41.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AlexGallery：一款基于node.js和nw的图片浏览、预览、批量处理、编辑的开源桌面应用">
-<meta name="twitter:description" content="关于AlexGallery AlexGallery是一款图片浏览、预览、批量处理、编辑的开源图片桌面应用，它是基于node.js环境，使用nw封装，可以在mac、windows等系统使用。
- 因为自从我使用Mac后，发现没有一款工具或者软件可以快速浏览和预览图片，虽然系统自带图片预览工具也是可用，但是始终很不方便，我需要快速进入文件夹浏览图片的工具，也用过Google的Picasa，功能很多，但是">
+<meta name="twitter:title" content="(每周爆栈精选)不同环境中的事件句柄中的return false区别">
+<meta name="twitter:description" content="这是我2年前写的blog，原文在这里
+来自爆栈这里
+引出问题的是楼主问jquery环境下preventDefault和return false的区别。
+楼下有一位总结关于return false在各个环境下的区别，以下是节选和总结：
+
+在标准的DOM2 handler下(也就是使用addEventListener方式监听)，return false不会做任何事情（也就是不会阻止事件，也不会停止冒泡">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -63,7 +69,7 @@
   };
 </script>
 
-  <title> AlexGallery：一款基于node.js和nw的图片浏览、预览、批量处理、编辑的开源桌面应用 | hcnode's blog </title>
+  <title> (每周爆栈精选)不同环境中的事件句柄中的return false区别 | hcnode's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -181,7 +187,7 @@
           
           
             
-              AlexGallery：一款基于node.js和nw的图片浏览、预览、批量处理、编辑的开源桌面应用
+              (每周爆栈精选)不同环境中的事件句柄中的return false区别
             
           
         </h1>
@@ -190,8 +196,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-08-21T10:37:40+08:00" content="2015-08-21">
-            2015-08-21
+          <time itemprop="dateCreated" datetime="2013-10-18T17:21:05+08:00" content="2013-10-18">
+            2013-10-18
           </time>
         </span>
 
@@ -201,8 +207,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/08/21/alexgallery/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/21/alexgallery/" itemprop="commentsCount"></span>
+              <a href="/2013/10/18/stackoverflow-2/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/18/stackoverflow-2/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -216,51 +222,21 @@
       
 
       
-        <span itemprop="articleBody"><p><img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot1.png" alt="screenshot1"></p>
-<h1 id="关于AlexGallery">关于AlexGallery</h1><p> <a href="https://github.com/hcnode/AlexGallery" target="_blank" rel="external">AlexGallery</a>是一款图片浏览、预览、批量处理、编辑的开源图片桌面应用，它是基于node.js环境，使用nw封装，可以在mac、windows等系统使用。</p>
-<p> 因为自从我使用Mac后，发现没有一款工具或者软件可以快速浏览和预览图片，虽然系统自带图片预览工具也是可用，但是始终很不方便，我需要快速进入文件夹浏览图片的工具，也用过Google的Picasa，功能很多，但是也还是没有我需要的简单快速浏览方式，其他的比如acdsee又要收费</p>
-<p> 所以我决定自己做一个图片预览的工具，而且因为在这之前，我有留意到2个开源库，一个是轻量的图片处理node库<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>，另一个是<a href="https://github.com/nwjs/nw.js" target="_blank" rel="external">nw</a>，在做<a href="https://github.com/hcnode/AlexGallery" target="_blank" rel="external">AlexGallery</a>之前，我没用过这两个库做过任何东西，但是当我第一次看到<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>的介绍和例子后，我就有个自己写个图片处理工具的想法，两周之前工作忙完差不多就开始动工，因为用了不少开源前端web组件，所以做了一周左右功能基本都出来了<br><a id="more"></a></p>
-<h1 id="lwip的特点">lwip的特点</h1><p>因为有<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>我才有做这个app的想法，所以这里介绍一下它的特点，也非常感谢<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>和它的作者<a href="https://github.com/EyalAr" target="_blank" rel="external">Eyal Arubas</a></p>
+        <span itemprop="articleBody"><p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/1654685420139195215454/" target="_blank" rel="external">这里</a></p>
+<p>来自爆栈<a href="http://stackoverflow.com/questions/1357118/event-preventdefault-vs-return-false" target="_blank" rel="external">这里</a></p>
+<p>引出问题的是楼主问jquery环境下preventDefault和return false的区别。</p>
+<p>楼下有一位总结关于return false在各个环境下的区别，以下是节选和总结：</p>
 <ul>
-<li>轻量级、简单易用的图片处理库</li>
-<li>没有依赖任何第三方库，这意味着build和distribution会简单很多</li>
-<li>更重要的是，<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>不是简单的对第三方库比如imagemagick进行封装，而是自己实现所有的功能</li>
-<li>api使用简单，看一次readme上的示例就只有怎么用了</li>
-</ul>
-<h1 id="AlexGallery的特点">AlexGallery的特点</h1><ul>
-<li>可以快速简单浏览本地文件夹，以树的结构显示在左侧</li>
-<li>选择一个含有图片的文件夹后，会自动生成缩略图并显示出来，并提供两个尺寸的缩略图显示方式</li>
-<li>可以对当前选择的文件进行图片批量处理，并可以选择缩放，和增加亮度，并且缩放提供三种方式</li>
-<li>可以对图片进行幻灯片方式预览</li>
-<li>图片处理，可以对图片进行缩放、选择、翻转、效果处理（模糊、锐化、增加亮度等）</li>
-</ul>
-<h1 id="使用方法">使用方法</h1><ul>
-<li>假设你已经有node.js环境并安装了<a href="https://github.com/nwjs/nw.js" target="_blank" rel="external">nw</a>和<a href="https://github.com/bower/bower" target="_blank" rel="external">bower</a>，如果没有的话，先安装<code>npm install nw bower -g</code></li>
-<li>git 下载 <code>git clone https://github.com/hcnode/AlexGallery</code> 然后 <code>cd AlexGallery</code></li>
-<li>安装node依赖库 <code>npm install</code></li>
-<li>安装浏览器依赖框架和组件 <code>bower install</code></li>
-<li><strong>当安装node依赖库时，node会自动使用node-gyp来build <a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>内部c写的库，如果只是在node下使用没有<a href="https://github.com/nwjs/nw.js" target="_blank" rel="external">nw</a>封装，是可以正常使用<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>，但是如果在<a href="https://github.com/nwjs/nw.js" target="_blank" rel="external">nw</a>下，则需要手动调用nw-gyp手动来build</strong><ul>
-<li>先安装 nw-gyp <code>npm install nw-gyp -g</code></li>
-<li>进入lwip目录 <code>cd node_module/lwip</code></li>
-<li>初始化 build 所需要文件 <code>nw-gyp configure</code></li>
-<li>build <code>nw-gyp build</code></li>
-</ul>
+<li><p>在标准的DOM2 handler下(也就是使用addEventListener方式监听)，return false不会做任何事情（也就是不会阻止事件，也不会停止冒泡）</p>
 </li>
-<li>回到AlexGallery根目录后运行 <code>nw</code> 即可运行AlexGallery</li>
-</ul>
-<h1 id="注意">注意</h1><ul>
-<li>这个应用暂时只在我的Mac机器上运行过，并且没有任何问题，所以我不清楚在windows下是否有问题，不过理论上<a href="https://github.com/nwjs/nw.js" target="_blank" rel="external">nw</a>和node都是跨系统支持的</li>
-<li>AlexGallery会在使用时候创建$HOME/AlexGallery目录来保存缩略图和编辑时候临时保存的文件，除此之外不会调用你的机器任何东西</li>
-<li>首次进入文件夹预览图片时候，AlexGallery会自动生成最大200px尺寸的缩略图，所以第一次浏览的时候需要点时间来生成</li>
-</ul>
-<h1 id="截图">截图</h1><p> <img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot1.png" alt="screenshot1"><br> <img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot2.png" alt="screenshot2"><br> <img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot3.png" alt="screenshot3"><br> <img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot4.png" alt="screenshot4"><br> <img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot5.png" alt="screenshot5"></p>
-<h1 id="Libraries_dependencies">Libraries dependencies</h1><ul>
-<li><a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a> Light Weight Image Processor for NodeJS</li>
-<li><a href="https://github.com/nickperkinslondon/angular-bootstrap-nav-tree" target="_blank" rel="external">angular-bootstrap-nav-tree</a> An AngularJS directive that creates a Tree based on a Bootstrap “nav” list.</li>
-<li><a href="https://github.com/jkuri/ngGallery" target="_blank" rel="external">ngGallery</a> AngularJS Image Gallery Slideshow</li>
-<li><a href="https://github.com/fengyuanchen/cropper" target="_blank" rel="external">cropper</a> A simple jQuery image cropping plugin.</li>
-<li><a href="https://github.com/seiyria/bootstrap-slider" target="_blank" rel="external">seiyria-bootstrap-slider</a> A complete rewrite of the original bootstrap-slider by Stefan Petre.</li>
-<li><a href="https://github.com/FortAwesome/Font-Awesome" target="_blank" rel="external">font-awesome</a> The iconic font and CSS toolkit</li>
+<li><p>在Microsoft DOM2 handler下（也就是使用attachEvent方式监听），return false会阻止事件，但是不会停止冒泡</p>
+</li>
+<li><p>在标准的DOM0 handler下（也就是在html结构里面事件中return，如：<code>&lt;a onclick=&quot;return ...&quot;&gt;</code>）,return false会阻止事件，但是不会停止冒泡</p>
+</li>
+<li><p>以上都是原生方式return false，都是不能默认阻止事件冒泡</p>
+</li>
+<li><p>但是在jquery环境下监听事件（如：$(‘a’).click(…)）return false会同时阻止事件和停止事件冒泡。</p>
+</li>
 </ul>
 </span>
       
@@ -270,7 +246,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/node-js/" rel="tag">#node.js</a>
+            <a href="/tags/old-blog/" rel="tag">#old blog</a>
           
         </div>
       
@@ -279,13 +255,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/21/android-efficient-work/" rel="prev">Android高效开发实践之－消灭重复的体力活</a>
+              <a href="/2013/10/19/stackoverflow-1/" rel="prev">(每周爆栈精选)javascript关于作用域的几个例子</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/17/ngnode/" rel="next">MEAN框架介绍：ngNode</a>
+              <a href="/2013/06/27/ajax-cross-domain/" rel="next">跨域Ajax问题总结</a>
             
           </div>
         </div>
@@ -300,10 +276,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2015/08/21/alexgallery/"
-     data-title="AlexGallery：一款基于node.js和nw的图片浏览、预览、批量处理、编辑的开源桌面应用"
+        <div class="ds-share flat" data-thread-key="2013/10/18/stackoverflow-2/"
+     data-title="(每周爆栈精选)不同环境中的事件句柄中的return false区别"
      data-content=""
-     data-url="https://www.github.com/hcnode/2015/08/21/alexgallery/">
+     data-url="https://www.github.com/hcnode/2013/10/18/stackoverflow-2/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -329,8 +305,8 @@
         
           <div class="comments" id="comments">
             
-              <div class="ds-thread" data-thread-key="2015/08/21/alexgallery/"
-                   data-title="AlexGallery：一款基于node.js和nw的图片浏览、预览、批量处理、编辑的开源桌面应用" data-url="https://www.github.com/hcnode/2015/08/21/alexgallery/">
+              <div class="ds-thread" data-thread-key="2013/10/18/stackoverflow-2/"
+                   data-title="(每周爆栈精选)不同环境中的事件句柄中的return false区别" data-url="https://www.github.com/hcnode/2013/10/18/stackoverflow-2/">
               </div>
             
           </div>
@@ -418,7 +394,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于AlexGallery"><span class="nav-number">1.</span> <span class="nav-text">关于AlexGallery</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lwip的特点"><span class="nav-number">2.</span> <span class="nav-text">lwip的特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AlexGallery的特点"><span class="nav-number">3.</span> <span class="nav-text">AlexGallery的特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用方法"><span class="nav-number">4.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注意"><span class="nav-number">5.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#截图"><span class="nav-number">6.</span> <span class="nav-text">截图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Libraries_dependencies"><span class="nav-number">7.</span> <span class="nav-text">Libraries dependencies</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
