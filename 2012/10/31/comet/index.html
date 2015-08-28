@@ -45,7 +45,7 @@
 <meta property="og:description" content="这是我三年前写的blog，原文在这里，因为这篇blog，我有幸被邀请到2012年的Velocity大会作为演讲嘉宾。
 本文是关于comet技术的介绍，以及网易邮箱在使用comet技术中的经验介绍和各种解决方案优劣对比。
 什么是cometComet是一种基于web的服务器端主动推送消息给浏览器端的技术，在传统的web应用，浏览器和服务器之间的通讯，是通过“浏览器请求-服务器端返回”这个过程服务器端被">
-<meta property="og:updated_time" content="2015-08-28T10:58:27.000Z">
+<meta property="og:updated_time" content="2015-08-28T14:57:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Comet 技术总结以及相关方案优劣对比">
 <meta name="twitter:description" content="这是我三年前写的blog，原文在这里，因为这篇blog，我有幸被邀请到2012年的Velocity大会作为演讲嘉宾。
@@ -229,8 +229,8 @@
 <li>Jsonp（以html的script标签方式请求）</li>
 <li>Flash xhr（随便跨域，无视浏览器兼容）</li>
 <li>iframe（iframe页面方式请求）</li>
-<li>long-polling优缺点：</li>
 </ul>
+<p>long-polling优缺点：</p>
 <p><strong>优点包括：</strong>实现稍微简单，可供选择的载体多，并且浏览器兼容性好<br><strong>缺点包括：</strong>轮询的方式定时请求，有数据返回后断开重新请求，这种方式消息到达可能不及时，以及浏览器端不断建立请求，导致过多资源，某些载体方式不支持post</p>
 <h4 id="Streaming：流方式">Streaming：流方式</h4><p>Streaming方式的特点有以下：</p>
 <p>使用这种方式，每次数据传送不会关闭连接，连接只会在通信出现错误时，或是连接重建时关闭（一些防火墙常被设置为丢弃过长的连接， 服务器端可以设置一个超时时间， 超时后通知客户端重新建立连接，并关闭原来的连接）。<br>Streaming的可以选择载体：</p>
@@ -240,7 +240,7 @@
 <li>iframe（iframe页面方式请求）</li>
 </ul>
 <p>Streaming优缺点：</p>
-<p><strong>优点包括：消息到达及时，浏览器端只需要一次请求，服务器端即可实现多次推送，并且get或者post方式都无压力</strong><br><strong>缺点包括：暂无</strong></p>
+<p><strong>优点包括：</strong>消息到达及时，浏览器端只需要一次请求，服务器端即可实现多次推送，并且get或者post方式都无压力<br><strong>缺点包括：</strong>无</p>
 <h4 id="邮箱的pushmail实现方案对比">邮箱的pushmail实现方案对比</h4><p>旧方案：</p>
 <ul>
 <li>长连接方式:long-polling</li>
