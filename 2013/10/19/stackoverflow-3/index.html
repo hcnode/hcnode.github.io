@@ -49,7 +49,7 @@
 以下是原文回答精选
 条件判断中的“===”操作符，相当于“==”操作符中没有类型转换的条件对比，并且类型必须是一样的。
 “==”操作符在判断是否相等之前会进行类型转换，“===”操作符则不会做任何类型转换，所以如果两个值的类型不一样，那么===会返回false，所以当这种情况下===效率会更加快，并且返回的结果可能会和==不一样，如果类型一样的话">
-<meta property="og:updated_time" content="2015-08-28T11:36:05.000Z">
+<meta property="og:updated_time" content="2015-08-28T23:35:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="(每周爆栈精选)javascript中“==”和“===”的性能对比">
 <meta name="twitter:description" content="这是我2年前写的blog，原文在这里
@@ -224,7 +224,10 @@
 <p>以下是原文回答精选</p>
 <p>条件判断中的“===”操作符，相当于“==”操作符中没有类型转换的条件对比，并且类型必须是一样的。</p>
 <p>“==”操作符在判断是否相等之前会进行类型转换，“===”操作符则不会做任何类型转换，所以如果两个值的类型不一样，那么===会返回false，所以当这种情况下===效率会更加快，并且返回的结果可能会和==不一样，如果类型一样的话，则性能也将会一样。</p>
-<p>引用javascript大师Douglas Crockford的《JavaScript: The Good Parts》：<br>javascript中有两组相等判断的操作符：===、!==，和另外一个SB组合 ==、!=。如果两边的对象是相同的类型，并且是相同的值，那么===返回true，!==返回false，SB组合也是一样会返回同样的结果，但是如果他们不是一样的类型，那么会尝试强制转换类型，然后再进行比较，至于转换规则，是异常的复杂和坑爹。</p>
+<p>引用javascript大师Douglas Crockford的《JavaScript: The Good Parts》：</p>
+<blockquote>
+<p>javascript中有两组相等判断的操作符：===、!==，和另外一个SB组合 ==、!=。如果两边的对象是相同的类型，并且是相同的值，那么===返回true，!==返回false，SB组合也是一样会返回同样的结果，但是如果他们不是一样的类型，那么会尝试强制转换类型，然后再进行比较，至于转换规则，是异常的复杂和坑爹。</p>
+</blockquote>
 <p>下面有些有趣的例子：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">''</span> == <span class="string">'0'</span>           <span class="comment">// false</span></span><br><span class="line"><span class="number">0</span> == <span class="string">''</span>             <span class="comment">// true</span></span><br><span class="line"><span class="number">0</span> == <span class="string">'0'</span>            <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="literal">false</span> == <span class="string">'false'</span>    <span class="comment">// false</span></span><br><span class="line"><span class="literal">false</span> == <span class="string">'0'</span>        <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="literal">false</span> == <span class="literal">undefined</span>  <span class="comment">// false</span></span><br><span class="line"><span class="literal">false</span> == <span class="literal">null</span>       <span class="comment">// false</span></span><br><span class="line"><span class="literal">null</span> == <span class="literal">undefined</span>   <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="string">' \t\r\n '</span> == <span class="number">0</span>     <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 <p>我的建议是不再使用SB组合，而是要使用===和!==。以上的例子，将==替换成===都将会返回false。</p>
