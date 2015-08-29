@@ -173,6 +173,91 @@
           
           
             
+              <a class="post-title-link" href="/2012/11/08/observer/" itemprop="url">
+                javascript设计模式之“Observer”模式在网易邮箱中实践和分享
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-11-08T17:35:28+08:00" content="2012-11-08">
+            2012-11-08
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2012/11/08/observer/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2012/11/08/observer/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>这是我三年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/1654685420121085355140/" target="_blank" rel="external">这里</a></p>
+<h3 id="为什么要使用Observer模式">为什么要使用Observer模式</h3><p>在大型的ajax项目前端开发中，模块分得很细，多个开发者负责不同的业务逻辑模块开发，会需要不同模块之间互相调用接口，在网易邮箱的前端开发中遇到过这样的情况也是家常便饭，虽然我们可以将公共调用的功能分离出来到一个“公共库”，然后开发者需要实现某个功能时，可以去“公共库”找相关的接口，然后在自己的代码中调用。</p>
+<p>但是如果接口有变更、或者新需求需要增加调用，就导致各个模块负责人耦合维护，这种方式在小型的项目没有大问题，不过项目越做越大后，就会导致模块之间耦合越来越大，维护成本越来越高，在新的网易邮箱版本里面，使用了Observer的设计模式实现模块之间的解耦。</p>
+<h3 id="Observer模式的定义">Observer模式的定义</h3><p>Observer（观察者模式）：定义对象间的一种一对多的依赖关系,以便当一个对象的状态发生改变时,所有依赖于它的对象都得到通知并自动刷新。</p>
+<h3 id="举例说明">举例说明</h3><p>先举个例子：邮箱中的收件箱模块和读信模块，分别是程序员A和程序员B负责，在旧的模式里，收件箱读取一封新邮件后，B会调用A的接口.setRead(sMailId)实现去掉该邮件未读标记，然后有一天，负责左侧导航的同事C说：产品增加一个需求，读取新邮件后，左侧导航的收件箱的未读数需要更新。这时，C发给B一个更新导航的接口，然后B就要修改代码，加上C提供的接口.updateNav()。</p>
+<ul>
+<li>使用Observer模式后：</li>
+</ul>
+<p>首先定义了一个afterRead的事件，收件箱模块监听了这个事件：Listener.listen(“afterRead”, DoSetReadFunction)，新邮件读取之后，会触发一个事件：Listener.fire(“afterRead”)，这时，监听了这个事件的收件箱模块会调用接口，然后在新的需求里，C同事只需要监听：Listener.listen(“afterRead”, DoUpdateNavFunction)，就实现了左侧导航的新邮件数更新了。</p>
+<ul>
+<li><p>这个过程的变化相当于：<br><strong>旧的方式：</strong>读取一封新邮件后 -&gt; 调用收件箱接口 -&gt; 调用导航接口<br><strong>新的方式：</strong>读取一封新邮件后 -&gt; 告诉所有模块：我刚读了一封新邮件 -&gt; 其他监听了这个事件的模块被通知了 -&gt; 调用相关接口</p>
+</li>
+<li><p>简单的自定义事件实现</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Listener = &#123;</span><br><span class="line"> listen   : <span class="comment">// 实现自定义事件监听</span></span><br><span class="line"> unlisten  : <span class="comment">// 解除自定义事件监听</span></span><br><span class="line"> unlistenAll  : <span class="comment">// 解除所有自定义事件监听,</span></span><br><span class="line"> fire   : <span class="comment">// 触发事件发生</span></span><br><span class="line"> _events  : <span class="comment">// 相关监听的事件以及事件监听的句柄</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// _events的结构大致如下：</span></span><br><span class="line">_events : [</span><br><span class="line"> &#123;</span><br><span class="line">  name : <span class="string">"event0"</span>, <span class="comment">// 自定事件0</span></span><br><span class="line">  handlers : [</span><br><span class="line">   <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;...&#125;,<span class="comment">// 监听的句柄</span></span><br><span class="line">   <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;...&#125; <span class="comment">// 监听的句柄</span></span><br><span class="line">  ]</span><br><span class="line"> &#125;,</span><br><span class="line"> &#123;</span><br><span class="line">  name : <span class="string">"event1"</span>, <span class="comment">// 自定事件1</span></span><br><span class="line">  handlers : [</span><br><span class="line">   <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;...&#125;,<span class="comment">// 监听的句柄</span></span><br><span class="line">   <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;...&#125; <span class="comment">// 监听的句柄</span></span><br><span class="line">  ]</span><br><span class="line"> &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>上面的简单的自定义事件实现方式，就可以很好的解决模块之间耦合的问题，当然也可以做得功能更加强大，比如事件触发可以加上参数支持、实现调用句柄获取当前的event对象等。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2012/10/31/comet/" itemprop="url">
                 Comet 技术总结以及相关方案优劣对比
               </a>
@@ -532,7 +617,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-count">14</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -546,7 +631,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">19</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
