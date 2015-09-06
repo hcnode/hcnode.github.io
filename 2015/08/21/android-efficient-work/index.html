@@ -35,36 +35,36 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="android开发的同学，相信都遇到过在写代码的过程中，需要花费很多时间去做一些重复的劳动，比如：
+<meta name="description" content="android开发的同学，相信都遇到过在写代码的过程中，需要花费很多时间去做一些重复的劳动，比如下面这些：
 
 activity和fragment创建后要写一大堆的findViewById来初始化各个view
-创建一个ListActivity的界面，我需要配套创建相关的一大堆文件包括：
+创建一个列表ListActivity的界面，我需要配套创建相关的一大堆文件包括：
 activity、fragment、adapter、listener等class
-activity layout、frag">
+activity layou">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android高效开发实践之－消灭重复的体力活">
 <meta property="og:url" content="https://www.github.com/hcnode/2015/08/21/android-efficient-work/index.html">
 <meta property="og:site_name" content="hcnode's blog">
-<meta property="og:description" content="android开发的同学，相信都遇到过在写代码的过程中，需要花费很多时间去做一些重复的劳动，比如：
+<meta property="og:description" content="android开发的同学，相信都遇到过在写代码的过程中，需要花费很多时间去做一些重复的劳动，比如下面这些：
 
 activity和fragment创建后要写一大堆的findViewById来初始化各个view
-创建一个ListActivity的界面，我需要配套创建相关的一大堆文件包括：
+创建一个列表ListActivity的界面，我需要配套创建相关的一大堆文件包括：
 activity、fragment、adapter、listener等class
-activity layout、frag">
+activity layou">
 <meta property="og:image" content="https://raw.githubusercontent.com/hcnode/hcnode-blog/master/images/androidannotation.jpg">
-<meta property="og:image" content="http://plugins.jetbrains.com/files/7369/screenshot_14384.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/hcnode/hcnode-blog/master/images/screenshot_14384.png">
 <meta property="og:image" content="https://github.com/hcnode/hcnode-blog/blob/master/images/butterknife.png?raw=true">
 <meta property="og:image" content="https://raw.githubusercontent.com/hcnode/hcnode-blog/master/images/template_folders.png">
 <meta property="og:image" content="https://lh6.googleusercontent.com/UWMstNihpq4VCeaTA4nkWMpnjZ_RlZ0SJa4rPh9Rc63nPT6r8nJ6Ju03BYfm7LTwtH7L5VMy=s1280-h800-e365-rw">
-<meta property="og:updated_time" content="2015-08-29T03:37:48.000Z">
+<meta property="og:updated_time" content="2015-08-31T07:16:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android高效开发实践之－消灭重复的体力活">
-<meta name="twitter:description" content="android开发的同学，相信都遇到过在写代码的过程中，需要花费很多时间去做一些重复的劳动，比如：
+<meta name="twitter:description" content="android开发的同学，相信都遇到过在写代码的过程中，需要花费很多时间去做一些重复的劳动，比如下面这些：
 
 activity和fragment创建后要写一大堆的findViewById来初始化各个view
-创建一个ListActivity的界面，我需要配套创建相关的一大堆文件包括：
+创建一个列表ListActivity的界面，我需要配套创建相关的一大堆文件包括：
 activity、fragment、adapter、listener等class
-activity layout、frag">
+activity layou">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -227,46 +227,55 @@ activity layout、frag">
       
 
       
-        <span itemprop="articleBody"><p>android开发的同学，相信都遇到过在写代码的过程中，需要花费很多时间去做一些重复的劳动，比如：</p>
+        <span itemprop="articleBody"><p>android开发的同学，相信都遇到过在写代码的过程中，需要花费很多时间去做一些重复的劳动，比如下面这些：</p>
 <ul>
 <li>activity和fragment创建后要写一大堆的findViewById来初始化各个view</li>
-<li>创建一个ListActivity的界面，我需要配套创建相关的一大堆文件包括：<ul>
+<li>创建一个列表ListActivity的界面，我需要配套创建相关的一大堆文件包括：<ul>
 <li>activity、fragment、adapter、listener等class</li>
 <li>activity layout、fragment layout、list item layout等layout</li>
-<li>Model层相关的比如我们是用retrofit就包括：manager、service、request、response四个类文件</li>
-<li>如果上面这些文件一个个创建，累死之余build时候发现各种缺漏</li>
+<li>Model层相关的比如我们是用retrofit就包括：manager、service、request、response四个类文件<br>如果上面这些文件一个个创建，累死之余build时候发现各种缺漏</li>
 </ul>
 </li>
-<li>调试时候每次build一两分钟，上个洗手间回来，发现gradle任务还在运行中</li>
+<li>调试时候每次都要build一两分钟，上个洗手间回来，发现gradle任务还在运行中</li>
 <li>调试webview时候，只能chrome来模拟，调试好了，真机上又有问题</li>
 <li>app的数据http请求调试各种繁琐，又加代理连到pc，又要开charles，手机又要连内网，手机的wifi代理经常要反复切换，坑爹的居然没有自动保存代理功能</li>
 </ul>
-<p>上面这些提到的“体力活”，可能会占据了我们开发不少的时间，一方面浪费时间、另一方面无法专心开发具体业务需求，我下面总结了一下消灭这些体力活的方法<br><a id="more"></a></p>
-<h3 id="依赖注入DI(Dependency_Injection)">依赖注入DI(Dependency Injection)</h3><p>估计大家对DI应该有所了解，因为在android开发里面，这是最浪费体力活的工作，前不久，我所负责的项目android版本需要新增一个新的模块，新的模块流程复杂、交互比较多，开工之前预计至少要3周时间开发，我决定尝试使用一个DI库 Butterknife来开发，配合android studio插件使用，自从用起来后，写代码的心情就一个字：很爽！最终整个模块提前一周时间基本功能都写出来。<br>一些常见的android DI库包括</p>
+<p>上面这些提到的没有技术含量得“体力活”，可能会占据了我们开发不少的时间，一方面浪费时间、另一方面无法专心开发具体业务需求，我下面总结了一下消灭这些体力活的方法<br><a id="more"></a></p>
+<h3 id="依赖注入DI(Dependency_Injection)">依赖注入DI(Dependency Injection)</h3><p>估计大家对DI应该有所了解，因为在android开发里面，这是最浪费体力活的工作，前不久，我所负责的项目android版本需要新增一个新的模块，新的模块流程复杂、交互比较多，开工之前预计至少要3周时间开发，我决定尝试使用一个DI库 Butterknife来开发，配合android studio插件使用，自从用起来后，写代码的心情就一个字：很爽！并且最终整个模块提前一周时间基本功能都写出来。</p>
+<p>一些常见的android DI库包括</p>
 <ul>
 <li>Android Annotation</li>
 <li>Dagger</li>
 <li>RoboGuice</li>
 <li>ButterKnife</li>
 </ul>
-<p>上面DI库用起来都是大同小异，而且性能都很好，因为它们基本都是编译时生成一些缓存来提供运行时使用，而不是运行时反射来调用。<br>Android Annotation看上去功能最强大，支持大量的注解，除了view，event，还包括各种你可以想到的注入，比如service、resource、多线程、甚至还包括http服务注入！<br>看下面官网的例子截图，使用Android Annotation后，代码简洁得异常残暴！！！<br><img src="https://raw.githubusercontent.com/hcnode/hcnode-blog/master/images/androidannotation.jpg" alt="androidannotation"><br>不过最终我们还是选择了ButterKnife，它比较轻量级，如果直接就上AA，担心步子迈得太大，大家不(rong)太(yi)习(che)惯(dan)，不过其实最主要原因还是因为Butterknife提供了IDE插件，其实我们的android项目之前也有一套自己写的简单的ViewInject的注解，但是没有插件支持，所以插件支持很重要，它能真正帮助我们解放体力活。<br>下面gif是官网提供的介绍动画<br><img src="http://plugins.jetbrains.com/files/7369/screenshot_14384.png" alt="butterknife"><br>另外插件还可以配置生成view的私有变量的前缀，比如统一前面加“m”前缀<br><img src="https://github.com/hcnode/hcnode-blog/blob/master/images/butterknife.png?raw=true" alt="butterknife_plugin"></p>
+<p>上面DI库用起来都是大同小异，而且性能都很好，因为它们基本都是编译时生成缓存来提供运行时使用，而不是运行时反射来调用。</p>
+<p>Android Annotation看上去功能最强大，支持大量的注解，除了view，event，还包括各种你可以想到的注入，比如service、resource、多线程、甚至还包括http服务注入！<br>看下面官网的例子截图，使用Android Annotation后，代码简洁得异常残暴！！！<br><img src="https://raw.githubusercontent.com/hcnode/hcnode-blog/master/images/androidannotation.jpg" alt="androidannotation"></p>
+<p>不过最终我们还是选择了ButterKnife，它比较轻量级，如果直接就上AA，担心步子迈得太大，大家不(rong)太(yi)习(che)惯(dan)，不过其实最主要原因还是因为Butterknife提供了IDE插件，其实我们的android项目之前也有一套自己写的简单的ViewInject的注解，但是没有插件支持，所以插件支持很重要，它能真正帮助我们解放体力活。<br>下面是ButterKnife的使用介绍动画</p>
+<p><img src="https://raw.githubusercontent.com/hcnode/hcnode-blog/master/images/screenshot_14384.png" alt="butterknife"></p>
+<p>另外插件还可以配置生成view的私有变量的前缀，比如统一前面加“m”前缀</p>
+<p><img src="https://github.com/hcnode/hcnode-blog/blob/master/images/butterknife.png?raw=true" alt="butterknife_plugin"></p>
 <h3 id="批量生成通用模块的模版">批量生成通用模块的模版</h3><p>我前面一开始所提到的创建一个列表时候，所需要创建一大堆文件，而且这些文件零零散散分布在各个文件夹，这也是一件很繁琐的体力活。<br>我使用了一个完全没有技术含量的方法来做这些“体力活”，我在项目里面创建了一个工具，然后通过自定义模块来生成需要的文件</p>
 <ul>
-<li><p><strong>首先，创建模版文件</strong><br>我新建立了一个module叫“templateutil”，里面包括需要创建的模版template目录，可以将通用的activity、fragment、layout放在里面<br><img src="https://raw.githubusercontent.com/hcnode/hcnode-blog/master/images/template_folders.png" alt="template_folder"></p>
+<li><p><strong>首先，创建模版文件</strong></p>
+<p>我新建立了一个module叫“templateutil”，里面包括需要创建的模版template目录，可以将通用的activity、fragment、layout放在里面</p>
+<p><img src="https://raw.githubusercontent.com/hcnode/hcnode-blog/master/images/template_folders.png" alt="template_folder"></p>
 </li>
-<li><p><strong>创建了两个给gradle执行任务的class</strong><br>分别是CreateListActivity用来创建相关一整套的class和layout、和CreateModel用来创建model层相关class</p>
+<li><p><strong>创建了两个给gradle执行任务的class</strong></p>
+<p>分别是CreateListActivity用来创建相关一整套的class和layout、和CreateModel用来创建model层相关class</p>
 </li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateListActivity</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"===== Create listactivity start ====="</span>);</span><br><span class="line">        String model = args[<span class="number">0</span>];</span><br><span class="line">        System.out.println(<span class="string">"model:"</span> + args[<span class="number">0</span>]);</span><br><span class="line">        <span class="comment">// 获取当前module path</span></span><br><span class="line">        String currProjectPath = System.getProperty(<span class="string">"user.dir"</span>);</span><br><span class="line">        <span class="comment">// 模版path</span></span><br><span class="line">        String tmpPath = currProjectPath + <span class="string">"/template/listactivity"</span>;</span><br><span class="line">        <span class="comment">// app src path</span></span><br><span class="line">        String appPath = currProjectPath + <span class="string">"/../app/src/main/java/com/netease/mail/oneduobaohydrid/"</span>;</span><br><span class="line">        <span class="comment">// resource path</span></span><br><span class="line">        String resPath = currProjectPath + <span class="string">"/../app/src/main/res/layout/"</span>;</span><br><span class="line">        <span class="comment">/** 各个文件路径定义开始 **/</span></span><br><span class="line">        String tmpActivityFile = tmpPath + <span class="string">"/Activity.java"</span>;</span><br><span class="line">        String activityFile = appPath + <span class="string">"activity/"</span> + Util.upperCaseModel(model) + <span class="string">"Activity.java"</span>;</span><br><span class="line">        String tmpAdapterFile = tmpPath + <span class="string">"/Adapter.java"</span>;</span><br><span class="line">        String adapterFile = appPath + <span class="string">"adapter/"</span> + Util.upperCaseModel(model) + <span class="string">"Adapter.java"</span>;</span><br><span class="line">        String tmpFragmentFile = tmpPath + <span class="string">"/Fragment.java"</span>;</span><br><span class="line">        String fragmentFile = appPath + <span class="string">"fragment/"</span> + Util.upperCaseModel(model) + <span class="string">"Fragment.java"</span>;</span><br><span class="line">        String tmpActivityXml = tmpPath + <span class="string">"/activity.xml"</span>;</span><br><span class="line">        String activityXml = resPath + <span class="string">"activity_"</span> + model + <span class="string">".xml"</span>;</span><br><span class="line">        String tmpFragmentXml = tmpPath + <span class="string">"/fragment.xml"</span>;</span><br><span class="line">        String fragmentXml = resPath + <span class="string">"fragment_"</span> + model + <span class="string">".xml"</span>;</span><br><span class="line">        String tmpItemXml = tmpPath + <span class="string">"/layout_item.xml"</span>;</span><br><span class="line">        String itemXml = resPath + <span class="string">"layout_item_"</span> + model + <span class="string">".xml"</span>;</span><br><span class="line">        <span class="comment">/** 各个文件路径定义结束 **/</span></span><br><span class="line">        System.out.println(<span class="string">"tmpPath:"</span> + tmpPath);</span><br><span class="line">        System.out.println(<span class="string">"appPath:"</span> + appPath);</span><br><span class="line">        <span class="comment">/** 下面开始读取、替换、保存到目标 **/</span></span><br><span class="line">        Util.buildFile(tmpActivityFile, activityFile, model);</span><br><span class="line">        Util.buildFile(tmpAdapterFile, adapterFile, model);</span><br><span class="line">        Util.buildFile(tmpFragmentFile, fragmentFile, model);</span><br><span class="line">        Util.buildFile(tmpActivityXml, activityXml, model);</span><br><span class="line">        Util.buildFile(tmpFragmentXml, fragmentXml, model);</span><br><span class="line">        Util.buildFile(tmpItemXml, itemXml, model);</span><br><span class="line">        System.out.println(<span class="string">"===== Create listactivity finish ====="</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateModel</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"===== Create model start ====="</span>);</span><br><span class="line">        String model = args[<span class="number">0</span>];</span><br><span class="line">        System.out.println(<span class="string">"model:"</span> + args[<span class="number">0</span>]);</span><br><span class="line">        String currProjectPath = System.getProperty(<span class="string">"user.dir"</span>);</span><br><span class="line">        String tmpPath = currProjectPath + <span class="string">"/template/model"</span>;</span><br><span class="line">        String modelPath = currProjectPath + <span class="string">"/../model/src/main/java/com/netease/mail/oneduobaohydrid/model/"</span> + model.toLowerCase();</span><br><span class="line">        System.out.println(<span class="string">"tmpPath:"</span> + tmpPath);</span><br><span class="line">        System.out.println(<span class="string">"modelPath:"</span> + modelPath);</span><br><span class="line">        File file =<span class="keyword">new</span> File(modelPath);</span><br><span class="line">        <span class="keyword">if</span>  (!file.exists()  &amp;&amp; !file.isDirectory())&#123;</span><br><span class="line">            file.mkdir();</span><br><span class="line">            Util.buildFiles(tmpPath, model, modelPath);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"!!!!!Model目录已存在"</span> + modelPath + <span class="string">""</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"===== Create model finish ====="</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li><strong>在gradle配置里面，增加两个task</strong><br>两个task分别创建ListActivity任务和创建Model任务</li>
+<li><strong>在gradle配置里面，增加两个task</strong></li>
 </ul>
+<p>两个task分别创建ListActivity任务和创建Model任务</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// gradle createModel -Pmodel=wishlist</span></span><br><span class="line">task createModel (<span class="string">type:</span> JavaExec, <span class="string">dependsOn:</span> classes) &#123;</span><br><span class="line">    <span class="keyword">if</span>(project.hasProperty(<span class="string">'model'</span>))&#123;</span><br><span class="line">        args(model)</span><br><span class="line">    &#125;</span><br><span class="line">    main = <span class="string">'com.templateutil.CreateModel'</span></span><br><span class="line">    classpath = sourceSets.main.runtimeClasspath</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// gradle createListActivity -Pmodel=wishlist</span></span><br><span class="line">task createListActivity (<span class="string">type:</span> JavaExec, <span class="string">dependsOn:</span> classes) &#123;</span><br><span class="line">    <span class="keyword">if</span>(project.hasProperty(<span class="string">'model'</span>))&#123;</span><br><span class="line">        args(model)</span><br><span class="line">    &#125;</span><br><span class="line">    main = <span class="string">'com.templateutil.CreateListActivity'</span></span><br><span class="line">    classpath = sourceSets.main.runtimeClasspath</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li><strong>然后就可以使用了</strong><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">harry$ gradle createListActivity -Pmodel=wishlist</span><br></pre></td></tr></table></figure>
-</li>
+<li><strong>然后就可以使用了</strong></li>
 </ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">harry$ gradle createListActivity -Pmodel=wishlist</span><br></pre></td></tr></table></figure>
 <h3 id="缩短gradle_build_task的时间">缩短gradle build task的时间</h3><p>现在一些大型的android项目，里面可能存在多个module，依赖很多库，每次需要run或者debug时候，需要一两分钟时间等待task run完，才能调试，下面有三个方法缩短这个build时间</p>
 <h4 id="修改gradle配置，">修改gradle配置，</h4><p>爆栈里的这个<a href="http://stackoverflow.com/questions/16775197/building-and-running-app-via-gradle-and-android-studio-is-slower-than-via-eclips" target="_blank" rel="external">修改gradle配置方法</a>经过实践证明确实可以减少一点build时间，在我的项目里面大概可以减少10-20s</p>
 <h4 id="buck"><a href="https://github.com/facebook/buck" target="_blank" rel="external">buck</a></h4><p>来自facebook的buck，据说可以将build时间缩短到十分之一，WOW！不过我没有用过，因为看介绍说，它放弃了gradle的build system，并且需要修改大量的代码，所以我们放弃用它</p>
@@ -274,7 +283,7 @@ activity layout、frag">
 <blockquote>
 <p>Android SDK sucks. It’s so slow to build and run which waste me a lot of time every day.</p>
 </blockquote>
-<p>LayoutCast最大的好处是，不需要修改太多的代码，速度方面在介绍中有数据对比，据称比buck还要快，我试过放入我们的项目，可能是因为我们的项目结果比较复杂，一直没有运行成功，不过我新建project测试是可以用的</p>
+<p>LayoutCast最大的好处是，不需要修改太多的代码，速度方面在介绍中有数据对比，据称比buck还要快，我试过放入我们的项目，可能是因为我们的项目结构比较复杂module比较多，一直没有运行成功，不过我新建project测试是可以用的</p>
 <h3 id="webview调试插件">webview调试插件</h3><p>有个很好用的调试真机webview的<a href="https://chrome.google.com/webstore/detail/adb/dpngiggdglpdnjdoaefidgiigpemgage" target="_blank" rel="external">chrome插件</a>，通过adb连接直接调试真机，而不需要chrome模拟移动设备<br><img src="https://lh6.googleusercontent.com/UWMstNihpq4VCeaTA4nkWMpnjZ_RlZ0SJa4rPh9Rc63nPT6r8nJ6Ju03BYfm7LTwtH7L5VMy=s1280-h800-e365-rw" alt="adb_plugin"></p>
 <h3 id="AndroidProxySetter"><a href="https://github.com/jpkrause/AndroidProxySetter" target="_blank" rel="external">AndroidProxySetter</a></h3><p>最后这个是一个小工具，使用adb命令可以快速进行wifi代理的设置和清除，亲测有效！</p>
 </span>

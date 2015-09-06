@@ -287,21 +287,20 @@
 
       
         
-          <p>android开发的同学，相信都遇到过在写代码的过程中，需要花费很多时间去做一些重复的劳动，比如：</p>
+          <p>android开发的同学，相信都遇到过在写代码的过程中，需要花费很多时间去做一些重复的劳动，比如下面这些：</p>
 <ul>
 <li>activity和fragment创建后要写一大堆的findViewById来初始化各个view</li>
-<li>创建一个ListActivity的界面，我需要配套创建相关的一大堆文件包括：<ul>
+<li>创建一个列表ListActivity的界面，我需要配套创建相关的一大堆文件包括：<ul>
 <li>activity、fragment、adapter、listener等class</li>
 <li>activity layout、fragment layout、list item layout等layout</li>
-<li>Model层相关的比如我们是用retrofit就包括：manager、service、request、response四个类文件</li>
-<li>如果上面这些文件一个个创建，累死之余build时候发现各种缺漏</li>
+<li>Model层相关的比如我们是用retrofit就包括：manager、service、request、response四个类文件<br>如果上面这些文件一个个创建，累死之余build时候发现各种缺漏</li>
 </ul>
 </li>
-<li>调试时候每次build一两分钟，上个洗手间回来，发现gradle任务还在运行中</li>
+<li>调试时候每次都要build一两分钟，上个洗手间回来，发现gradle任务还在运行中</li>
 <li>调试webview时候，只能chrome来模拟，调试好了，真机上又有问题</li>
 <li>app的数据http请求调试各种繁琐，又加代理连到pc，又要开charles，手机又要连内网，手机的wifi代理经常要反复切换，坑爹的居然没有自动保存代理功能</li>
 </ul>
-<p>上面这些提到的“体力活”，可能会占据了我们开发不少的时间，一方面浪费时间、另一方面无法专心开发具体业务需求，我下面总结了一下消灭这些体力活的方法<br>
+<p>上面这些提到的没有技术含量得“体力活”，可能会占据了我们开发不少的时间，一方面浪费时间、另一方面无法专心开发具体业务需求，我下面总结了一下消灭这些体力活的方法<br>
           <div class="post-more-link text-center">
             <a class="btn" href="/2015/08/21/android-efficient-work/#more" rel="contents">
               阅读全文 &raquo;
@@ -374,7 +373,7 @@
 
       
         
-          <p><img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshot1.png" alt="screenshot1"></p>
+          <p><img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshots/screenshot1.png" alt="screenshot1"></p>
 <h1 id="关于AlexGallery">关于AlexGallery</h1><p> <a href="https://github.com/hcnode/AlexGallery">AlexGallery</a>是一款图片浏览、预览、批量处理、编辑的开源图片桌面应用，它是基于node.js环境，使用nw封装，可以在mac、windows等系统使用。</p>
 <p> 因为自从我使用Mac后，发现没有一款工具或者软件可以快速浏览和预览图片，虽然系统自带图片预览工具也是可用，但是始终很不方便，我需要快速进入文件夹浏览图片的工具，也用过Google的Picasa，功能很多，但是也还是没有我需要的简单快速浏览方式，其他的比如acdsee又要收费</p>
 <p> 所以我决定自己做一个图片预览的工具，而且因为在这之前，我有留意到2个开源库，一个是轻量的图片处理node库<a href="https://github.com/EyalAr/lwip">lwip</a>，另一个是<a href="https://github.com/nwjs/nw.js">nw</a>，在做<a href="https://github.com/hcnode/AlexGallery">AlexGallery</a>之前，我没用过这两个库做过任何东西，但是当我第一次看到<a href="https://github.com/EyalAr/lwip">lwip</a>的介绍和例子后，我就有个自己写个图片处理工具的想法，两周之前工作忙完差不多就开始动工，因为用了不少开源前端web组件，所以做了一周左右功能基本都出来了<br>
