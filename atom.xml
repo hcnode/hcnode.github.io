@@ -1,0 +1,779 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[hcnode's blog]]></title>
+  <subtitle><![CDATA[quicker to develop, cheaper to maintain, and easier to test]]></subtitle>
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://hcnode.github.io/"/>
+  <updated>2015-08-29T03:39:42.000Z</updated>
+  <id>http://hcnode.github.io/</id>
+  
+  <author>
+    <name><![CDATA[Harry Chen]]></name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[node-gitignore and commander]]></title>
+    <link href="http://hcnode.github.io/2015/08/29/node-gitignore/"/>
+    <id>http://hcnode.github.io/2015/08/29/node-gitignore/</id>
+    <published>2015-08-29T02:48:39.000Z</published>
+    <updated>2015-08-29T03:39:42.000Z</updated>
+    <content type="html"><![CDATA[<p>前不久写了一个<a href="https://github.com/hcnode/node-gitignore" target="_blank" rel="external">小工具</a>实现自定义我自己的.gitignore文件，因为在官方的<a href="https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore" target="_blank" rel="external">.gitignore</a>，我不明白为什么没有<code>bower_components</code>，因为很多node.js项目可能是会用到浏览器端的依赖。</p>
+<p>所以我在自己的工具里面加上了<code>bower_components</code>和我的IDE webstorm自动生成的<code>.idea</code>。</p>
+<p>这样我每次新建node项目，我直接在项目文件夹里面命令行运行<code>node-gitignore</code>，就会自动生成我需要的.gitignore文件。</p>
+<p>这个工具非常简单，用了<a href="https://github.com/tj" target="_blank" rel="external">tj</a>大神的<a href="https://github.com/tj/commander.js" target="_blank" rel="external">commander</a>库，可以很方便写node的cli库，commander非常强大、简单、易用，我的这个工具就这么几行代码而已：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#!<span class="regexp">/usr/</span>bin/env node</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> program = <span class="built_in">require</span>(<span class="string">'commander'</span>);</span><br><span class="line"><span class="keyword">var</span> request = <span class="built_in">require</span>(<span class="string">'request'</span>);</span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .version(<span class="string">'0.0.1'</span>)</span><br><span class="line">  .parse(process.argv);</span><br><span class="line"><span class="keyword">var</span> append = <span class="string">"# .idea\n.idea\n# Dependency directory\nbower_components"</span>;</span><br><span class="line"><span class="keyword">var</span> ws = fs.createWriteStream(<span class="string">'.gitignore'</span>);</span><br><span class="line">ws.on(<span class="string">"finish"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	fs.appendFile(<span class="string">".gitignore"</span>, append, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(err)&#123;</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="string">"error."</span>);</span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="string">"done."</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;);</span><br><span class="line">request</span><br><span class="line">  .get(<span class="string">'https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore'</span>)</span><br><span class="line">  .on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err)</span><br><span class="line">  &#125;)</span><br><span class="line">  .pipe(ws);</span><br></pre></td></tr></table></figure>
+<p><strong>使用方法</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm install node-gitignore -g</span><br><span class="line">$ node-gitignore</span><br></pre></td></tr></table></figure>
+<p>或者你也可以定制自己的.gitignore文件，你可以fork然后修改代码后，发布到npm上，然后安装后就可以用。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>前不久写了一个<a href="https://github.com/hcnode/node-gitignore" target="_blank" rel="external">小工具</a>实现自定义我自己的.gitignore文件，因为在官方的<a href="http]]>
+    </summary>
+    
+      <category term="commander" scheme="http://hcnode.github.io/tags/commander/"/>
+    
+      <category term="node.js" scheme="http://hcnode.github.io/tags/node-js/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Android高效开发实践之－消灭重复的体力活]]></title>
+    <link href="http://hcnode.github.io/2015/08/21/android-efficient-work/"/>
+    <id>http://hcnode.github.io/2015/08/21/android-efficient-work/</id>
+    <published>2015-08-21T06:58:55.000Z</published>
+    <updated>2015-08-31T07:16:22.000Z</updated>
+    <content type="html"><![CDATA[<p>android开发的同学，相信都遇到过在写代码的过程中，需要花费很多时间去做一些重复的劳动，比如下面这些：</p>
+<ul>
+<li>activity和fragment创建后要写一大堆的findViewById来初始化各个view</li>
+<li>创建一个列表ListActivity的界面，我需要配套创建相关的一大堆文件包括：<ul>
+<li>activity、fragment、adapter、listener等class</li>
+<li>activity layout、fragment layout、list item layout等layout</li>
+<li>Model层相关的比如我们是用retrofit就包括：manager、service、request、response四个类文件<br>如果上面这些文件一个个创建，累死之余build时候发现各种缺漏</li>
+</ul>
+</li>
+<li>调试时候每次都要build一两分钟，上个洗手间回来，发现gradle任务还在运行中</li>
+<li>调试webview时候，只能chrome来模拟，调试好了，真机上又有问题</li>
+<li>app的数据http请求调试各种繁琐，又加代理连到pc，又要开charles，手机又要连内网，手机的wifi代理经常要反复切换，坑爹的居然没有自动保存代理功能</li>
+</ul>
+<p>上面这些提到的没有技术含量得“体力活”，可能会占据了我们开发不少的时间，一方面浪费时间、另一方面无法专心开发具体业务需求，我下面总结了一下消灭这些体力活的方法<br><a id="more"></a></p>
+<h3 id="依赖注入DI(Dependency_Injection)">依赖注入DI(Dependency Injection)</h3><p>估计大家对DI应该有所了解，因为在android开发里面，这是最浪费体力活的工作，前不久，我所负责的项目android版本需要新增一个新的模块，新的模块流程复杂、交互比较多，开工之前预计至少要3周时间开发，我决定尝试使用一个DI库 Butterknife来开发，配合android studio插件使用，自从用起来后，写代码的心情就一个字：很爽！并且最终整个模块提前一周时间基本功能都写出来。</p>
+<p>一些常见的android DI库包括</p>
+<ul>
+<li>Android Annotation</li>
+<li>Dagger</li>
+<li>RoboGuice</li>
+<li>ButterKnife</li>
+</ul>
+<p>上面DI库用起来都是大同小异，而且性能都很好，因为它们基本都是编译时生成缓存来提供运行时使用，而不是运行时反射来调用。</p>
+<p>Android Annotation看上去功能最强大，支持大量的注解，除了view，event，还包括各种你可以想到的注入，比如service、resource、多线程、甚至还包括http服务注入！<br>看下面官网的例子截图，使用Android Annotation后，代码简洁得异常残暴！！！<br><img src="https://raw.githubusercontent.com/hcnode/hcnode-blog/master/images/androidannotation.jpg" alt="androidannotation"></p>
+<p>不过最终我们还是选择了ButterKnife，它比较轻量级，如果直接就上AA，担心步子迈得太大，大家不(rong)太(yi)习(che)惯(dan)，不过其实最主要原因还是因为Butterknife提供了IDE插件，其实我们的android项目之前也有一套自己写的简单的ViewInject的注解，但是没有插件支持，所以插件支持很重要，它能真正帮助我们解放体力活。<br>下面是ButterKnife的使用介绍动画</p>
+<p><img src="https://raw.githubusercontent.com/hcnode/hcnode-blog/master/images/screenshot_14384.png" alt="butterknife"></p>
+<p>另外插件还可以配置生成view的私有变量的前缀，比如统一前面加“m”前缀</p>
+<p><img src="https://github.com/hcnode/hcnode-blog/blob/master/images/butterknife.png?raw=true" alt="butterknife_plugin"></p>
+<h3 id="批量生成通用模块的模版">批量生成通用模块的模版</h3><p>我前面一开始所提到的创建一个列表时候，所需要创建一大堆文件，而且这些文件零零散散分布在各个文件夹，这也是一件很繁琐的体力活。<br>我使用了一个完全没有技术含量的方法来做这些“体力活”，我在项目里面创建了一个工具，然后通过自定义模块来生成需要的文件</p>
+<ul>
+<li><p><strong>首先，创建模版文件</strong></p>
+<p>我新建立了一个module叫“templateutil”，里面包括需要创建的模版template目录，可以将通用的activity、fragment、layout放在里面</p>
+<p><img src="https://raw.githubusercontent.com/hcnode/hcnode-blog/master/images/template_folders.png" alt="template_folder"></p>
+</li>
+<li><p><strong>创建了两个给gradle执行任务的class</strong></p>
+<p>分别是CreateListActivity用来创建相关一整套的class和layout、和CreateModel用来创建model层相关class</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateListActivity</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"===== Create listactivity start ====="</span>);</span><br><span class="line">        String model = args[<span class="number">0</span>];</span><br><span class="line">        System.out.println(<span class="string">"model:"</span> + args[<span class="number">0</span>]);</span><br><span class="line">        <span class="comment">// 获取当前module path</span></span><br><span class="line">        String currProjectPath = System.getProperty(<span class="string">"user.dir"</span>);</span><br><span class="line">        <span class="comment">// 模版path</span></span><br><span class="line">        String tmpPath = currProjectPath + <span class="string">"/template/listactivity"</span>;</span><br><span class="line">        <span class="comment">// app src path</span></span><br><span class="line">        String appPath = currProjectPath + <span class="string">"/../app/src/main/java/com/netease/mail/oneduobaohydrid/"</span>;</span><br><span class="line">        <span class="comment">// resource path</span></span><br><span class="line">        String resPath = currProjectPath + <span class="string">"/../app/src/main/res/layout/"</span>;</span><br><span class="line">        <span class="comment">/** 各个文件路径定义开始 **/</span></span><br><span class="line">        String tmpActivityFile = tmpPath + <span class="string">"/Activity.java"</span>;</span><br><span class="line">        String activityFile = appPath + <span class="string">"activity/"</span> + Util.upperCaseModel(model) + <span class="string">"Activity.java"</span>;</span><br><span class="line">        String tmpAdapterFile = tmpPath + <span class="string">"/Adapter.java"</span>;</span><br><span class="line">        String adapterFile = appPath + <span class="string">"adapter/"</span> + Util.upperCaseModel(model) + <span class="string">"Adapter.java"</span>;</span><br><span class="line">        String tmpFragmentFile = tmpPath + <span class="string">"/Fragment.java"</span>;</span><br><span class="line">        String fragmentFile = appPath + <span class="string">"fragment/"</span> + Util.upperCaseModel(model) + <span class="string">"Fragment.java"</span>;</span><br><span class="line">        String tmpActivityXml = tmpPath + <span class="string">"/activity.xml"</span>;</span><br><span class="line">        String activityXml = resPath + <span class="string">"activity_"</span> + model + <span class="string">".xml"</span>;</span><br><span class="line">        String tmpFragmentXml = tmpPath + <span class="string">"/fragment.xml"</span>;</span><br><span class="line">        String fragmentXml = resPath + <span class="string">"fragment_"</span> + model + <span class="string">".xml"</span>;</span><br><span class="line">        String tmpItemXml = tmpPath + <span class="string">"/layout_item.xml"</span>;</span><br><span class="line">        String itemXml = resPath + <span class="string">"layout_item_"</span> + model + <span class="string">".xml"</span>;</span><br><span class="line">        <span class="comment">/** 各个文件路径定义结束 **/</span></span><br><span class="line">        System.out.println(<span class="string">"tmpPath:"</span> + tmpPath);</span><br><span class="line">        System.out.println(<span class="string">"appPath:"</span> + appPath);</span><br><span class="line">        <span class="comment">/** 下面开始读取、替换、保存到目标 **/</span></span><br><span class="line">        Util.buildFile(tmpActivityFile, activityFile, model);</span><br><span class="line">        Util.buildFile(tmpAdapterFile, adapterFile, model);</span><br><span class="line">        Util.buildFile(tmpFragmentFile, fragmentFile, model);</span><br><span class="line">        Util.buildFile(tmpActivityXml, activityXml, model);</span><br><span class="line">        Util.buildFile(tmpFragmentXml, fragmentXml, model);</span><br><span class="line">        Util.buildFile(tmpItemXml, itemXml, model);</span><br><span class="line">        System.out.println(<span class="string">"===== Create listactivity finish ====="</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateModel</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"===== Create model start ====="</span>);</span><br><span class="line">        String model = args[<span class="number">0</span>];</span><br><span class="line">        System.out.println(<span class="string">"model:"</span> + args[<span class="number">0</span>]);</span><br><span class="line">        String currProjectPath = System.getProperty(<span class="string">"user.dir"</span>);</span><br><span class="line">        String tmpPath = currProjectPath + <span class="string">"/template/model"</span>;</span><br><span class="line">        String modelPath = currProjectPath + <span class="string">"/../model/src/main/java/com/netease/mail/oneduobaohydrid/model/"</span> + model.toLowerCase();</span><br><span class="line">        System.out.println(<span class="string">"tmpPath:"</span> + tmpPath);</span><br><span class="line">        System.out.println(<span class="string">"modelPath:"</span> + modelPath);</span><br><span class="line">        File file =<span class="keyword">new</span> File(modelPath);</span><br><span class="line">        <span class="keyword">if</span>  (!file.exists()  &amp;&amp; !file.isDirectory())&#123;</span><br><span class="line">            file.mkdir();</span><br><span class="line">            Util.buildFiles(tmpPath, model, modelPath);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"!!!!!Model目录已存在"</span> + modelPath + <span class="string">""</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"===== Create model finish ====="</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>在gradle配置里面，增加两个task</strong></li>
+</ul>
+<p>两个task分别创建ListActivity任务和创建Model任务</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// gradle createModel -Pmodel=wishlist</span></span><br><span class="line">task createModel (<span class="string">type:</span> JavaExec, <span class="string">dependsOn:</span> classes) &#123;</span><br><span class="line">    <span class="keyword">if</span>(project.hasProperty(<span class="string">'model'</span>))&#123;</span><br><span class="line">        args(model)</span><br><span class="line">    &#125;</span><br><span class="line">    main = <span class="string">'com.templateutil.CreateModel'</span></span><br><span class="line">    classpath = sourceSets.main.runtimeClasspath</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// gradle createListActivity -Pmodel=wishlist</span></span><br><span class="line">task createListActivity (<span class="string">type:</span> JavaExec, <span class="string">dependsOn:</span> classes) &#123;</span><br><span class="line">    <span class="keyword">if</span>(project.hasProperty(<span class="string">'model'</span>))&#123;</span><br><span class="line">        args(model)</span><br><span class="line">    &#125;</span><br><span class="line">    main = <span class="string">'com.templateutil.CreateListActivity'</span></span><br><span class="line">    classpath = sourceSets.main.runtimeClasspath</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>然后就可以使用了</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">harry$ gradle createListActivity -Pmodel=wishlist</span><br></pre></td></tr></table></figure>
+<h3 id="缩短gradle_build_task的时间">缩短gradle build task的时间</h3><p>现在一些大型的android项目，里面可能存在多个module，依赖很多库，每次需要run或者debug时候，需要一两分钟时间等待task run完，才能调试，下面有三个方法缩短这个build时间</p>
+<h4 id="修改gradle配置，">修改gradle配置，</h4><p>爆栈里的这个<a href="http://stackoverflow.com/questions/16775197/building-and-running-app-via-gradle-and-android-studio-is-slower-than-via-eclips" target="_blank" rel="external">修改gradle配置方法</a>经过实践证明确实可以减少一点build时间，在我的项目里面大概可以减少10-20s</p>
+<h4 id="buck"><a href="https://github.com/facebook/buck" target="_blank" rel="external">buck</a></h4><p>来自facebook的buck，据说可以将build时间缩短到十分之一，WOW！不过我没有用过，因为看介绍说，它放弃了gradle的build system，并且需要修改大量的代码，所以我们放弃用它</p>
+<h4 id="LayoutCast"><a href="https://github.com/mmin18/LayoutCast" target="_blank" rel="external">LayoutCast</a></h4><p>当看到LayoutCast README的第一行说明，我忍不住想跟作者握个抓</p>
+<blockquote>
+<p>Android SDK sucks. It’s so slow to build and run which waste me a lot of time every day.</p>
+</blockquote>
+<p>LayoutCast最大的好处是，不需要修改太多的代码，速度方面在介绍中有数据对比，据称比buck还要快，我试过放入我们的项目，可能是因为我们的项目结构比较复杂module比较多，一直没有运行成功，不过我新建project测试是可以用的</p>
+<h3 id="webview调试插件">webview调试插件</h3><p>有个很好用的调试真机webview的<a href="https://chrome.google.com/webstore/detail/adb/dpngiggdglpdnjdoaefidgiigpemgage" target="_blank" rel="external">chrome插件</a>，通过adb连接直接调试真机，而不需要chrome模拟移动设备<br><img src="https://lh6.googleusercontent.com/UWMstNihpq4VCeaTA4nkWMpnjZ_RlZ0SJa4rPh9Rc63nPT6r8nJ6Ju03BYfm7LTwtH7L5VMy=s1280-h800-e365-rw" alt="adb_plugin"></p>
+<h3 id="AndroidProxySetter"><a href="https://github.com/jpkrause/AndroidProxySetter" target="_blank" rel="external">AndroidProxySetter</a></h3><p>最后这个是一个小工具，使用adb命令可以快速进行wifi代理的设置和清除，亲测有效！</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>android开发的同学，相信都遇到过在写代码的过程中，需要花费很多时间去做一些重复的劳动，比如下面这些：</p>
+<ul>
+<li>activity和fragment创建后要写一大堆的findViewById来初始化各个view</li>
+<li>创建一个列表ListActivity的界面，我需要配套创建相关的一大堆文件包括：<ul>
+<li>activity、fragment、adapter、listener等class</li>
+<li>activity layout、fragment layout、list item layout等layout</li>
+<li>Model层相关的比如我们是用retrofit就包括：manager、service、request、response四个类文件<br>如果上面这些文件一个个创建，累死之余build时候发现各种缺漏</li>
+</ul>
+</li>
+<li>调试时候每次都要build一两分钟，上个洗手间回来，发现gradle任务还在运行中</li>
+<li>调试webview时候，只能chrome来模拟，调试好了，真机上又有问题</li>
+<li>app的数据http请求调试各种繁琐，又加代理连到pc，又要开charles，手机又要连内网，手机的wifi代理经常要反复切换，坑爹的居然没有自动保存代理功能</li>
+</ul>
+<p>上面这些提到的没有技术含量得“体力活”，可能会占据了我们开发不少的时间，一方面浪费时间、另一方面无法专心开发具体业务需求，我下面总结了一下消灭这些体力活的方法<br>]]>
+    
+    </summary>
+    
+      <category term="android" scheme="http://hcnode.github.io/tags/android/"/>
+    
+      <category term="java" scheme="http://hcnode.github.io/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[AlexGallery：一款基于node.js和nw的图片浏览、预览、批量处理、编辑的开源桌面应用]]></title>
+    <link href="http://hcnode.github.io/2015/08/21/alexgallery/"/>
+    <id>http://hcnode.github.io/2015/08/21/alexgallery/</id>
+    <published>2015-08-21T02:37:40.000Z</published>
+    <updated>2015-09-06T09:28:54.000Z</updated>
+    <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshots/screenshot1.png" alt="screenshot1"></p>
+<h1 id="关于AlexGallery">关于AlexGallery</h1><p> <a href="https://github.com/hcnode/AlexGallery" target="_blank" rel="external">AlexGallery</a>是一款图片浏览、预览、批量处理、编辑的开源图片桌面应用，它是基于node.js环境，使用nw封装，可以在mac、windows等系统使用。</p>
+<p> 因为自从我使用Mac后，发现没有一款工具或者软件可以快速浏览和预览图片，虽然系统自带图片预览工具也是可用，但是始终很不方便，我需要快速进入文件夹浏览图片的工具，也用过Google的Picasa，功能很多，但是也还是没有我需要的简单快速浏览方式，其他的比如acdsee又要收费</p>
+<p> 所以我决定自己做一个图片预览的工具，而且因为在这之前，我有留意到2个开源库，一个是轻量的图片处理node库<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>，另一个是<a href="https://github.com/nwjs/nw.js" target="_blank" rel="external">nw</a>，在做<a href="https://github.com/hcnode/AlexGallery" target="_blank" rel="external">AlexGallery</a>之前，我没用过这两个库做过任何东西，但是当我第一次看到<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>的介绍和例子后，我就有个自己写个图片处理工具的想法，两周之前工作忙完差不多就开始动工，因为用了不少开源前端web组件，所以做了一周左右功能基本都出来了<br><a id="more"></a></p>
+<h1 id="lwip的特点">lwip的特点</h1><p>因为有<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>我才有做这个app的想法，所以这里介绍一下它的特点，也非常感谢<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>和它的作者<a href="https://github.com/EyalAr" target="_blank" rel="external">Eyal Arubas</a></p>
+<ul>
+<li>轻量级、简单易用的图片处理库</li>
+<li>没有依赖任何第三方库，这意味着build和distribution会简单很多</li>
+<li>更重要的是，<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>不是简单的对第三方库比如imagemagick进行封装，而是自己实现所有的功能</li>
+<li>api使用简单，看一次readme上的示例就只有怎么用了</li>
+</ul>
+<h1 id="AlexGallery的特点">AlexGallery的特点</h1><ul>
+<li>可以快速简单浏览本地文件夹，以树的结构显示在左侧</li>
+<li>选择一个含有图片的文件夹后，会自动生成缩略图并显示出来，并提供两个尺寸的缩略图显示方式</li>
+<li>可以对当前选择的文件进行图片批量处理，并可以选择缩放，和增加亮度，并且缩放提供三种方式</li>
+<li>可以对图片进行幻灯片方式预览</li>
+<li>图片处理，可以对图片进行缩放、选择、翻转、效果处理（模糊、锐化、增加亮度等）</li>
+</ul>
+<h1 id="使用方法">使用方法</h1><ul>
+<li>假设你已经有node.js环境并安装了<a href="https://github.com/nwjs/nw.js" target="_blank" rel="external">nw</a>和<a href="https://github.com/bower/bower" target="_blank" rel="external">bower</a>，如果没有的话，先安装<code>npm install nw bower -g</code></li>
+<li>git 下载 <code>git clone https://github.com/hcnode/AlexGallery</code> 然后 <code>cd AlexGallery</code></li>
+<li>安装node依赖库 <code>npm install</code></li>
+<li>安装浏览器依赖框架和组件 <code>bower install</code></li>
+<li><strong>当安装node依赖库时，node会自动使用node-gyp来build <a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>内部c写的库，如果只是在node下使用没有<a href="https://github.com/nwjs/nw.js" target="_blank" rel="external">nw</a>封装，是可以正常使用<a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a>，但是如果在<a href="https://github.com/nwjs/nw.js" target="_blank" rel="external">nw</a>下，则需要手动调用nw-gyp手动来build</strong><ul>
+<li>先安装 nw-gyp <code>npm install nw-gyp -g</code></li>
+<li>进入lwip目录 <code>cd node_module/lwip</code></li>
+<li>初始化 build 所需要文件 <code>nw-gyp configure</code></li>
+<li>build <code>nw-gyp build</code></li>
+</ul>
+</li>
+<li>回到AlexGallery根目录后运行 <code>nw</code> 即可运行AlexGallery</li>
+</ul>
+<h1 id="注意">注意</h1><ul>
+<li>这个应用暂时只在我的Mac机器上运行过，并且没有任何问题，所以我不清楚在windows下是否有问题，不过理论上<a href="https://github.com/nwjs/nw.js" target="_blank" rel="external">nw</a>和node都是跨系统支持的</li>
+<li>AlexGallery会在使用时候创建$HOME/AlexGallery目录来保存缩略图和编辑时候临时保存的文件，除此之外不会调用你的机器任何东西</li>
+<li>首次进入文件夹预览图片时候，AlexGallery会自动生成最大200px尺寸的缩略图，所以第一次浏览的时候需要点时间来生成</li>
+</ul>
+<h1 id="截图">截图</h1><p> <img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshots/screenshot1.png" alt="screenshot1"><br> <img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshots/screenshot2.png" alt="screenshot2"><br> <img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshots/screenshot3.png" alt="screenshot3"><br> <img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshots/screenshot4.png" alt="screenshot4"><br> <img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshots/screenshot5.png" alt="screenshot5"></p>
+<h1 id="Libraries_dependencies">Libraries dependencies</h1><ul>
+<li><a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a> Light Weight Image Processor for NodeJS</li>
+<li><a href="https://github.com/nickperkinslondon/angular-bootstrap-nav-tree" target="_blank" rel="external">angular-bootstrap-nav-tree</a> An AngularJS directive that creates a Tree based on a Bootstrap “nav” list.</li>
+<li><a href="https://github.com/jkuri/ngGallery" target="_blank" rel="external">ngGallery</a> AngularJS Image Gallery Slideshow</li>
+<li><a href="https://github.com/fengyuanchen/cropper" target="_blank" rel="external">cropper</a> A simple jQuery image cropping plugin.</li>
+<li><a href="https://github.com/seiyria/bootstrap-slider" target="_blank" rel="external">seiyria-bootstrap-slider</a> A complete rewrite of the original bootstrap-slider by Stefan Petre.</li>
+<li><a href="https://github.com/FortAwesome/Font-Awesome" target="_blank" rel="external">font-awesome</a> The iconic font and CSS toolkit</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><img src="https://raw.githubusercontent.com/hcnode/AlexGallery/master/screenshots/screenshot1.png" alt="screenshot1"></p>
+<h1 id="关于AlexGallery">关于AlexGallery</h1><p> <a href="https://github.com/hcnode/AlexGallery">AlexGallery</a>是一款图片浏览、预览、批量处理、编辑的开源图片桌面应用，它是基于node.js环境，使用nw封装，可以在mac、windows等系统使用。</p>
+<p> 因为自从我使用Mac后，发现没有一款工具或者软件可以快速浏览和预览图片，虽然系统自带图片预览工具也是可用，但是始终很不方便，我需要快速进入文件夹浏览图片的工具，也用过Google的Picasa，功能很多，但是也还是没有我需要的简单快速浏览方式，其他的比如acdsee又要收费</p>
+<p> 所以我决定自己做一个图片预览的工具，而且因为在这之前，我有留意到2个开源库，一个是轻量的图片处理node库<a href="https://github.com/EyalAr/lwip">lwip</a>，另一个是<a href="https://github.com/nwjs/nw.js">nw</a>，在做<a href="https://github.com/hcnode/AlexGallery">AlexGallery</a>之前，我没用过这两个库做过任何东西，但是当我第一次看到<a href="https://github.com/EyalAr/lwip">lwip</a>的介绍和例子后，我就有个自己写个图片处理工具的想法，两周之前工作忙完差不多就开始动工，因为用了不少开源前端web组件，所以做了一周左右功能基本都出来了<br>]]>
+    
+    </summary>
+    
+      <category term="lwip" scheme="http://hcnode.github.io/tags/lwip/"/>
+    
+      <category term="node.js" scheme="http://hcnode.github.io/tags/node-js/"/>
+    
+      <category term="nw" scheme="http://hcnode.github.io/tags/nw/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[MEAN框架介绍：ngNode]]></title>
+    <link href="http://hcnode.github.io/2015/08/17/ngnode/"/>
+    <id>http://hcnode.github.io/2015/08/17/ngnode/</id>
+    <published>2015-08-17T08:00:00.000Z</published>
+    <updated>2015-08-29T03:39:36.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="ngNode">ngNode</h2><p><a href="https://github.com/hcnode/ngNode" target="_blank" rel="external">ngNode</a>是一个可以简单快速开发MEAN web应用的framework</p>
+<h2 id="特点">特点</h2><ul>
+<li>实时的MEAN应用，通过配置生成web api，angularjs构建ui界面.</li>
+<li>通过简单的配置，简单快速创建web应用，除此之外不需要做其他事情</li>
+<li>自动生成相关功能，包括：mongodb ODM、CRUD api、数据显示datatable、排序、分页、搜索、编辑数据等</li>
+<li>内置User模块和<a href="https://github.com/jaredhanson/passport" target="_blank" rel="external">passport.js</a>验证模块<a id="more"></a>
+<h2 id="MEAN相关:">MEAN相关:</h2>This library runs under MEAN, you can find some infomation about MEAN below.</li>
+<li>MongoDB - Go through <a href="http://mongodb.org/" target="_blank" rel="external">MongoDB Official Website</a> and proceed to their <a href="http://docs.mongodb.org/manual/" target="_blank" rel="external">Official Manual</a>, which should help you understand NoSQL and MongoDB better.</li>
+<li>Express - The best way to understand express is through its <a href="http://expressjs.com/" target="_blank" rel="external">Official Website</a>, which has a <a href="http://expressjs.com/starter/installing.html" target="_blank" rel="external">Getting Started</a> guide, as well as an <a href="http://expressjs.com/guide/error-handling.html" target="_blank" rel="external">ExpressJS Guide</a> guide for general express topics. You can also go through this <a href="http://stackoverflow.com/questions/8144214/learning-express-for-node-js" target="_blank" rel="external">StackOverflow Thread</a> for more resources.</li>
+<li>AngularJS - Angular’s <a href="http://angularjs.org/" target="_blank" rel="external">Official Website</a> is a great starting point. You can also use <a href="http://www.thinkster.io/" target="_blank" rel="external">Thinkster Popular Guide</a>, and the <a href="https://egghead.io/" target="_blank" rel="external">Egghead Videos</a>.</li>
+<li>Node.js - Start by going through <a href="http://nodejs.org/" target="_blank" rel="external">Node.js Official Website</a> and this <a href="http://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js" target="_blank" rel="external">StackOverflow Thread</a>, which should get you going with the Node.js platform in no time.</li>
+</ul>
+<h2 id="如何使用">如何使用</h2><p>dependency:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"ngnode"</span>: <span class="string">"2.0.5"</span></span><br></pre></td></tr></table></figure></p>
+<p>install dependency<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure></p>
+<p>创建应用相关配置<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> config = &#123;</span><br><span class="line">	appName : <span class="string">"testapp"</span>,</span><br><span class="line">	mongodConnection : <span class="string">"mongodb://localhost:27017/ngnode"</span>,</span><br><span class="line">	on : &#123;</span><br><span class="line">		<span class="string">"someaction"</span> : <span class="function"><span class="keyword">function</span> (<span class="params">req, res, model, cb</span>) </span>&#123;</span><br><span class="line">			<span class="comment">// hook all models here you want when "someaction" execute.</span></span><br><span class="line">			<span class="comment">// and can define in the model config as well</span></span><br><span class="line">			<span class="comment">// see the model config below for detail</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">require</span>(<span class="string">"ngNode"</span>)(config);</span><br></pre></td></tr></table></figure></p>
+<p>保存到app.js然后运行node<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node app.js</span><br></pre></td></tr></table></figure></p>
+<p>猜一下发生了什么？你刚才已经创建了一个MEAN应用！很简单，是吧？</p>
+<h2 id="为什么ngNode可以这么简单">为什么ngNode可以这么简单</h2><p>通过前面的配置，我们很轻易的就可以创建一个MEAN应用，并且里面已经包含一个user模块</p>
+<p>并且你还可以创建自定义模块，那么当创建自定义模块后，ngNode会自动做些什么事情？</p>
+<p><strong>服务器端</strong></p>
+<ol>
+<li>通过自定义字段定义，生成mongodb的collection的配置</li>
+<li>自动创建crud的服务</li>
+<li>自动创建crud路由</li>
+<li>app运行是调用initData进行数据初始化</li>
+<li>注入自定义hooks</li>
+</ol>
+<p><strong>浏览器端</strong></p>
+<ol>
+<li>自定义字段的显示title、是否支持排序、是否可以编辑等</li>
+<li>自动生成数据表格显示，并且有分页功能</li>
+<li>自动生成“新建”、“编辑”、“删除”操作链接，并且自动生成ajax调用</li>
+<li>通过field的render配置，可以自定义显示内容</li>
+<li>多种编辑模式，包括普通文本、textarea、日期选择、单选框、列表选择</li>
+</ol>
+<h2 id="如何创建自定义model">如何创建自定义model</h2><p>ngNode 会尝试在根目录的“/models”下查找自定义的model</p>
+<p>自定义的model配置说明如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> &#123;</span><br><span class="line">        name: <span class="string">"blog"</span>, <span class="comment">// 模块名称，作为mongodb的collection名称</span></span><br><span class="line">        schema: &#123; <span class="comment">// collection的字段配置</span></span><br><span class="line">            title: &#123; <span class="comment">// 字段名</span></span><br><span class="line">                text: <span class="string">"Title"</span>, <span class="comment">// 在表格中header的显示</span></span><br><span class="line">                type: <span class="built_in">String</span>, <span class="comment">// 数据类型</span></span><br><span class="line">                editType : <span class="string">"textarea"</span> <span class="comment">// [optional] 编辑类型，默认是普通文本</span></span><br><span class="line">                editable : <span class="literal">true</span>, <span class="comment">// [optional] 是否可以编辑，默认是true</span></span><br><span class="line">                sortable: <span class="literal">true</span>, <span class="comment">// [optional] 是否可以排序，默认是false</span></span><br><span class="line">                render : <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123; <span class="comment">// [optional] 内容显示</span></span><br><span class="line">                                <span class="comment">// data : 字段的值</span></span><br><span class="line">                    <span class="comment">// return 需要显示的内容</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            ... other fields</span><br><span class="line">        &#125;</span><br><span class="line">        defSortField: <span class="string">"title"</span>, <span class="comment">// 默认排序字段</span></span><br><span class="line">        queryFields: [<span class="string">"title"</span>], <span class="comment">// 搜索的字段</span></span><br><span class="line">        defaultPageSize: <span class="number">15</span>, <span class="comment">// 默认每页数据条数</span></span><br><span class="line">        on: &#123; <span class="comment">// hook配置，只hook当前model，如果需要hook所有model，那么必须在app的配置里面配置on</span></span><br><span class="line">            <span class="string">"beforeCreate"</span>: <span class="function"><span class="keyword">function</span> (<span class="params">req, res, model, cb</span>) </span>&#123;</span><br><span class="line">                <span class="comment">// 创建之前调用</span></span><br><span class="line">                cb(model); <span class="comment">// 如果想继续调用，则回调cb</span></span><br><span class="line">                cb(&#123;err : <span class="string">"如果不想创建，则回调传入有err属性的对象"</span>&#125;);</span><br><span class="line">                <span class="comment">// 所以当你想继续创建的话，比如避免数据对象出现err属性</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        initData : <span class="function"><span class="keyword">function</span>(<span class="params">mongoose</span>)</span>&#123;</span><br><span class="line">            <span class="comment">// 初始化调用，app运行时候调用</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="为什么我只需要创建一个model的配置，就可以在服务器端和浏览器端使用，怎么做到的？">为什么我只需要创建一个model的配置，就可以在服务器端和浏览器端使用，怎么做到的？</h2><p>当app启动时，ngNode使用<a href="http://browserify.org/" target="_blank" rel="external">browserify</a>打包自定义model，并可以在浏览器的web端使用。</p>
+<h2 id="dependencies_in_ngNode">dependencies in ngNode</h2><ul>
+<li><a href="http://expressjs.com" target="_blank" rel="external">express</a> : ngNode is a framework of MEAN, so express is included</li>
+<li><a href="http://mongoosejs.com" target="_blank" rel="external">mongoose</a> : my first choice mongodb ORM</li>
+<li><a href="http://passportjs.org" target="_blank" rel="external">passport</a>: I use passport as authentication</li>
+<li><a href="https://github.com/expressjs/session" target="_blank" rel="external">express-session</a> : use express-session to maintain user authentication</li>
+<li><a href="https://github.com/kcbanner/connect-mongo" target="_blank" rel="external">connect-mongo</a> : and use mongodb as session store in express-session</li>
+<li><a href="http://browserify.org" target="_blank" rel="external">browserify</a> : model module used in server side and browser side, browserify definitely</li>
+<li><a href="https://github.com/ncb000gt/node.bcrypt.js" target="_blank" rel="external">bcrypt</a> : user model use bcrypt to encode password when create user, and compare password when user login</li>
+</ul>
+<h2 id="ngNode_示例">ngNode 示例</h2><p><a href="https://github.com/hcnode/ngNode-sample" target="_blank" rel="external">ngNode-sample</a></p>
+<ul>
+<li>git clone and run <code>npm install</code> and run <code>npm start</code></li>
+<li>visit in chrome: <code>http://localhost:9527/user</code> or <code>http://localhost:9527/blog</code> or <code>http://localhost:9527/yourownmodel</code> when you add “yourownmodel”</li>
+<li>login with test@163.com/test</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="ngNode">ngNode</h2><p><a href="https://github.com/hcnode/ngNode">ngNode</a>是一个可以简单快速开发MEAN web应用的framework</p>
+<h2 id="特点">特点</h2><ul>
+<li>实时的MEAN应用，通过配置生成web api，angularjs构建ui界面.</li>
+<li>通过简单的配置，简单快速创建web应用，除此之外不需要做其他事情</li>
+<li>自动生成相关功能，包括：mongodb ODM、CRUD api、数据显示datatable、排序、分页、搜索、编辑数据等</li>
+<li>内置User模块和<a href="https://github.com/jaredhanson/passport">passport.js</a>验证模块]]>
+    
+    </summary>
+    
+      <category term="mean" scheme="http://hcnode.github.io/tags/mean/"/>
+    
+      <category term="node.js" scheme="http://hcnode.github.io/tags/node-js/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Javascript单元测试？和大神一起来品尝咖啡吧]]></title>
+    <link href="http://hcnode.github.io/2015/07/02/javascript-test/"/>
+    <id>http://hcnode.github.io/2015/07/02/javascript-test/</id>
+    <published>2015-07-02T07:26:37.000Z</published>
+    <updated>2015-08-29T03:39:30.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="关于分享">关于分享</h2><p>本文是关于单元测试的分享，单元测试是在项目开发里面某个模块对某个接口或者函数进行测试检查，在服务器端开发这是非常常见的，但是在web前端开发，特别是js开发中，是比较少见的，所以对于各位前端开发工程师，单元测试一件非常痛苦的事情，所以我打算在这里跟大家分享一下，我所了解到一些比较新的前端的测试框架。<br>本文所有的例子都可以在最后的example的github地址里面找到<br><a id="more"></a></p>
+<h2 id="js测试框架：mocha">js测试框架：mocha</h2><p>最近几年因为node.js的发展，也带来了js相关技术的快速发展，其中就包括js的各种单元测试framework和assertion library，比如jasmine、mocha、karma等测试框架，这里其中包括一个非常优秀的框架：<a href="http://mochajs.org/" target="_blank" rel="external">mocha</a>，没错，就是“摩卡”咖啡。<br>什么是mocha？来看看它的featrues</p>
+<ul>
+<li>虽然是node.js环境，但是它也支持浏览器环境</li>
+<li>支持异步的测试用例，包括promise</li>
+<li>支持代码覆盖率coverage测试报告</li>
+<li>fail的测试用例可以显示differ（暂时只限String）</li>
+<li>支持配置进行不同的测试（比如使用什么断言库，显示reporter的方式）</li>
+<li>使用任何你喜欢的断言库</li>
+<li>多种reporter选择</li>
+<li>and more! (<a href="http://mochajs.org/" target="_blank" rel="external">查看更多featrues</a>)</li>
+</ul>
+<p>关于mocha的安装使用等，这里就不详细说了，可以直接官网看教程。</p>
+<h2 id="assertion_library">assertion library</h2><p>assertion library也就是断言库，前面介绍mocha说过，mocha可以选择第三方的断言库，比如jasmine、should、chai、或者直接使用node的assert。</p>
+<ul>
+<li><a href="http://jasmine.github.io/" target="_blank" rel="external">jasmine</a>：包含丰富的语法、支持异步，我们webmai几年前也用过，它本身就是一个支持浏览器端的js测试框架。</li>
+<li><a href="https://github.com/tj/should.js" target="_blank" rel="external">should</a>：assertion语句非常有可读性，写起测试代码简直就是写文章一样。</li>
+<li><a href="https://github.com/chaijs/chai" target="_blank" rel="external">chai</a>：集成其他库的优点，支持should、expect、assert的各种写法习惯（第一次看到这个名字实在“cai”不出它的意思，后来查原来是：“印度奶茶”）。</li>
+<li>其他：<a href="https://nodejs.org/api/assert.html" target="_blank" rel="external">node的assert</a>、jq的<a href="https://qunitjs.com/" target="_blank" rel="external">qunit</a></li>
+</ul>
+<h2 id="should-js">should.js</h2><p>如果要我推荐一个断言库，我推荐should，为什么不用chai这样的“瑞士军刀”？<br>是因为mocha里面已经有“milk”而不需要milk tea的原因？<br>还是因为它看上去有点山寨的原因？<br>都不是！而是因为mocha和should的作者是js和github界大名鼎鼎的<a href="https://github.com/tj" target="_blank" rel="external">TJ大神</a>！<br>关于TJ大神的传说是在是太多了，既然说起他，我顺便列一下他神奇的features：</p>
+<ul>
+<li>Node 知名模块作者(Express, ejs, commander, connect, mocha, co, koa等等)</li>
+<li>除js和node以外许多其他语言(C、java、go等)的高手</li>
+<li>随便一个项目在 github 上 star 数量成百上千，github follower数量上万，且排名在前十(前十中有三位为github创始人, 还有linux的作者)</li>
+<li>是一个90后，喜欢杀马特造型</li>
+<li>从做设计入行，不看书，不用培训，不参加任何开发者组织和大会，通过看别人代码学习（<a href="http://www.quora.com/How-did-TJ-Holowaychuk-learn-to-program" target="_blank" rel="external">TJ亲自回答这位网友的疑问</a>）</li>
+<li>他一天写的代码，相当于你一周写的代码量，而且代码质量更好更简洁，即使这样，他每天还有时间发20多条tweeter，在githut上回复所有的feedback，他另外还在一个在美国加州公司的全职工作。</li>
+<li>因为他的代码高产，并且没有参加过任何大会，以致有人怀疑他不是一个人，而是一个组织，甚至<a href="http://www.quora.com/How-is-TJ-Holowaychuk-so-insanely-productive" target="_blank" rel="external">有人研究他</a>，从他以往的代码里面，尝试从他的字里行间寻找出他不是一个人的“破绽”</li>
+</ul>
+<p>回到should.js，记得第一眼看到should的assert语法，当时觉得有点不可思议，比如一下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">5</span>).should.be.exactly(<span class="number">5</span>).and.be.a.Number;</span><br><span class="line"><span class="keyword">var</span> harry = &#123;</span><br><span class="line">    name : <span class="string">"harry"</span>,</span><br><span class="line">    age : <span class="number">18</span></span><br><span class="line">&#125;;</span><br><span class="line">harry.should.be.an.Object;</span><br><span class="line">harry.should.have.property(<span class="string">"name"</span>).and.have.property(<span class="string">"age"</span>);</span><br><span class="line">harry.name.should.be.equal(<span class="string">"harry"</span>);</span><br><span class="line">harry.age.should.be.equal(<span class="number">18</span>);</span><br></pre></td></tr></table></figure></p>
+<p>所有变量不管什么类型，都可以直接使用should属性，我以为使用了某种对变量的封装注入属性，其实后来发现原理很简单，should的readme最后写的：</p>
+<blockquote>
+<p>OMG IT EXTENDS OBJECT???!?!@</p>
+<p>Yes, yes it does, with a single getter should, and no it won’t break<br>your code, because it does thisproperly with a non-enumerable<br>property.</p>
+</blockquote>
+<p>OMG！原来是扩展Object的prototype！代码就是这么简单：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">Object</span>.prototype, <span class="string">'should'</span>, &#123;</span><br><span class="line">    set: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;,</span><br><span class="line">    get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> should(<span class="keyword">this</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    configurable: <span class="literal">true</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>另外一个让我觉得神奇的地方，是它们的channing语法，从它们提供的example看到should提供各种比如an/and/be/have等，我在想应该在什么时候使用be，什么时候使用have，如果我想判断是否是Object，那我应该使用should.be.an，还是should.be.a，但其实这些关键字的作用都是一样的，只是为了增加可读性才提供这些chaining words！</p>
+<blockquote>
+<p>chaining assertions</p>
+<p>Every assertion will return a should.js-wrapped Object, so assertions<br>can be chained. To help chained assertions read more clearly, you can<br>use the following helpers anywhere in your chain: .an,.of, .a, .and,<br>.be, .have, .with, .is, .which. Use them for better readability; they<br>do nothing at all. For example:<br>user.should.be.an.instanceOf(Object).and.have.property(‘name’, ‘tj’);<br>user.pets.should.be.instanceof(Array).and.have.lengthOf(4); Almost all<br>assertions return the same object - so you can easy chain them. But<br>some (eg: .lengthand .property) move the assertion object to a<br>property value, so be careful.</p>
+</blockquote>
+<p>对了，其实TJ大神在mocha之前曾经写过另外一个类似的js测试框架：<a href="https://github.com/visionmedia/expresso" target="_blank" rel="external">expresso</a>，不过他说，这个库不再维护，要么建议你使用mocha，要么你可以找大神自荐来维护这个库，expresso的意思是意式特浓咖啡，估计大神觉得咖啡太浓太苦了，所以加了些milk和chocalate，便成了mocha！</p>
+<h2 id="自定义assertion">自定义assertion</h2><p>无论是should.js还是jasmine，除了使用它们已经定义好的assertion（比如equal,instanceOf），我们还可以自定义自己的assertion。</p>
+<ul>
+<li>jasmine: 提供教程如何<a href="http://jasmine.github.io/2.3/custom_matcher.html" target="_blank" rel="external">自定义matcher</a>。</li>
+<li>should.js: 没有提供具体的教程，不过Api文档显示提供<a href="http://shouldjs.github.io/#assertion-add" target="_blank" rel="external">Assertion.add</a>自定义Assertion， 在这之前了解一下配置<a href="http://shouldjs.github.io/#assertion-assert" target="_blank" rel="external">Assertion.params</a>，也可以通过看should.js的源码，可以知道怎么实现自定义的assertion，比如以下是<a href="https://github.com/tj/should.js/blob/master/lib/ext/bool.js" target="_blank" rel="external">bool.js</a>，可以看到怎么实现自定义的assertion</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">should, Assertion</span>) </span>&#123;</span><br><span class="line">    Assertion.add(<span class="string">'true'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.is.exactly(<span class="literal">true</span>);</span><br><span class="line">    &#125;, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">    Assertion.alias(<span class="string">'true'</span>, <span class="string">'True'</span>);</span><br><span class="line"></span><br><span class="line">    Assertion.add(<span class="string">'false'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.is.exactly(<span class="literal">false</span>);</span><br><span class="line">    &#125;, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">    Assertion.alias(<span class="string">'false'</span>, <span class="string">'False'</span>);</span><br><span class="line"></span><br><span class="line">    Assertion.add(<span class="string">'ok'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.params = &#123; operator: <span class="string">'to be truthy'</span> &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.assert(<span class="keyword">this</span>.obj);</span><br><span class="line">    &#125;, <span class="literal">true</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>比如使用”ok”：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#125;.should.be.an.ok;</span><br></pre></td></tr></table></figure></p>
+<p>下面我定义了一个判断email地址的domain assertion：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Assertion.add(<span class="string">'domain'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">domain</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.params = &#123; operator: <span class="string">'to have domain '</span> + domain &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.obj.should.be.a.String; <span class="comment">// 必须是一个string</span></span><br><span class="line">    <span class="comment">// 必须有@，而且不能在最前或者最后</span></span><br><span class="line">    <span class="keyword">this</span>.obj.indexOf(<span class="string">"@"</span>).should.be.greaterThan(<span class="number">0</span>).and.not.be.equal(<span class="keyword">this</span>.obj.length - <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">this</span>.obj.split(<span class="string">"@"</span>)[<span class="number">1</span>].should.be.equal(domain);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="string">``</span><span class="string">`	</span><br><span class="line">使用“domain”：</span><br><span class="line">`</span><span class="string">``</span>javascript	</span><br><span class="line"><span class="string">"harry@163.com"</span>.should.be.the.domain(<span class="string">"163.com"</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="浏览器端使用mocha">浏览器端使用mocha</h2><p>前面说的都是在node.js环境下的单元测试，如果要在浏览器端进行测试，应该怎么做呢。<br>mocha本身是支持浏览器的测试，我们可以使用<a href="https://github.com/bower/bower" target="_blank" rel="external">bower</a>下载依赖，bower是一个浏览器端类似npm的一个库管理工具，可以管理库的依赖，包括库之间的依赖、以及版本管理，一般的js库，如果它们声称支持browser的话，基本都可以通过bower找到。<br>首先通过命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$bower</span> install mocha should</span><br></pre></td></tr></table></figure>
+<p>下载mocha和should到当前目录的bower_components文件夹里<br>在test目录下新建一个html，内容如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"utf-8"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">title</span>&gt;</span>Mocha Tests<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--mocha和should库引用开始--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"../bower_components/mocha/mocha.css"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"../bower_components/should/should.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"../bower_components/mocha/mocha.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--mocha和should库引用结束--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--初始化mocha，设置为bdd模式--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="stylus">mocha.<span class="function"><span class="title">setup</span><span class="params">(<span class="string">'bdd'</span>)</span></span></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--加入需要测试和测试用例的js--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"../assertion/assertion_email.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"assertion.test.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--测试报告容器--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"mocha"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="openscad"></span><br><span class="line">    mocha.run<span class="params">()</span>; <span class="comment">// 启动</span></span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>   然后用浏览器打开这个页面就可以运行测试并看到测试结果。 </p>
+<h2 id="Karma">Karma</h2><p>在前面的例子里面，使用mocha在浏览器运行测试，首先需要手动新建页面，然后手动加上对应的库和测试代码以及单元测试代码，但这些都不够智能和自动化，那么有没有一个框架可以做到将这些都自动化，有！就是<a href="https://karma-runner.github.io/0.12/index.html" target="_blank" rel="external">karma</a>！</p>
+<p>karma是一个浏览器端的测试框架，它起源2012年google开源了Testacular，2013年Testacular改名为karma<br>下面列出karma非常实用的features：</p>
+<ul>
+<li>可以运行在真实的浏览器，包括chrome、firefox、ie等</li>
+<li>在不同的浏览器测试可以同时运行并且全自动</li>
+<li>可以使用mocha或者jasmine等第三方测试框架</li>
+<li>可以自动监视被测试的文件是否有修改，如果有，自动重新运行一遍</li>
+<li>支持代码覆盖率报告，包括Statements、Branches、functions、lines四个覆盖率的显示</li>
+<li>支持requireJs方式运行，这意味着node.js环境下的js库，可以不需要browserify打包，都可以直接在浏览器端运行</li>
+</ul>
+<p>karma也是基于node环境，使用方式非常简单，可以使用<code>karma ini</code>命令方式，一步一步的选择比如使用的测试框架、测试的浏览器类型、测试用例的js文件等等，详细可以查看关于<a href="https://karma-runner.github.io/0.12/config/configuration-file.html" target="_blank" rel="external">配置的说明</a>，你也可以手动修改这个配置。</p>
+<p>配置完后，使用<code>karma start</code>运行，默认会运行当前目录的karma.config.js配置，你也可以指定配置文件的位置，这样你就可以一个项目里面有多个测试配置文件，根据不同的需要，手动或者在grunt里面构建你需要的测试任务。<br>karma可以使用mocha和should，因为karma本身默认支持mocha测试框架，所以在config的file include里面，是不需要引用mocha的库（而是在配置加上 frameworks: [‘mocha’]），但是需要手动加上should库：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">files: [</span><br><span class="line">   <span class="string">"bower_components/should/should.js"</span>,</span><br><span class="line">   <span class="string">"..."</span></span><br><span class="line">  ],</span><br></pre></td></tr></table></figure>
+<h2 id="supertest">supertest</h2><p>再介绍一款TJ大神的作品：supertest，这是一个用来测试http接口，因为都是同一个作者，所以它可以和轻易简单和mocha、should结合一起使用。<br>supertest的特点是，它是一个专门设计给http接口用的断言库<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="string">"http://some.base.url/"</span>)</span><br><span class="line">.get(<span class="string">'/someGetMethod'</span>)</span><br><span class="line">.expect(<span class="string">'Content-Type'</span>, <span class="regexp">/json/</span>)</span><br><span class="line">.expect(<span class="string">'Content-Length'</span>, <span class="string">'20'</span>)</span><br><span class="line">.expect(<span class="number">200</span>)</span><br><span class="line">.end(<span class="function"><span class="keyword">function</span>(<span class="params">err, res</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>上面的例子expect http的status、header、response等信息，这种方式测试http接口非常简单方便。<br>以上的例子没有使用should，如果要使用，在js最前面require(“should”)，就可以使用了：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">request(<span class="string">'http://localhost:4001'</span>)</span><br><span class="line">.get(<span class="string">'/'</span>)</span><br><span class="line">.end(<span class="function"><span class="keyword">function</span>(<span class="params">err, res</span>)</span>&#123;</span><br><span class="line">    res.status.should.equal(<span class="number">200</span>);</span><br><span class="line">    res.text.should.equal(<span class="string">'hey'</span>);</span><br><span class="line">    done();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>不久前我在写一个基于restful接口的应用，当我看到大神的这个测试库后受到启发，写了一个基于supertest的restful测试框架，这个测试库的亮点就是可以关联各个请求之间的请求参数，有兴趣的可以<a href="https://github.com/hcnode/supertest-rest" target="_blank" rel="external">了解一下</a>。<br>总结</p>
+<p>现在知道TJ大神的代码为什么这么高产了吧，正所谓工欲善其事，必先利其器，正是有了他开发的这些“利器”，他写起各种js库才会游刃有余。<br>可能对于大部分web前端开发工程师，我们不是TJ大神那样写纯碎的js库，我们面对的，可能是各种：</p>
+<ul>
+<li>快速紧急的项目</li>
+<li>不断修改需求导致不断修改</li>
+<li>前端工程师不断加班加点赶项目</li>
+<li>“后天就要上线了，你觉得我还有时间做单元测试？”</li>
+<li>“重构的时间都没有，哪有时间写测试代码”</li>
+<li>“本来我的代码写得挺好挺规范的，但是后来各种非符合规范的需求，代码越撸越惨不忍睹”</li>
+</ul>
+<p>另外一方面是web前端开发的工作太杂了，除了上述的问题，很多时候，比如遇到：</p>
+<ul>
+<li>js开发调试效率低</li>
+<li>前后端联调不顺畅</li>
+<li>前端涉及面广出现问题时候不利于排查</li>
+<li>测试－发布－补丁流程不通畅等</li>
+</ul>
+<p>其实现在js开发已经是可以做成相当规范了，从开发前的<a href="http://yeoman.io/" target="_blank" rel="external">yeoman</a>构建项目模版、到库的bower依赖管理、再到mocha或者karma的测试、再到grunt或者<a href="http://gulpjs.com/" target="_blank" rel="external">gulp</a>任务构建、甚至集成到<a href="https://jenkins-ci.org/" target="_blank" rel="external">jenkins</a>的CI服务，就像java项目可以有一整套完整规范的流程。</p>
+<h2 id="Examples">Examples</h2><p>前面介绍的mocha+should+karma，我这里写了一个完整的例子。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/hcnode/mocha-should-karma-examples</span><br></pre></td></tr></table></figure></p>
+<p>下载源码后，进入目录，然后在node环境下（包括bower）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br><span class="line">bower install</span><br></pre></td></tr></table></figure></p>
+<p>如果本地没有安装mocha、should、karma,需要先全局安装：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install mocha should karma -g</span><br></pre></td></tr></table></figure></p>
+<h3 id="mocha＋should的node命令行运行：">mocha＋should的node命令行运行：</h3><p>根目录运行命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mocha</span><br></pre></td></tr></table></figure></p>
+<p>后会直接运行test目录的所有test cases</p>
+<h3 id="mocha＋should的浏览器环境运行：">mocha＋should的浏览器环境运行：</h3><p>浏览器打开：test/runner.html</p>
+<h3 id="karma＋mocha＋should的浏览器环境运行：">karma＋mocha＋should的浏览器环境运行：</h3><p>命令行运行：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">karma start</span><br></pre></td></tr></table></figure></p>
+<p>运行后，自动生成coverage reporter在目录“coverage/浏览器目录” 下</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="关于分享">关于分享</h2><p>本文是关于单元测试的分享，单元测试是在项目开发里面某个模块对某个接口或者函数进行测试检查，在服务器端开发这是非常常见的，但是在web前端开发，特别是js开发中，是比较少见的，所以对于各位前端开发工程师，单元测试一件非常痛苦的事情，所以我打算在这里跟大家分享一下，我所了解到一些比较新的前端的测试框架。<br>本文所有的例子都可以在最后的example的github地址里面找到<br>]]>
+    
+    </summary>
+    
+      <category term="node.js" scheme="http://hcnode.github.io/tags/node-js/"/>
+    
+      <category term="test" scheme="http://hcnode.github.io/tags/test/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[(每周爆栈精选)如何向一个只有六岁的小孩解释什么是javascript闭包]]></title>
+    <link href="http://hcnode.github.io/2013/10/19/stackoverflow-4/"/>
+    <id>http://hcnode.github.io/2013/10/19/stackoverflow-4/</id>
+    <published>2013-10-19T09:23:59.000Z</published>
+    <updated>2015-08-29T03:40:11.000Z</updated>
+    <content type="html"><![CDATA[<p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/16546854201391952359197/" target="_blank" rel="external">这里</a></p>
+<p>来自爆栈<a href="http://stackoverflow.com/questions/111102/how-do-javascript-closures-work" target="_blank" rel="external">这里</a></p>
+<p>首先有人抱怨这个：</p>
+<blockquote>
+<p>“Like the old Albert Einstein said: “If you can’t explain it to a six-year old, you really don’t understand it yourself.”. Well, I tried to explain JavaScript closures to a 27-year old friend and completely failed.<br>How would you explain it to a 6-year old person that is strangely interested in that subject? ”</p>
+</blockquote>
+<p>这位楼主大概意思是：</p>
+<blockquote>
+<p>爱因斯坦说过：“如果你不能向一个六岁大的小孩解释清楚，那么你自己并不完全领悟”，好吧，当我向一个27岁的朋友尝试解释关于javascript中的闭包，尼玛他完全不懂。那还能如何指望一个六岁屁大的孩子能够听懂？</p>
+</blockquote>
+<p> 楼下一位非常有想象力的码农贴出了以下：</p>
+<p>很久以前：</p>
+<p>有一位公主…</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">princess</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 她住在一个充满其妙冒险的世界。她遇到一个非常有魅力的王子，骑着一个独角兽，她还遇到巨型战龙，甚至还有会说话的动物等不可思议的事情。</span></span><br><span class="line">    <span class="keyword">var</span> adventures = [];</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">princeCharming</span>(<span class="params"></span>) </span>&#123; <span class="comment">/* ... */</span> &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> unicorn = &#123; <span class="comment">/* ... */</span> &#125;,</span><br><span class="line">        dragons = [ <span class="comment">/* ... */</span> ],</span><br><span class="line">        squirrel = <span class="string">"Hello!"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 但是，这个小公主每次都不得不返回到现实世界，变成一个普通人，还要面对各种无趣的大人们。</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 她每一次回来，总会告诉这些大人，她所遇到各种非常令人惊讶的事情</span></span><br><span class="line">        story: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> adventures[adventures.length - <span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是，大人们只是看到的是一个天真无邪的小女孩说…</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> littleGirl = princess();</span><br><span class="line">...这些只会发生在童话中的故事</span><br><span class="line">littleGirl.story();</span><br></pre></td></tr></table></figure>
+<p>但是他们不会相信独角兽和龙，因为他们永远看不到这些怪兽。大人们觉得这些只是存在小女孩的想象中。<br>但是我们都知道，其实这些都是真实存在…</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/16546854201391952359197/" target="_blank" rel="external">这里</a><]]>
+    </summary>
+    
+      <category term="closure" scheme="http://hcnode.github.io/tags/closure/"/>
+    
+      <category term="javascript" scheme="http://hcnode.github.io/tags/javascript/"/>
+    
+      <category term="old blog" scheme="http://hcnode.github.io/tags/old-blog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[(每周爆栈精选)javascript中“==”和“===”的性能对比]]></title>
+    <link href="http://hcnode.github.io/2013/10/19/stackoverflow-3/"/>
+    <id>http://hcnode.github.io/2013/10/19/stackoverflow-3/</id>
+    <published>2013-10-19T09:21:52.000Z</published>
+    <updated>2015-08-29T03:40:05.000Z</updated>
+    <content type="html"><![CDATA[<p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/16546854201391952152914/" target="_blank" rel="external">这里</a></p>
+<p>来自爆栈<a href="http://stackoverflow.com/questions/359494/does-it-matter-which-equals-operator-vs-i-use-in-javascript-comparisons" target="_blank" rel="external">这里</a></p>
+<p>以下是原文回答精选</p>
+<p>条件判断中的“===”操作符，相当于“==”操作符中没有类型转换的条件对比，并且类型必须是一样的。</p>
+<p>“==”操作符在判断是否相等之前会进行类型转换，“===”操作符则不会做任何类型转换，所以如果两个值的类型不一样，那么===会返回false，所以当这种情况下===效率会更加快，并且返回的结果可能会和==不一样，如果类型一样的话，则性能也将会一样。</p>
+<p>引用javascript大师Douglas Crockford的《JavaScript: The Good Parts》：</p>
+<blockquote>
+<p>javascript中有两组相等判断的操作符：===、!==，和另外一个SB组合 ==、!=。如果两边的对象是相同的类型，并且是相同的值，那么===返回true，!==返回false，SB组合也是一样会返回同样的结果，但是如果他们不是一样的类型，那么会尝试强制转换类型，然后再进行比较，至于转换规则，是异常的复杂和坑爹。</p>
+</blockquote>
+<p>下面有些有趣的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">''</span> == <span class="string">'0'</span>           <span class="comment">// false</span></span><br><span class="line"><span class="number">0</span> == <span class="string">''</span>             <span class="comment">// true</span></span><br><span class="line"><span class="number">0</span> == <span class="string">'0'</span>            <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="literal">false</span> == <span class="string">'false'</span>    <span class="comment">// false</span></span><br><span class="line"><span class="literal">false</span> == <span class="string">'0'</span>        <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="literal">false</span> == <span class="literal">undefined</span>  <span class="comment">// false</span></span><br><span class="line"><span class="literal">false</span> == <span class="literal">null</span>       <span class="comment">// false</span></span><br><span class="line"><span class="literal">null</span> == <span class="literal">undefined</span>   <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="string">' \t\r\n '</span> == <span class="number">0</span>     <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>我的建议是不再使用SB组合，而是要使用===和!==。以上的例子，将==替换成===都将会返回false。</p>
+<p>关于性能的对比测试<br>回到主题，以下这个例子，我将原来的改了一下，<a href="http://jsperf.com/comparison-of-comparisons/16" target="_blank" rel="external">测试</a>这两种组合的效率，结果一定会使你和你的小伙伴们都惊呆了。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/16546854201391952152914/" target="_blank" rel="external">这里</a><]]>
+    </summary>
+    
+      <category term="javascript" scheme="http://hcnode.github.io/tags/javascript/"/>
+    
+      <category term="old blog" scheme="http://hcnode.github.io/tags/old-blog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[(每周爆栈精选)javascript关于作用域的几个例子]]></title>
+    <link href="http://hcnode.github.io/2013/10/19/stackoverflow-1/"/>
+    <id>http://hcnode.github.io/2013/10/19/stackoverflow-1/</id>
+    <published>2013-10-19T09:19:44.000Z</published>
+    <updated>2015-08-29T03:39:54.000Z</updated>
+    <content type="html"><![CDATA[<p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/16546854201391951944863/" target="_blank" rel="external">这里</a></p>
+<p>来自爆栈<a href="http://stackoverflow.com/questions/500431/javascript-variable-scope" target="_blank" rel="external">这里</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 全局作用域变量定义</span></span><br><span class="line"><span class="keyword">var</span> a=<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 简单的例子：访问全局作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">one</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 简单的例子：访问的是局部作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">two</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">    alert(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 简单的例子：还是局部作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">three</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line">  alert(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 有点难度的例子：在函数内脚本块里面定义的局部变量，可以被函数内部访问的局部作用域的变量</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">four</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">        <span class="keyword">var</span> a=<span class="number">4</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    alert(a); <span class="comment">// alerts '4', not the global value of '1'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 有点难度的例子：对象属性作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Five</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.a = <span class="number">5</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 高级货: 闭包</span></span><br><span class="line"><span class="keyword">var</span> six = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> foo = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="comment">// javascript "闭包" 意思是我只能在这个函数里面访问到foo,</span></span><br><span class="line">        alert(foo);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 另外一个高级货: 基于prototype的作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Seven</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.a = <span class="number">7</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// [object].prototype.property 方式定义属性会在 [object].property 方式定义后丢失对应的属性</span></span><br><span class="line">Seven.prototype.a = -<span class="number">1</span>; <span class="comment">// 此值会被覆盖，因为构造函数会将a属性重新复制</span></span><br><span class="line">Seven.prototype.b = <span class="number">8</span>; <span class="comment">// 同理此b属性没有被覆盖，所以值为8</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 以上例子的值分别为 1-8</span></span><br><span class="line">one();</span><br><span class="line">two(<span class="number">2</span>);</span><br><span class="line">three();</span><br><span class="line">four();</span><br><span class="line">alert(<span class="keyword">new</span> Five().a);</span><br><span class="line">six();</span><br><span class="line">alert(<span class="keyword">new</span> Seven().a);</span><br><span class="line">alert(<span class="keyword">new</span> Seven().b);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">我补充几个高级货：</span><br><span class="line"></span><br><span class="line"><span class="comment">// this作用域的区别</span></span><br><span class="line"><span class="keyword">var</span> nine = <span class="number">9</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Nine</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	alert(<span class="keyword">this</span>.nine); <span class="comment">// this指向window的全局作用域</span></span><br><span class="line">&#125;</span><br><span class="line">Nine();</span><br><span class="line"><span class="comment">// 以上的直接调用Nine()的效果，但是this对象作用域可以变的</span></span><br><span class="line">Nine.call(&#123;nine : <span class="number">10</span>&#125;);<span class="comment">// this对象指向参数的对象</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 除了call和apply，还有另外一种方式调用会导致不同的this引用对象</span></span><br><span class="line"><span class="keyword">var</span> Eleven = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">var</span> bar = &#123;</span><br><span class="line">	Eleven : <span class="number">11</span>,</span><br><span class="line">	foo : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		alert(<span class="keyword">this</span>.Eleven)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">bar.foo();<span class="comment">// this指向bar对象</span></span><br><span class="line"><span class="keyword">var</span> foo = bar.foo;</span><br><span class="line">foo();<span class="comment">// this指向window</span></span><br><span class="line"><span class="comment">// 以上例子分别输出9-12</span></span><br></pre></td></tr></table></figure>]]></content>
+    <summary type="html">
+    <![CDATA[<p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/16546854201391951944863/" target="_blank" rel="external">这里</a><]]>
+    </summary>
+    
+      <category term="javascript" scheme="http://hcnode.github.io/tags/javascript/"/>
+    
+      <category term="old blog" scheme="http://hcnode.github.io/tags/old-blog/"/>
+    
+      <category term="scope" scheme="http://hcnode.github.io/tags/scope/"/>
+    
+      <category term="stackoverflow" scheme="http://hcnode.github.io/tags/stackoverflow/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[(每周爆栈精选)不同环境中的事件句柄中的return false区别]]></title>
+    <link href="http://hcnode.github.io/2013/10/18/stackoverflow-2/"/>
+    <id>http://hcnode.github.io/2013/10/18/stackoverflow-2/</id>
+    <published>2013-10-18T09:21:05.000Z</published>
+    <updated>2015-08-29T03:39:59.000Z</updated>
+    <content type="html"><![CDATA[<p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/1654685420139195215454/" target="_blank" rel="external">这里</a></p>
+<p>来自爆栈<a href="http://stackoverflow.com/questions/1357118/event-preventdefault-vs-return-false" target="_blank" rel="external">这里</a></p>
+<p>引出问题的是楼主问jquery环境下preventDefault和return false的区别。</p>
+<p>楼下有一位总结关于return false在各个环境下的区别，以下是节选和总结：</p>
+<ul>
+<li><p>在标准的DOM2 handler下(也就是使用addEventListener方式监听)，return false不会做任何事情（也就是不会阻止事件，也不会停止冒泡）</p>
+</li>
+<li><p>在Microsoft DOM2 handler下（也就是使用attachEvent方式监听），return false会阻止事件，但是不会停止冒泡</p>
+</li>
+<li><p>在标准的DOM0 handler下（也就是在html结构里面事件中return，如：<code>&lt;a onclick=&quot;return ...&quot;&gt;</code>）,return false会阻止事件，但是不会停止冒泡</p>
+</li>
+<li><p>以上都是原生方式return false，都是不能默认阻止事件冒泡</p>
+</li>
+<li><p>但是在jquery环境下监听事件（如：$(‘a’).click(…)）return false会同时阻止事件和停止事件冒泡。</p>
+</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/1654685420139195215454/" target="_blank" rel="external">这里</a></]]>
+    </summary>
+    
+      <category term="dom" scheme="http://hcnode.github.io/tags/dom/"/>
+    
+      <category term="event" scheme="http://hcnode.github.io/tags/event/"/>
+    
+      <category term="javascript" scheme="http://hcnode.github.io/tags/javascript/"/>
+    
+      <category term="old blog" scheme="http://hcnode.github.io/tags/old-blog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[跨域Ajax问题总结]]></title>
+    <link href="http://hcnode.github.io/2013/06/27/ajax-cross-domain/"/>
+    <id>http://hcnode.github.io/2013/06/27/ajax-cross-domain/</id>
+    <published>2013-06-27T07:50:12.000Z</published>
+    <updated>2015-08-29T03:38:57.000Z</updated>
+    <content type="html"><![CDATA[<p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/1654685420135273483575/" target="_blank" rel="external">这里</a></p>
+<p>最近在用xhr2做某个项目的后台，在这过程中遇到各种疑难杂症，对比起来，flash request的跨域其实是既简单又实用，而xhr2则有各种限制。</p>
+<h3 id="先来对比flash_request和xhr2的跨域策略区别">先来对比flash request和xhr2的跨域策略区别</h3><ul>
+<li><p>flash request：使用配置xml “crossdomain.xml”，来进行配置，不需要修改其他比如返回http头，flash会先获取这个xml查询http请求，是否有权限进行跨域。</p>
+</li>
+<li><p>xhr2：使用浏览器自带的xmlhttprequest level2来进行跨域ajax请求，浏览器和服务器需要发送和返回对应的http头来进行跨域策略。</p>
+</li>
+</ul>
+<h3 id="下面是在用到xhr2是遇到的问题：">下面是在用到xhr2是遇到的问题：</h3><ul>
+<li><p>首先遇到第一个问题，因为extjs框架进行跨域访问时，会自动带上自定义头：X-Requested-With，这时候浏览器会提示出错，原因是因为当有自定义头时，服务器端需要返回头：Access-Control-Allow-Headers:X-Requested-With，表示允许可以设置请求自定义头</p>
+</li>
+<li><p>第二个问题是发现跨域请求没有带上cookie，原因是因为在extjs的xhr2，withCredentials默认为false，需要加上这个属性请求才能带上cookie，但是加上withCredentials属性后发现还是出错，原因是当withCredentials为true时，返回的Access-Control-Allow-Origin的值不能为*，需要为一个特定的域名，最后把这个改为测试机的域名后，以为终于可以了吧，Holy Crap！还是不行，好吧，原因是服务器端http头也要返回Access-Control-Allow-Credentials:true</p>
+</li>
+</ul>
+<h3 id="总结：">总结：</h3><ul>
+<li><p>当xhr2跨域ajax时，不需要带上cookie，没有自定义头，只需要返回设置Access-Control-Allow-Origin头就可以。</p>
+</li>
+<li><p>如果需要设置自定义头，需要服务器端返回Access-Control-Allow-Headers:自定义头。</p>
+</li>
+<li><p>如果需要带上cookie，则xhr2对象需要设置withCredentials为true，并且服务器返回Access-Control-Allow-Credentials:true ，并且Access-Control-Allow-Origin不能为*</p>
+</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/1654685420135273483575/" target="_blank" rel="external">这里</a></]]>
+    </summary>
+    
+      <category term="ajax" scheme="http://hcnode.github.io/tags/ajax/"/>
+    
+      <category term="old blog" scheme="http://hcnode.github.io/tags/old-blog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[javascript设计模式之“Observer”模式在网易邮箱中实践和分享]]></title>
+    <link href="http://hcnode.github.io/2012/11/08/observer/"/>
+    <id>http://hcnode.github.io/2012/11/08/observer/</id>
+    <published>2012-11-08T09:35:28.000Z</published>
+    <updated>2015-08-29T03:39:47.000Z</updated>
+    <content type="html"><![CDATA[<p>这是我三年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/1654685420121085355140/" target="_blank" rel="external">这里</a></p>
+<h3 id="为什么要使用Observer模式">为什么要使用Observer模式</h3><p>在大型的ajax项目前端开发中，模块分得很细，多个开发者负责不同的业务逻辑模块开发，会需要不同模块之间互相调用接口，在网易邮箱的前端开发中遇到过这样的情况也是家常便饭，虽然我们可以将公共调用的功能分离出来到一个“公共库”，然后开发者需要实现某个功能时，可以去“公共库”找相关的接口，然后在自己的代码中调用。</p>
+<p>但是如果接口有变更、或者新需求需要增加调用，就导致各个模块负责人耦合维护，这种方式在小型的项目没有大问题，不过项目越做越大后，就会导致模块之间耦合越来越大，维护成本越来越高，在新的网易邮箱版本里面，使用了Observer的设计模式实现模块之间的解耦。</p>
+<h3 id="Observer模式的定义">Observer模式的定义</h3><p>Observer（观察者模式）：定义对象间的一种一对多的依赖关系,以便当一个对象的状态发生改变时,所有依赖于它的对象都得到通知并自动刷新。</p>
+<h3 id="举例说明">举例说明</h3><p>先举个例子：邮箱中的收件箱模块和读信模块，分别是程序员A和程序员B负责，在旧的模式里，收件箱读取一封新邮件后，B会调用A的接口.setRead(sMailId)实现去掉该邮件未读标记，然后有一天，负责左侧导航的同事C说：产品增加一个需求，读取新邮件后，左侧导航的收件箱的未读数需要更新。这时，C发给B一个更新导航的接口，然后B就要修改代码，加上C提供的接口.updateNav()。</p>
+<ul>
+<li>使用Observer模式后：</li>
+</ul>
+<p>首先定义了一个afterRead的事件，收件箱模块监听了这个事件：Listener.listen(“afterRead”, DoSetReadFunction)，新邮件读取之后，会触发一个事件：Listener.fire(“afterRead”)，这时，监听了这个事件的收件箱模块会调用接口，然后在新的需求里，C同事只需要监听：Listener.listen(“afterRead”, DoUpdateNavFunction)，就实现了左侧导航的新邮件数更新了。</p>
+<ul>
+<li><p>这个过程的变化相当于：<br><strong>旧的方式：</strong>读取一封新邮件后 -&gt; 调用收件箱接口 -&gt; 调用导航接口<br><strong>新的方式：</strong>读取一封新邮件后 -&gt; 告诉所有模块：我刚读了一封新邮件 -&gt; 其他监听了这个事件的模块被通知了 -&gt; 调用相关接口</p>
+</li>
+<li><p>简单的自定义事件实现</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Listener = &#123;</span><br><span class="line"> listen   : <span class="comment">// 实现自定义事件监听</span></span><br><span class="line"> unlisten  : <span class="comment">// 解除自定义事件监听</span></span><br><span class="line"> unlistenAll  : <span class="comment">// 解除所有自定义事件监听,</span></span><br><span class="line"> fire   : <span class="comment">// 触发事件发生</span></span><br><span class="line"> _events  : <span class="comment">// 相关监听的事件以及事件监听的句柄</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// _events的结构大致如下：</span></span><br><span class="line">_events : [</span><br><span class="line"> &#123;</span><br><span class="line">  name : <span class="string">"event0"</span>, <span class="comment">// 自定事件0</span></span><br><span class="line">  handlers : [</span><br><span class="line">   <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;...&#125;,<span class="comment">// 监听的句柄</span></span><br><span class="line">   <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;...&#125; <span class="comment">// 监听的句柄</span></span><br><span class="line">  ]</span><br><span class="line"> &#125;,</span><br><span class="line"> &#123;</span><br><span class="line">  name : <span class="string">"event1"</span>, <span class="comment">// 自定事件1</span></span><br><span class="line">  handlers : [</span><br><span class="line">   <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;...&#125;,<span class="comment">// 监听的句柄</span></span><br><span class="line">   <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;...&#125; <span class="comment">// 监听的句柄</span></span><br><span class="line">  ]</span><br><span class="line"> &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>上面的简单的自定义事件实现方式，就可以很好的解决模块之间耦合的问题，当然也可以做得功能更加强大，比如事件触发可以加上参数支持、实现调用句柄获取当前的event对象等。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>这是我三年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/1654685420121085355140/" target="_blank" rel="external">这里</a></]]>
+    </summary>
+    
+      <category term="Observer" scheme="http://hcnode.github.io/tags/Observer/"/>
+    
+      <category term="javascript" scheme="http://hcnode.github.io/tags/javascript/"/>
+    
+      <category term="old blog" scheme="http://hcnode.github.io/tags/old-blog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Comet 技术总结以及相关方案优劣对比]]></title>
+    <link href="http://hcnode.github.io/2012/10/31/comet/"/>
+    <id>http://hcnode.github.io/2012/10/31/comet/</id>
+    <published>2012-10-31T09:34:13.000Z</published>
+    <updated>2015-08-29T03:38:25.000Z</updated>
+    <content type="html"><![CDATA[<p>这是我三年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/16546854201293153047762/" target="_blank" rel="external">这里</a>，因为这篇blog，我有幸被邀请到<a href="http://velocity.oreilly.com.cn/2012/index.php?func=slidesvideos" target="_blank" rel="external">2012年的Velocity大会</a>作为<a href="http://velocity.oreilly.com.cn/2012/index.php?func=session&amp;id=27" target="_blank" rel="external">演讲嘉宾</a>。</p>
+<p>本文是关于comet技术的介绍，以及网易邮箱在使用comet技术中的经验介绍和各种解决方案优劣对比。</p>
+<h3 id="什么是comet">什么是comet</h3><p>Comet是一种基于web的服务器端主动推送消息给浏览器端的技术，在传统的web应用，浏览器和服务器之间的通讯，是通过“浏览器请求-服务器端返回”这个过程服务器端被动的返回信息，Comet则是服务器端主动推送消息给浏览器端，这种方式可以及时将消息传送浏览器，所以对于一些对于消息处理需要很及时的web应用就会使用到comet技术，例如：webim</p>
+<h3 id="Socket协议和http协议">Socket协议和http协议</h3><p>socket包括有Flash XMLSocket、activex组件等浏览器插件，Flash XMLSocket的实现是在 HTML 页面中内嵌入一个使用了 XMLSocket 类的 Flash 程序，JavaScript 通过调用此 Flash 程序提供的套接口接口与服务器端的套接口进行通信，不过使用Socket协议的方式没有 HTTP 隧道功能，不能自动穿过防火墙，所以建议使用http协议的方式，本文也只讨论http协议的方式。</p>
+<h3 id="comet的实现方式">comet的实现方式</h3><h4 id="long-polling：长轮询">long-polling：长轮询</h4><p>long-polling方式的特点有以下：</p>
+<ul>
+<li>服务器端会阻塞请求直到有数据传递或超时才返回。</li>
+<li>客户端 JavaScript 响应处理函数会在处理完服务器返回的信息后，再次发出请求，重新建立连接。</li>
+<li>当客户端处理接收的数据、重新建立连接时，服务器端可能有新的数据到达；这些信息会被服务器端保存直到客户端重新建立连接，客户端才会把当前服务器端所有的信息取回。</li>
+</ul>
+<p>long-polling的可选择载体：</p>
+<ul>
+<li>浏览器原生xhr</li>
+<li>Jsonp（以html的script标签方式请求）</li>
+<li>Flash xhr（随便跨域，无视浏览器兼容）</li>
+<li>iframe（iframe页面方式请求）</li>
+</ul>
+<p>long-polling优缺点：</p>
+<p><strong>优点包括：</strong>实现稍微简单，可供选择的载体多，并且浏览器兼容性好<br><strong>缺点包括：</strong>轮询的方式定时请求，有数据返回后断开重新请求，这种方式消息到达可能不及时，以及浏览器端不断建立请求，导致过多资源，某些载体方式不支持post</p>
+<h4 id="Streaming：流方式">Streaming：流方式</h4><p>Streaming方式的特点有以下：</p>
+<p>使用这种方式，每次数据传送不会关闭连接，连接只会在通信出现错误时，或是连接重建时关闭（一些防火墙常被设置为丢弃过长的连接， 服务器端可以设置一个超时时间， 超时后通知客户端重新建立连接，并关闭原来的连接）。<br>Streaming的可以选择载体：</p>
+<ul>
+<li>浏览器原生xhr</li>
+<li>Flash xhr（随便跨域，无视浏览器兼容）</li>
+<li>iframe（iframe页面方式请求）</li>
+</ul>
+<p>Streaming优缺点：</p>
+<p><strong>优点包括：</strong>消息到达及时，浏览器端只需要一次请求，服务器端即可实现多次推送，并且get或者post方式都无压力<br><strong>缺点包括：</strong>无</p>
+<h4 id="邮箱的pushmail实现方案对比">邮箱的pushmail实现方案对比</h4><p>旧方案：</p>
+<ul>
+<li>长连接方式:long-polling</li>
+<li>载体：jsonp</li>
+<li>优点：实现简单，兼容性好，可以跨域</li>
+<li>缺点：只能get方式请求，jsonp方式不能实现Streaming，容易请求中断，firefox无法隐藏加载提示</li>
+</ul>
+<p>新方案：</p>
+<ul>
+<li>长连接方式: Streaming</li>
+<li>载体：flash xhr</li>
+<li>优点：没有任何兼容性问题，可以使用Streaming的方式推送，可以跨域，可以使用post方式请求</li>
+<li>缺点：部分没有安装flash的用户无法使用，经过统计，这部分用户只占1%左右，这部分可以改用旧方案</li>
+</ul>
+<h3 id="总结">总结</h3><p>通过各种方案对比，streaming+flash xhr是最佳的选择。</p>
+<ul>
+<li>跨域请求：新的方案可以轻松实现跨域请求，不再为跨域烦恼。</li>
+<li>浏览器兼容：使用flash的xhr可以无视各种浏览器的原生xhr的差别。</li>
+<li>使用streaming方式：可以避免反复数据返回-断开重连的情况下对客户端运行效率问题。</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>这是我三年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/16546854201293153047762/" target="_blank" rel="external">这里</a>，]]>
+    </summary>
+    
+      <category term="comet" scheme="http://hcnode.github.io/tags/comet/"/>
+    
+      <category term="old blog" scheme="http://hcnode.github.io/tags/old-blog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[前端开发各种cross之cross domain(二)]]></title>
+    <link href="http://hcnode.github.io/2012/05/10/cross-domain-2/"/>
+    <id>http://hcnode.github.io/2012/05/10/cross-domain-2/</id>
+    <published>2012-05-10T08:59:17.000Z</published>
+    <updated>2015-08-29T03:39:14.000Z</updated>
+    <content type="html"><![CDATA[<p>这是我三年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/16546854201241045825663/" target="_blank" rel="external">这里</a></p>
+<p>在上一篇关于跨域获取数据中，苦逼的前端开发工程师，刚才解决了一个cross domain的问题，还没有来得及沉浸在其中喜悦之际，又迎来了另外一个cross domain的问题：邮箱出现双滚动啦。</p>
+<p>在页面中当需要加载外域app的iframe时候，最容易出现跨frame的cross domain问题，比如刚才那前端开发工程师遇到的双滚动的问题，在页面中放入一个外域的iframe，当iframe的高度大于iframe的页面的body高度时，就会出现滚动，这时候加上本身页面已经有一条滚动，那就出现经典的双滚动问题，如果iframe里面又嵌套另一个外域iframe，那可能会出现三滚动，继续嵌套..继续滚动..继续套..继续滚…，之所以出现这个问题，是因为外域的iframe不能直接调用:</p>
+<pre><code>parent<span class="class">.document</span><span class="class">.getElementById</span>(<span class="string">"iframe_id"</span>)<span class="class">.style</span><span class="class">.height</span> =   document<span class="class">.body</span><span class="class">.offsetHeight</span> + <span class="string">"px"</span>
+</code></pre><p>这里就需要跨iframe进行cross domain，有以下提到的两个方式。<br>以下的例子会以这几个页面作为例子：<br>页面a:</p>
+<pre><code><span class="string">http:</span><span class="comment">//www.a.com/a.htm</span>
+</code></pre><p>页面b:</p>
+<pre><code><span class="string">http:</span><span class="comment">//www.b.com/b.htm</span>
+</code></pre><p>a的内容：</p>
+<pre><code><span class="tag">&lt;<span class="title">iframe</span> <span class="attribute">src</span>=<span class="value">"http://www.b.com/b.htm"</span> <span class="attribute">id</span>=<span class="value">"ifrm_b"</span>&gt;</span><span class="tag">&lt;/<span class="title">iframe</span>&gt;</span>
+</code></pre><h3 id="html5的postMessage方式">html5的postMessage方式</h3><p>首先介绍一个浏览器原生的跨域调用方式，在支持html5的高级浏览器，支持这种方式：</p>
+<pre><code><span class="tag">oWin</span><span class="class">.postMessage</span>(<span class="tag">oMessage</span>, <span class="tag">sTargetDomain</span>);
+</code></pre><ul>
+<li>oWin为需要跨域调用的window对象</li>
+<li>oMessage为传送的数据</li>
+<li>sTargetDomain是跨域的frame的域</li>
+</ul>
+<p>假如页面a跨域页面b，那么在页面a上调用以下进行跨域：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line"> <span class="built_in">document</span>.getElementById(<span class="string">"ifrm_b"</span>).contentWindow.postMessage(<span class="built_in">JSON</span>.stringify(&#123;value:<span class="string">"this   is cross call by PostMessage."</span>&#125;), <span class="string">"http://www.b.com"</span>);</span><br><span class="line">&#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line"> alert(<span class="string">"请使用以下或者更高版本浏览器：\nIE8+,   Firefox 3, Opera 9, Chrome 3和 Safari 4！"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在b，需要加一个window的message事件监听</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fAddEvent(<span class="built_in">window</span>, <span class="string">"message"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">o</span>) </span>&#123;</span><br><span class="line"> <span class="keyword">var</span> oMessage = o.data;<span class="comment">// data属性就是postMessage的oMessage参数</span></span><br><span class="line"> alert(oMessage.value); <span class="comment">// 这时候会显示：this is cross call by PostMessage.</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这样就完成了跨frame的跨域通讯</p>
+<ul>
+<li>优点：完美的跨frame跨域调用</li>
+<li>缺点：只支持html5的浏览器</li>
+</ul>
+<h3 id="代理iframe方式">代理iframe方式</h3><p>使用代理iframe的方式有两种，一种通过window.name方式跨域调用，一种是通过url参数的方式传递调用，不过两种方式的调用原理都是创建一个隐藏的iframe，iframe的url指向需要跨域的域名的一个代理页面，然后通过这个代理的iframe，和跨域的iframe通讯，因为这时代理的iframe和跨域的iframe完全同域，就可以畅通无阻进行。<br>在上面的例子加多一个代理页面c:<br>代理iframe c:<a href="http://www.b.com/c.htm" target="_blank" rel="external">http://www.b.com/c.htm</a></p>
+<ul>
+<li>在页面a加入以下函数：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fCrossByName</span>(<span class="params">sDomain, oData</span>) </span>&#123;</span><br><span class="line"> <span class="keyword">var</span> oIframe =   <span class="built_in">document</span>.getElementById(<span class="string">"ifrmCross"</span>);</span><br><span class="line"> <span class="keyword">if</span>(oIframe)&#123;</span><br><span class="line">  oIframe.parentNode.removeChild(oIframe);</span><br><span class="line"> &#125;</span><br><span class="line"> oIframe   = <span class="built_in">document</span>.createElement(<span class="string">"IFRAME"</span>);</span><br><span class="line"> oIframe.style.display =   <span class="string">"none"</span>;</span><br><span class="line"> oIframe.id = <span class="string">"ifrmCross"</span>;</span><br><span class="line"> oIframe.name =   <span class="built_in">JSON</span>.stringify(oData);</span><br><span class="line"> <span class="built_in">document</span>.body.appendChild(oIframe);</span><br><span class="line"> oIframe.src   = <span class="string">"http://"</span> + sDomain + <span class="string">"/c.htm"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>然后在页面a就可以进行跨域：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fCrossByName(<span class="string">"www.b.com"</span>, &#123;</span><br><span class="line"> value:<span class="string">'this is cross call by iframe'</span>,</span><br><span class="line"> func : <span class="string">"fCrossByNameCall"</span>,  <span class="comment">// 要跨域调用的函数</span></span><br><span class="line"> win : <span class="string">"ifrm_b"</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>然后在代理iframe加入以下代码：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> oData = !<span class="built_in">window</span>.name?<span class="literal">null</span>:(<span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">'return '</span>+<span class="built_in">window</span>.name))();</span><br><span class="line"><span class="keyword">if</span>(oData.win &amp;&amp; oData.func)&#123;</span><br><span class="line"> <span class="keyword">var</span> oResult = (oData.win == <span class="string">"top"</span> ? top : parent[oData.win])[oData.func](oData);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样就可以实现整个的跨域调用，通过url参数方式跨域调用，和这个类似，只是需要将数据放到代理iframe的url参数上，而不是name。<br>下面这个页面demo显示这三种方式的调用（因为没加JSON的转换js包，需要使用支持内置JSON对象的浏览器运行..）：<br><a href="http://mimg.163.com/demo/crossdomain_test.htm" target="_blank" rel="external">http://mimg.163.com/demo/crossdomain_test.htm</a></p>
+<ul>
+<li>优点：没有浏览器兼容问题</li>
+<li>缺点：因为要部署代理iframe的文件，所以比较麻烦，整个流程也比较复杂，如果要实现和html5的postMessage兼容的接口，需要做大量封装，就会更加造成更加复杂</li>
+</ul>
+<p>总结：在邮箱实际使用过程中，当只是简单的跨域调用比如前面提到的解决双滚动问题，一般可以简单的使用第二种方式，但是如果需要复杂的双向互相调用，就需要支持html5的浏览器调用postMessage，不支持的需要第二种方法实现兼容。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>这是我三年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/16546854201241045825663/" target="_blank" rel="external">这里</a><]]>
+    </summary>
+    
+      <category term="crossdomain" scheme="http://hcnode.github.io/tags/crossdomain/"/>
+    
+      <category term="javascript" scheme="http://hcnode.github.io/tags/javascript/"/>
+    
+      <category term="old blog" scheme="http://hcnode.github.io/tags/old-blog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[前端开发各种cross之cross domain(一)]]></title>
+    <link href="http://hcnode.github.io/2012/05/10/cross-domain-1/"/>
+    <id>http://hcnode.github.io/2012/05/10/cross-domain-1/</id>
+    <published>2012-05-10T03:52:29.000Z</published>
+    <updated>2015-08-29T03:38:57.000Z</updated>
+    <content type="html"><![CDATA[<p>这是我三年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/165468542012410115229581/" target="_blank" rel="external">这里</a></p>
+<p>作为一个苦逼前端开发工程师，不得不面对各种cross，比如面对五花八门的浏览器我们必须cross browser，面对各种终端，我们必须cross device，在这么多年的前端开发经历中，在不同的域之间穿越中，遭受各种折磨，所以这次和大家分享的是cross domain。</p>
+<p>这次分享的cross domain，是包括所有跨域调用，无论是跨域获取数据，还是跨域跨frame调用，所以会分为两部分，这次会先分享跨域获取数据，跨域获取数据大概有以下方式。</p>
+<h3 id="jsonp方式">jsonp方式</h3><p>这是最简单，也是最实用的跨域获取数据方式，原理是在浏览器端通过生成script标签，并通过js callback的形式实现跨域访问，比如一个jsonp接口是这样：</p>
+<pre><code><span class="string">http:</span><span class="comment">//mail.163.com/someapp/jsonp?somequery=<span class="doctag"><span class="keyword">xxx</span></span>&amp;callback=fSomeMethod</span>
+</code></pre><p>然后服务器端会通过以下方式返回数据：</p>
+<pre><code><span class="function"><span class="title">fSomeMethod</span><span class="params">({返回的json数据对象})</span></span>
+</code></pre><ul>
+<li>优点：实现简单，使用灵活，并且原生cross all browser</li>
+<li>缺点：只能get方式获取数据，某些浏览器会显示加载中提示</li>
+</ul>
+<h3 id="表单post方式">表单post方式</h3><p>这个方式会复杂一点点，原理是post表单到一个隐藏的iframe，然后iframe将数据post回来同域的一个url，这时候就可以直接调用同域的回调：</p>
+<ul>
+<li><p>首先post表单到如：</p>
+<p> <a href="http://other.domain.com/someapp?somequery=xxx&amp;callback=fSomeMethod&amp;backurl=http://mail.163.com/proxy" target="_blank" rel="external">http://other.domain.com/someapp?somequery=xxx&amp;callback=fSomeMethod&amp;backurl=http://mail.163.com/proxy</a></p>
+</li>
+<li><p>这个接口返回的内容:</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">form</span> <span class="attribute">action</span>=<span class="value">"$&#123;backurl&#125;"</span> <span class="attribute">method</span>=<span class="value">"post"</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"hidden"</span> <span class="attribute">value</span>=<span class="value">"返回的数据"</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"hidden"</span> <span class="attribute">name</span>=<span class="value">"callback"</span> <span class="attribute">value</span>=<span class="value">"$&#123;callback&#125;"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="css"><span class="tag">document</span><span class="class">.getElementsByTagName</span>("<span class="tag">FORM</span>")<span class="attr_selector">[0]</span><span class="class">.submit</span>();</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>然后post到<a href="http://mail.163.com/proxy" target="_blank" rel="external">http://mail.163.com/proxy</a> 后，返回：</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="apache"></span><br><span class="line"><span class="keyword">parent</span>.<span class="cbracket">$&#123;param.callback&#125;</span>(<span class="string">"返回的数据"</span>)</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这样就完成整个跨域获取数据的过程<br><strong>优点：</strong>支持post方式，并且原生cross all browser<br><strong>缺点：</strong>实现有点复杂，并且流程有点曲折，需要两次请求，而且表单post方式会引起刷新提示的问题</p>
+<h3 id="服务器代理">服务器代理</h3><p>服务器代理方式跨域调用也是使用的比较广泛的方式，原理就是在服务器端来获取跨域数据，然后在同域里ajax方式或者其他方式返回给浏览器。<br><strong>优点：</strong>客户端实现简单，没有cross browser问题<br><strong>缺点：</strong>需要在服务器端实现模拟请求获取数据</p>
+<h3 id="html5的XDomainRequest">html5的XDomainRequest</h3><p>终于在html5迎来了对跨域的ajax，泪牛满脸啊，这下完全可以通过浏览器的原生方式跨域ajax获取数据，这里一个对浏览器的各种跨域ajax的测试：<br><a href="http://www.debugtheweb.com/test/teststreaming.aspx" target="_blank" rel="external">http://www.debugtheweb.com/test/teststreaming.aspx</a><br><strong>优点：</strong>浏览器原生支持跨域方式ajax请求<br><strong>缺点：</strong>只能在支持html5的高级浏览器中支持</p>
+<h3 id="flash_request">flash request</h3><p>这个是目前跨域请求最好的一个解决方案，建议在不能用jsonp的方式时候，都可以使用flash request方式，而且flash request可以配置一个安全策略，可以允许哪些域可以调用，然后被跨域的调用需要配置一个crossdomain.xml，允许可以被那个域的flash跨域调用，内容如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0"?&gt;</span></span><br><span class="line"><span class="doctype">&lt;!DOCTYPE cross-domain-policy SYSTEM "http://www.adobe.com/xml/dtds/cross-domain-policy.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">cross-domain-policy</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="title">allow-access-from</span> <span class="attribute">domain</span>=<span class="value">"www.xxx.com"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">cross-domain-policy</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这种方式的局限就是必须依赖flash，我们这边在邮箱曾经做过一个统计，99%的用户可以通过这种方式获取到数据，另外1%的用户可能是没有安装flash或者flash版本有问题。</p>
+<ul>
+<li>优点：依赖flash下可以无视各个浏览器兼容问题</li>
+<li>缺点：正所谓成也萧何败也萧何，缺点也是因为要依赖flash</li>
+</ul>
+<p>以上是获取数据时需要cross domain的解决方案，下一篇是跨frame时候需要cross domain的分享。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>这是我三年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/165468542012410115229581/" target="_blank" rel="external">这里</a>]]>
+    </summary>
+    
+      <category term="crossdomain" scheme="http://hcnode.github.io/tags/crossdomain/"/>
+    
+      <category term="javascript" scheme="http://hcnode.github.io/tags/javascript/"/>
+    
+      <category term="old blog" scheme="http://hcnode.github.io/tags/old-blog/"/>
+    
+  </entry>
+  
+</feed>
