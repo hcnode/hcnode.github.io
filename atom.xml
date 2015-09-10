@@ -4,7 +4,7 @@
   <subtitle><![CDATA[quicker to develop, cheaper to maintain, and easier to test]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://hcnode.github.io/"/>
-  <updated>2015-09-07T07:00:56.000Z</updated>
+  <updated>2015-08-29T03:39:42.000Z</updated>
   <id>http://hcnode.github.io/</id>
   
   <author>
@@ -13,25 +13,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title><![CDATA[开发基于nw的ftp应用-day1]]></title>
-    <link href="http://hcnode.github.io/2015/09/07/nw-ftp/"/>
-    <id>http://hcnode.github.io/2015/09/07/nw-ftp/</id>
-    <published>2015-09-07T06:56:04.000Z</published>
-    <updated>2015-09-07T07:00:56.000Z</updated>
-    <content type="html"><![CDATA[<h1 id="关于开发的想法">关于开发的想法</h1><p>大概几周前开始有个想法用nw写个ftp应用，当时刚将AlexGallery写完，</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h1 id="关于开发的想法">关于开发的想法</h1><p>大概几周前开始有个想法用nw写个ftp应用，当时刚将AlexGallery写完，</p>
-]]>
-    </summary>
-    
-      <category term="ftp" scheme="http://hcnode.github.io/tags/ftp/"/>
-    
-      <category term="nw" scheme="http://hcnode.github.io/tags/nw/"/>
-    
-  </entry>
   
   <entry>
     <title><![CDATA[node-gitignore and commander]]></title>
