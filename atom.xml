@@ -4,7 +4,7 @@
   <subtitle><![CDATA[quicker to develop, cheaper to maintain, and easier to test]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://hcnode.github.io/"/>
-  <updated>2015-10-13T04:26:13.000Z</updated>
+  <updated>2015-10-13T04:28:12.000Z</updated>
   <id>http://hcnode.github.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://hcnode.github.io/2015/10/13/sails-hook-deepblueprints/"/>
     <id>http://hcnode.github.io/2015/10/13/sails-hook-deepblueprints/</id>
     <published>2015-10-13T01:20:32.000Z</published>
-    <updated>2015-10-13T04:26:13.000Z</updated>
+    <updated>2015-10-13T04:28:12.000Z</updated>
     <content type="html"><![CDATA[<h2 id="关于Sails">关于Sails</h2><p>Sails 是一个很优秀的node.js的web服务器框架，提供完整的web服务的解决方案，比如：</p>
 <ul>
 <li>丰富的<a href="http://sailsjs.org/documentation/reference/command-line-interface" target="_blank" rel="external">cli命令</a></li>
@@ -31,7 +31,8 @@
 <li>文件上传<a href="http://sailsjs.org/documentation/concepts/file-uploads" target="_blank" rel="external">解决方案</a>和支持文件上传的<a href="https://github.com/balderdashy/skipper" target="_blank" rel="external">skipper库</a></li>
 <li>编写<a href="http://sailsjs.org/documentation/concepts/extending-sails/hooks" target="_blank" rel="external">自定义的hook</a>插件</li>
 <li>提供RESTFul的Api接口<a href="http://sailsjs.org/documentation/concepts/testing" target="_blank" rel="external">测试方案</a></li>
-<li>提供各种Security的<a href="http://sailsjs.org/documentation/concepts/security" target="_blank" rel="external">解决方案</a><br> 包括：CORS,CSRF,ClickJacking,Hijacking,DDos,P3P,XSS等</li>
+<li>提供各种Security的<a href="http://sailsjs.org/documentation/concepts/security" target="_blank" rel="external">解决方案</a><br> 包括：CORS,CSRF,ClickJacking,Hijacking,DDos,P3P,XSS等<a id="more"></a>
+</li>
 </ul>
 <h2 id="blueprints">blueprints</h2><p>blueprints是sails其中一个最出色的功能，blueprints可以瞬间生成完整、复杂的RESTFul接口，包括除了正常的数据增删改查、还包括model之间的associations增删改查，比如有两个model：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">* Company.js</span><br><span class="line">*/</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line"></span><br><span class="line">  attributes: &#123;</span><br><span class="line">    name : <span class="string">"string"</span>,</span><br><span class="line">    team:&#123;</span><br><span class="line">      collection: <span class="string">'team'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    user:&#123;</span><br><span class="line">      collection: <span class="string">'user'</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -86,7 +87,17 @@
     <summary type="html">
     <![CDATA[<h2 id="关于Sails">关于Sails</h2><p>Sails 是一个很优秀的node.js的web服务器框架，提供完整的web服务的解决方案，比如：</p>
 <ul>
-<li>丰富的<a href="http://sailsjs.org/documentation/]]>
+<li>丰富的<a href="http://sailsjs.org/documentation/reference/command-line-interface">cli命令</a></li>
+<li>多种<a href="http://sailsjs.org/documentation/reference/configuration/sails-config-connections">数据库adapter</a>支持</li>
+<li>数据ORM模型<a href="https://github.com/balderdashy/waterline">waterline</a></li>
+<li><a href="http://sailsjs.org/documentation/reference/blueprint-api?q=blueprint-routes">blueprints</a>的RESTFul接口实现</li>
+<li>权限的<a href="http://sailsjs.org/documentation/concepts/policies">Policies</a>管理方案</li>
+<li>提供方便的<a href="http://sailsjs.org/documentation/concepts/custom-responses">自定义response</a>方案</li>
+<li>文件上传<a href="http://sailsjs.org/documentation/concepts/file-uploads">解决方案</a>和支持文件上传的<a href="https://github.com/balderdashy/skipper">skipper库</a></li>
+<li>编写<a href="http://sailsjs.org/documentation/concepts/extending-sails/hooks">自定义的hook</a>插件</li>
+<li>提供RESTFul的Api接口<a href="http://sailsjs.org/documentation/concepts/testing">测试方案</a></li>
+<li>提供各种Security的<a href="http://sailsjs.org/documentation/concepts/security">解决方案</a><br> 包括：CORS,CSRF,ClickJacking,Hijacking,DDos,P3P,XSS等]]>
+    
     </summary>
     
       <category term="blueprints" scheme="http://hcnode.github.io/tags/blueprints/"/>
