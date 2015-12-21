@@ -175,6 +175,81 @@
           
           
             
+              <a class="post-title-link" href="/2015/12/21/folder-gallery/" itemprop="url">
+                folder-gallery
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-12-21T08:58:58+08:00" content="2015-12-21">
+            2015-12-21
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/12/21/folder-gallery/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/21/folder-gallery/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="前言">前言</h1><p>前天看到有同事分享了一个照片分享的相册系统，看完之后，想起我之前也是因为团建旅游回来后写了一个基于node的相册和目录浏览的系统<a href="https://github.com/hcnode/folder-gallery">folder-gallery</a>，不敢私藏，开源出来给大家。因为我之前写过一个基于nw的桌面版照片浏览应用 <a href="https://github.com/hcnode/AlexGallery">AlexGallery</a> ，所依赖的一些库也是差不多，所以网络版写起来比比较快。</p>
+<p>其实这个系统，我并没有写多少代码，估计也就100多行左右，都是使用开源的库搭起来的，所以简单的说，我其实不怎么写代码，我只是github的搬运工，再简单的说，呃，其实我是个搬砖的。</p>
+<p>我觉得，<strong>一个高效多产的coder，不但要写得一手好代码，还得要搬得一手好砖，下面我会简单介绍一下搬砖的全过程。</strong><br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/12/21/folder-gallery/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/10/13/sails-hook-deepblueprints/" itemprop="url">
                 Sails和blueprints 简介以及deepblueprints hook介绍
               </a>
@@ -874,90 +949,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2013/10/18/stackoverflow-2/" itemprop="url">
-                (每周爆栈精选)不同环境中的事件句柄中的return false区别
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2013-10-18T17:21:05+08:00" content="2013-10-18">
-            2013-10-18
-          </time>
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2013/10/18/stackoverflow-2/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/18/stackoverflow-2/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/1654685420139195215454/" target="_blank" rel="external">这里</a></p>
-<p>来自爆栈<a href="http://stackoverflow.com/questions/1357118/event-preventdefault-vs-return-false" target="_blank" rel="external">这里</a></p>
-<p>引出问题的是楼主问jquery环境下preventDefault和return false的区别。</p>
-<p>楼下有一位总结关于return false在各个环境下的区别，以下是节选和总结：</p>
-<ul>
-<li><p>在标准的DOM2 handler下(也就是使用addEventListener方式监听)，return false不会做任何事情（也就是不会阻止事件，也不会停止冒泡）</p>
-</li>
-<li><p>在Microsoft DOM2 handler下（也就是使用attachEvent方式监听），return false会阻止事件，但是不会停止冒泡</p>
-</li>
-<li><p>在标准的DOM0 handler下（也就是在html结构里面事件中return，如：<code>&lt;a onclick=&quot;return ...&quot;&gt;</code>）,return false会阻止事件，但是不会停止冒泡</p>
-</li>
-<li><p>以上都是原生方式return false，都是不能默认阻止事件冒泡</p>
-</li>
-<li><p>但是在jquery环境下监听事件（如：$(‘a’).click(…)）return false会同时阻止事件和停止事件冒泡。</p>
-</li>
-</ul>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -996,7 +987,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-count">16</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1010,7 +1001,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

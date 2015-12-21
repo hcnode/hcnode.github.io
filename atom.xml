@@ -4,7 +4,7 @@
   <subtitle><![CDATA[quicker to develop, cheaper to maintain, and easier to test]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://hcnode.github.io/"/>
-  <updated>2015-10-13T04:38:29.000Z</updated>
+  <updated>2015-12-21T01:00:18.000Z</updated>
   <id>http://hcnode.github.io/</id>
   
   <author>
@@ -13,6 +13,90 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[folder-gallery]]></title>
+    <link href="http://hcnode.github.io/2015/12/21/folder-gallery/"/>
+    <id>http://hcnode.github.io/2015/12/21/folder-gallery/</id>
+    <published>2015-12-21T00:58:58.000Z</published>
+    <updated>2015-12-21T01:00:18.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="前言">前言</h1><p>前天看到有同事分享了一个照片分享的相册系统，看完之后，想起我之前也是因为团建旅游回来后写了一个基于node的相册和目录浏览的系统<a href="https://github.com/hcnode/folder-gallery" target="_blank" rel="external">folder-gallery</a>，不敢私藏，开源出来给大家。因为我之前写过一个基于nw的桌面版照片浏览应用 <a href="https://github.com/hcnode/AlexGallery" target="_blank" rel="external">AlexGallery</a> ，所依赖的一些库也是差不多，所以网络版写起来比比较快。</p>
+<p>其实这个系统，我并没有写多少代码，估计也就100多行左右，都是使用开源的库搭起来的，所以简单的说，我其实不怎么写代码，我只是github的搬运工，再简单的说，呃，其实我是个搬砖的。</p>
+<p>我觉得，<strong>一个高效多产的coder，不但要写得一手好代码，还得要搬得一手好砖，下面我会简单介绍一下搬砖的全过程。</strong><br><a id="more"></a></p>
+<h1 id="Demo和截图">Demo和截图</h1><p>公司内部网络<a href="http://10.254.100.189:8000/" target="_blank" rel="external">Demo</a><br><img src="https://raw.githubusercontent.com/hcnode/folder-gallery/master/screenshots/screenshot2.png" alt="screenshot2"><br><img src="https://raw.githubusercontent.com/hcnode/folder-gallery/master/screenshots/screenshot3.png" alt="screenshot3"><br><img src="https://raw.githubusercontent.com/hcnode/folder-gallery/master/screenshots/screenshot4.png" alt="screenshot4"><br><img src="https://raw.githubusercontent.com/hcnode/folder-gallery/master/screenshots/screenshot5.png" alt="screenshot5"></p>
+<h1 id="特点">特点</h1><p>folder-gallery的特点是简单、易用，包括：</p>
+<ul>
+<li>安装部署简单，只需要一个json参数配置就可以运行并使用</li>
+<li>目录浏览的方式，简单直观</li>
+<li>可以进入相册浏览方式，并提供两个尺寸的缩略图浏览方式</li>
+<li>提供文件夹压缩下载功能</li>
+</ul>
+<h1 id="安装方式">安装方式</h1><ul>
+<li>依赖bower安装web组件，所以全局没有bower的话必须先安装 <code>npm install bower -g</code></li>
+<li><code>git clone https://github.com/hcnode/folder-gallery</code></li>
+<li><code>cd folder-gallery</code></li>
+<li><code>npm install</code></li>
+<li><code>vi ./config/default.json</code> 修改配置 “homePath” 为你的相册的文件夹路径</li>
+<li><code>npm start</code></li>
+<li>访问 <a href="http://localhost:8000/" target="_blank" rel="external">http://localhost:8000/</a></li>
+</ul>
+<h1 id="搬砖说明">搬砖说明</h1><h2 id="主要材料">主要材料</h2><p>前端的框架是bootstrap和angular，其他核心的材料包括这些：</p>
+<ul>
+<li><a href="http://expressjs.com/en/index.html" target="_blank" rel="external">express</a> 这个大家应该都很熟，提供web服务</li>
+<li><a href="https://github.com/expressjs/serve-index" target="_blank" rel="external">serve-index</a> express中间件，提供目录和文件浏览</li>
+<li><a href="https://github.com/EyalAr/lwip" target="_blank" rel="external">lwip</a> 生成缩略图的工具</li>
+<li><a href="https://github.com/mafintosh/tar-fs" target="_blank" rel="external">tar-fs</a> 压缩工具</li>
+<li><a href="https://github.com/jkuri/ngGallery" target="_blank" rel="external">ngGallery</a> 相册库</li>
+</ul>
+<h2 id="搬运过程">搬运过程</h2><ul>
+<li><p><strong>使用serve-index作为目录和文件浏览的express中间件</strong></p>
+<p>  这个库使用很简单，只需要一行代码，再加上静态文件路由：</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="string">'/'</span>, serveIndex(homePath, &#123;<span class="string">'icons'</span>: <span class="literal">true</span>, view: <span class="string">"details"</span>&#125;));</span><br><span class="line">app.use(<span class="string">'/'</span>, express.static(homePath));</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<pre><code>因为我需要在页面上加上“打包下载”和“相册浏览”的功能，所以我fork这个库加上了2个链接：
+
+<span class="comment"><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">	   <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span> <span class="attribute">onclick</span>=<span class="value">"this.href=location.href+(location.pathname=='/'?'':'/')+'_tar'"</span> <span class="attribute">target</span>=<span class="value">"_blank"</span>&gt;</span>Tar<span class="tag">&lt;/<span class="title">a</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"#"</span> <span class="attribute">onclick</span>=<span class="value">"this.href=location.href+(location.pathname=='/'?'':'/')+'_gallery'"</span> <span class="attribute">target</span>=<span class="value">"_blank"</span>&gt;</span>Gallery<span class="tag">&lt;/<span class="title">a</span>&gt;</span></span><br></pre></td></tr></table></figure></span>
+</code></pre><ul>
+<li><p><strong>路由设计</strong></p>
+<p>新建的路由包括相册页面、缩略图接口、原图接口、压缩打包接口，因为中间件serve-index会接管文件夹和文件的映射，所以我决定，将上面的接口定义为：/path/to/file(folder)/_action，所以四个路由的定义分别为：</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 打包下载</span></span><br><span class="line">app.get(<span class="regexp">/.*\/_tar$/</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 缩略图生成</span></span><br><span class="line">app.get(<span class="regexp">/.*\/_thumb$/</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 相册页面</span></span><br><span class="line">app.get(<span class="regexp">/.*\/_gallery$/</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 原图请求</span></span><br><span class="line">app.get(<span class="regexp">/.*\/_image$/</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>打包下载</strong></p>
+<p>很轻松的一块砖，使用tar-fs只需要一行代码，加上压缩包的文件名定义，一共两行：</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">res.set(<span class="string">"Content-Disposition"</span>, <span class="string">'attachment;filename="'</span> + <span class="built_in">encodeURIComponent</span>(tarName) + <span class="string">'.tar"'</span>);</span><br><span class="line">tar.pack(dir).pipe(res);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>缩略图生成</strong></p>
+<p>这块砖般得比较费劲，消耗了20多行代码，主要是加了一些逻辑，比如第一次访问生成缩略图并保存，第二次访问就会直接读取，因为生成缩略图还是比较耗资源。</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(fs.existsSync(thumbFile))&#123;</span><br><span class="line">	res.sendFile(thumbFile);</span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">	lwip.open(fullFile, <span class="function"><span class="keyword">function</span> (<span class="params">err, image</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">var</span> max = <span class="built_in">Math</span>.max(image.width(), image.height());</span><br><span class="line">		<span class="keyword">if</span>(max &lt; thumbSize)&#123;</span><br><span class="line">			res.sendFile(fullFile);</span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">var</span> ratio = <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">if</span>(image.width() &gt; image.height())&#123;</span><br><span class="line">				ratio = thumbSize / image.width();</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				ratio = thumbSize / image.height();</span><br><span class="line">			&#125;</span><br><span class="line">			image.scale(ratio, <span class="function"><span class="keyword">function</span> (<span class="params">err, image</span>) </span>&#123;</span><br><span class="line">				image.writeFile(thumbFile, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">					res.sendFile(thumbFile);</span><br><span class="line">				&#125;);</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>相册页面</strong></p>
+<p>最大的一块砖，所以我去ngGallery找了一辆货车将它运走了</p>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">body</span> <span class="attribute">ng-app</span>=<span class="value">"app"</span> <span class="attribute">style</span>=<span class="value">"padding: 20px"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-controller</span>=<span class="value">"CtrlGallery as ctrl"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">ng-gallery</span> <span class="attribute">images</span>=<span class="value">"ctrl.images"</span> <span class="attribute">editShow</span>=<span class="value">"false"</span>&gt;</span><span class="tag">&lt;/<span class="title">ng-gallery</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">createImages</span>(<span class="params">path, files</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> images = [];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;files.length;i++) &#123;</span><br><span class="line">            images.push(&#123; <span class="comment">// ngGallery所需要的数据对象</span></span><br><span class="line">                thumb: path + <span class="string">"/"</span> +  files[i] + <span class="string">"/_thumb"</span>,</span><br><span class="line">                img: path + <span class="string">"/"</span>+ files[i] + <span class="string">"/_image"</span>,</span><br><span class="line">                description: (<span class="regexp">/\/([^\/]+)$/</span>.test(path) &amp;&amp; <span class="built_in">RegExp</span>.$<span class="number">1</span>)</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> images;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> app = angular.module(<span class="string">"app"</span>, [<span class="string">'jkuri.gallery'</span>]).controller(<span class="string">'CtrlGallery'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope, $timeout</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> files = <span class="xml"><span class="tag">&lt;<span class="title">%-</span> <span class="attribute">JSON.stringify</span>(<span class="attribute">files</span>) %&gt;</span>;</span> <span class="comment">// 照片的json数组：["xxx.jpg", "yyy.jpg"]</span></span><br><span class="line">        <span class="keyword">var</span> path = <span class="string">"&lt;%- path %&gt;"</span>;</span><br><span class="line">        <span class="keyword">var</span> images = createImages(path, files);</span><br><span class="line">        <span class="keyword">var</span> that = <span class="keyword">this</span>;</span><br><span class="line">        <span class="comment">// 每次加载三张图片，按顺序加载</span></span><br><span class="line">        that.images = images.splice(<span class="number">0</span>, <span class="number">3</span>);</span><br><span class="line">        <span class="built_in">window</span>.ngGalleryImageOnload = <span class="function"><span class="keyword">function</span> (<span class="params">image</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(images.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                $timeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                    that.images.push(images.shift());</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>  <strong>配合ngGallery的路由</strong>：</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">fs.readdir(fullPath, <span class="function"><span class="keyword">function</span> (<span class="params">err, files</span>) </span>&#123;</span><br><span class="line">	_.forEach(files, <span class="function"><span class="keyword">function</span> (<span class="params">file</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(file.indexOf(<span class="string">"."</span>) != <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="keyword">var</span> stat = fs.statSync(fullPath + <span class="string">'/'</span> + file);</span><br><span class="line">			<span class="keyword">if</span> (!stat.isDirectory()) &#123;</span><br><span class="line">				<span class="keyword">if</span> (<span class="regexp">/\.(PNG)|(JPG)$/ig</span>.test(file)) &#123;</span><br><span class="line">					images.push(file);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line">	res.render(__dirname + <span class="string">"/views/gallery.ejs"</span>, &#123;files : images, path : path&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>基本上整个相册就搭好了，并用config库封装了两个配置：homePath和thumbSize，方便用户下载后改配置。<br>整个搬砖过程大概就是这样，如果大家有更快的搬砖方式或者姿势，欢迎拍砖！</p>
+<h2 id="Issues">Issues</h2><ol>
+<li>ngGallery的预览模式的下面照片导航显示有时候会有点问题</li>
+<li>可能有人会问为什么我使用fs文件操作喜欢用同步方式，主要是因为减少callback而已，自己内部用性能没啥影响，如果你要放到网上，那就必须用异步的接口</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="前言">前言</h1><p>前天看到有同事分享了一个照片分享的相册系统，看完之后，想起我之前也是因为团建旅游回来后写了一个基于node的相册和目录浏览的系统<a href="https://github.com/hcnode/folder-gallery">folder-gallery</a>，不敢私藏，开源出来给大家。因为我之前写过一个基于nw的桌面版照片浏览应用 <a href="https://github.com/hcnode/AlexGallery">AlexGallery</a> ，所依赖的一些库也是差不多，所以网络版写起来比比较快。</p>
+<p>其实这个系统，我并没有写多少代码，估计也就100多行左右，都是使用开源的库搭起来的，所以简单的说，我其实不怎么写代码，我只是github的搬运工，再简单的说，呃，其实我是个搬砖的。</p>
+<p>我觉得，<strong>一个高效多产的coder，不但要写得一手好代码，还得要搬得一手好砖，下面我会简单介绍一下搬砖的全过程。</strong><br>]]>
+    
+    </summary>
+    
+      <category term="express" scheme="http://hcnode.github.io/tags/express/"/>
+    
+      <category term="gallery" scheme="http://hcnode.github.io/tags/gallery/"/>
+    
+      <category term="node" scheme="http://hcnode.github.io/tags/node/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Sails和blueprints 简介以及deepblueprints hook介绍]]></title>

@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://hcnode.github.io/2015/12/21/folder-gallery/</loc>
+    <lastmod>2015-12-21T01:00:18.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://hcnode.github.io/2015/10/13/sails-hook-deepblueprints/</loc>
     <lastmod>2015-10-13T04:38:29.000Z</lastmod>
   </url>
