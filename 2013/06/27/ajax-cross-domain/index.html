@@ -220,19 +220,19 @@ flash request：使用配置xml “crossdomain.xml”，来进行配置，不需
       
         <span itemprop="articleBody"><p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/1654685420135273483575/" target="_blank" rel="external">这里</a></p>
 <p>最近在用xhr2做某个项目的后台，在这过程中遇到各种疑难杂症，对比起来，flash request的跨域其实是既简单又实用，而xhr2则有各种限制。</p>
-<h3 id="先来对比flash_request和xhr2的跨域策略区别">先来对比flash request和xhr2的跨域策略区别</h3><ul>
+<h3 id="u5148_u6765_u5BF9_u6BD4flash_request_u548Cxhr2_u7684_u8DE8_u57DF_u7B56_u7565_u533A_u522B"><a href="#u5148_u6765_u5BF9_u6BD4flash_request_u548Cxhr2_u7684_u8DE8_u57DF_u7B56_u7565_u533A_u522B" class="headerlink" title="先来对比flash request和xhr2的跨域策略区别"></a>先来对比flash request和xhr2的跨域策略区别</h3><ul>
 <li><p>flash request：使用配置xml “crossdomain.xml”，来进行配置，不需要修改其他比如返回http头，flash会先获取这个xml查询http请求，是否有权限进行跨域。</p>
 </li>
 <li><p>xhr2：使用浏览器自带的xmlhttprequest level2来进行跨域ajax请求，浏览器和服务器需要发送和返回对应的http头来进行跨域策略。</p>
 </li>
 </ul>
-<h3 id="下面是在用到xhr2是遇到的问题：">下面是在用到xhr2是遇到的问题：</h3><ul>
+<h3 id="u4E0B_u9762_u662F_u5728_u7528_u5230xhr2_u662F_u9047_u5230_u7684_u95EE_u9898_uFF1A"><a href="#u4E0B_u9762_u662F_u5728_u7528_u5230xhr2_u662F_u9047_u5230_u7684_u95EE_u9898_uFF1A" class="headerlink" title="下面是在用到xhr2是遇到的问题："></a>下面是在用到xhr2是遇到的问题：</h3><ul>
 <li><p>首先遇到第一个问题，因为extjs框架进行跨域访问时，会自动带上自定义头：X-Requested-With，这时候浏览器会提示出错，原因是因为当有自定义头时，服务器端需要返回头：Access-Control-Allow-Headers:X-Requested-With，表示允许可以设置请求自定义头</p>
 </li>
 <li><p>第二个问题是发现跨域请求没有带上cookie，原因是因为在extjs的xhr2，withCredentials默认为false，需要加上这个属性请求才能带上cookie，但是加上withCredentials属性后发现还是出错，原因是当withCredentials为true时，返回的Access-Control-Allow-Origin的值不能为*，需要为一个特定的域名，最后把这个改为测试机的域名后，以为终于可以了吧，Holy Crap！还是不行，好吧，原因是服务器端http头也要返回Access-Control-Allow-Credentials:true</p>
 </li>
 </ul>
-<h3 id="总结：">总结：</h3><ul>
+<h3 id="u603B_u7ED3_uFF1A"><a href="#u603B_u7ED3_uFF1A" class="headerlink" title="总结："></a>总结：</h3><ul>
 <li><p>当xhr2跨域ajax时，不需要带上cookie，没有自定义头，只需要返回设置Access-Control-Allow-Origin头就可以。</p>
 </li>
 <li><p>如果需要设置自定义头，需要服务器端返回Access-Control-Allow-Headers:自定义头。</p>
@@ -405,7 +405,7 @@ flash request：使用配置xml “crossdomain.xml”，来进行配置，不需
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#先来对比flash_request和xhr2的跨域策略区别"><span class="nav-number">1.</span> <span class="nav-text">先来对比flash request和xhr2的跨域策略区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下面是在用到xhr2是遇到的问题："><span class="nav-number">2.</span> <span class="nav-text">下面是在用到xhr2是遇到的问题：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结："><span class="nav-number">3.</span> <span class="nav-text">总结：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#u5148_u6765_u5BF9_u6BD4flash_request_u548Cxhr2_u7684_u8DE8_u57DF_u7B56_u7565_u533A_u522B"><span class="nav-number">1.</span> <span class="nav-text">先来对比flash request和xhr2的跨域策略区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u4E0B_u9762_u662F_u5728_u7528_u5230xhr2_u662F_u9047_u5230_u7684_u95EE_u9898_uFF1A"><span class="nav-number">2.</span> <span class="nav-text">下面是在用到xhr2是遇到的问题：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u603B_u7ED3_uFF1A"><span class="nav-number">3.</span> <span class="nav-text">总结：</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

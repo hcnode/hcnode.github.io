@@ -243,7 +243,7 @@ activity layou">
 <li>app的数据http请求调试各种繁琐，又加代理连到pc，又要开charles，手机又要连内网，手机的wifi代理经常要反复切换，坑爹的居然没有自动保存代理功能</li>
 </ul>
 <p>上面这些提到的没有技术含量得“体力活”，可能会占据了我们开发不少的时间，一方面浪费时间、另一方面无法专心开发具体业务需求，我下面总结了一下消灭这些体力活的方法<br><a id="more"></a></p>
-<h3 id="依赖注入DI(Dependency_Injection)">依赖注入DI(Dependency Injection)</h3><p>估计大家对DI应该有所了解，因为在android开发里面，这是最浪费体力活的工作，前不久，我所负责的项目android版本需要新增一个新的模块，新的模块流程复杂、交互比较多，开工之前预计至少要3周时间开发，我决定尝试使用一个DI库 Butterknife来开发，配合android studio插件使用，自从用起来后，写代码的心情就一个字：很爽！并且最终整个模块提前一周时间基本功能都写出来。</p>
+<h3 id="u4F9D_u8D56_u6CE8_u5165DI_28Dependency_Injection_29"><a href="#u4F9D_u8D56_u6CE8_u5165DI_28Dependency_Injection_29" class="headerlink" title="依赖注入DI(Dependency Injection)"></a>依赖注入DI(Dependency Injection)</h3><p>估计大家对DI应该有所了解，因为在android开发里面，这是最浪费体力活的工作，前不久，我所负责的项目android版本需要新增一个新的模块，新的模块流程复杂、交互比较多，开工之前预计至少要3周时间开发，我决定尝试使用一个DI库 Butterknife来开发，配合android studio插件使用，自从用起来后，写代码的心情就一个字：很爽！并且最终整个模块提前一周时间基本功能都写出来。</p>
 <p>一些常见的android DI库包括</p>
 <ul>
 <li>Android Annotation</li>
@@ -257,7 +257,7 @@ activity layou">
 <p><img src="https://raw.githubusercontent.com/hcnode/hcnode-blog/master/images/screenshot_14384.png" alt="butterknife"></p>
 <p>另外插件还可以配置生成view的私有变量的前缀，比如统一前面加“m”前缀</p>
 <p><img src="https://github.com/hcnode/hcnode-blog/blob/master/images/butterknife.png?raw=true" alt="butterknife_plugin"></p>
-<h3 id="批量生成通用模块的模版">批量生成通用模块的模版</h3><p>我前面一开始所提到的创建一个列表时候，所需要创建一大堆文件，而且这些文件零零散散分布在各个文件夹，这也是一件很繁琐的体力活。<br>我使用了一个完全没有技术含量的方法来做这些“体力活”，我在项目里面创建了一个工具，然后通过自定义模块来生成需要的文件</p>
+<h3 id="u6279_u91CF_u751F_u6210_u901A_u7528_u6A21_u5757_u7684_u6A21_u7248"><a href="#u6279_u91CF_u751F_u6210_u901A_u7528_u6A21_u5757_u7684_u6A21_u7248" class="headerlink" title="批量生成通用模块的模版"></a>批量生成通用模块的模版</h3><p>我前面一开始所提到的创建一个列表时候，所需要创建一大堆文件，而且这些文件零零散散分布在各个文件夹，这也是一件很繁琐的体力活。<br>我使用了一个完全没有技术含量的方法来做这些“体力活”，我在项目里面创建了一个工具，然后通过自定义模块来生成需要的文件</p>
 <ul>
 <li><p><strong>首先，创建模版文件</strong></p>
 <p>我新建立了一个module叫“templateutil”，里面包括需要创建的模版template目录，可以将通用的activity、fragment、layout放在里面</p>
@@ -278,16 +278,16 @@ activity layou">
 <li><strong>然后就可以使用了</strong></li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">harry$ gradle createListActivity -Pmodel=wishlist</span><br></pre></td></tr></table></figure>
-<h3 id="缩短gradle_build_task的时间">缩短gradle build task的时间</h3><p>现在一些大型的android项目，里面可能存在多个module，依赖很多库，每次需要run或者debug时候，需要一两分钟时间等待task run完，才能调试，下面有三个方法缩短这个build时间</p>
-<h4 id="修改gradle配置，">修改gradle配置，</h4><p>爆栈里的这个<a href="http://stackoverflow.com/questions/16775197/building-and-running-app-via-gradle-and-android-studio-is-slower-than-via-eclips" target="_blank" rel="external">修改gradle配置方法</a>经过实践证明确实可以减少一点build时间，在我的项目里面大概可以减少10-20s</p>
-<h4 id="buck"><a href="https://github.com/facebook/buck" target="_blank" rel="external">buck</a></h4><p>来自facebook的buck，据说可以将build时间缩短到十分之一，WOW！不过我没有用过，因为看介绍说，它放弃了gradle的build system，并且需要修改大量的代码，所以我们放弃用它</p>
-<h4 id="LayoutCast"><a href="https://github.com/mmin18/LayoutCast" target="_blank" rel="external">LayoutCast</a></h4><p>当看到LayoutCast README的第一行说明，我忍不住想跟作者握个抓</p>
+<h3 id="u7F29_u77EDgradle_build_task_u7684_u65F6_u95F4"><a href="#u7F29_u77EDgradle_build_task_u7684_u65F6_u95F4" class="headerlink" title="缩短gradle build task的时间"></a>缩短gradle build task的时间</h3><p>现在一些大型的android项目，里面可能存在多个module，依赖很多库，每次需要run或者debug时候，需要一两分钟时间等待task run完，才能调试，下面有三个方法缩短这个build时间</p>
+<h4 id="u4FEE_u6539gradle_u914D_u7F6E_uFF0C"><a href="#u4FEE_u6539gradle_u914D_u7F6E_uFF0C" class="headerlink" title="修改gradle配置，"></a>修改gradle配置，</h4><p>爆栈里的这个<a href="http://stackoverflow.com/questions/16775197/building-and-running-app-via-gradle-and-android-studio-is-slower-than-via-eclips" target="_blank" rel="external">修改gradle配置方法</a>经过实践证明确实可以减少一点build时间，在我的项目里面大概可以减少10-20s</p>
+<h4 id="buck"><a href="#buck" class="headerlink" title="buck"></a><a href="https://github.com/facebook/buck" target="_blank" rel="external">buck</a></h4><p>来自facebook的buck，据说可以将build时间缩短到十分之一，WOW！不过我没有用过，因为看介绍说，它放弃了gradle的build system，并且需要修改大量的代码，所以我们放弃用它</p>
+<h4 id="LayoutCast"><a href="#LayoutCast" class="headerlink" title="LayoutCast"></a><a href="https://github.com/mmin18/LayoutCast" target="_blank" rel="external">LayoutCast</a></h4><p>当看到LayoutCast README的第一行说明，我忍不住想跟作者握个抓</p>
 <blockquote>
 <p>Android SDK sucks. It’s so slow to build and run which waste me a lot of time every day.</p>
 </blockquote>
 <p>LayoutCast最大的好处是，不需要修改太多的代码，速度方面在介绍中有数据对比，据称比buck还要快，我试过放入我们的项目，可能是因为我们的项目结构比较复杂module比较多，一直没有运行成功，不过我新建project测试是可以用的</p>
-<h3 id="webview调试插件">webview调试插件</h3><p>有个很好用的调试真机webview的<a href="https://chrome.google.com/webstore/detail/adb/dpngiggdglpdnjdoaefidgiigpemgage" target="_blank" rel="external">chrome插件</a>，通过adb连接直接调试真机，而不需要chrome模拟移动设备<br><img src="https://lh6.googleusercontent.com/UWMstNihpq4VCeaTA4nkWMpnjZ_RlZ0SJa4rPh9Rc63nPT6r8nJ6Ju03BYfm7LTwtH7L5VMy=s1280-h800-e365-rw" alt="adb_plugin"></p>
-<h3 id="AndroidProxySetter"><a href="https://github.com/jpkrause/AndroidProxySetter" target="_blank" rel="external">AndroidProxySetter</a></h3><p>最后这个是一个小工具，使用adb命令可以快速进行wifi代理的设置和清除，亲测有效！</p>
+<h3 id="webview_u8C03_u8BD5_u63D2_u4EF6"><a href="#webview_u8C03_u8BD5_u63D2_u4EF6" class="headerlink" title="webview调试插件"></a>webview调试插件</h3><p>有个很好用的调试真机webview的<a href="https://chrome.google.com/webstore/detail/adb/dpngiggdglpdnjdoaefidgiigpemgage" target="_blank" rel="external">chrome插件</a>，通过adb连接直接调试真机，而不需要chrome模拟移动设备<br><img src="https://lh6.googleusercontent.com/UWMstNihpq4VCeaTA4nkWMpnjZ_RlZ0SJa4rPh9Rc63nPT6r8nJ6Ju03BYfm7LTwtH7L5VMy=s1280-h800-e365-rw" alt="adb_plugin"></p>
+<h3 id="AndroidProxySetter"><a href="#AndroidProxySetter" class="headerlink" title="AndroidProxySetter"></a><a href="https://github.com/jpkrause/AndroidProxySetter" target="_blank" rel="external">AndroidProxySetter</a></h3><p>最后这个是一个小工具，使用adb命令可以快速进行wifi代理的设置和清除，亲测有效！</p>
 </span>
       
     </div>
@@ -453,7 +453,7 @@ activity layou">
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖注入DI(Dependency_Injection)"><span class="nav-number">1.</span> <span class="nav-text">依赖注入DI(Dependency Injection)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#批量生成通用模块的模版"><span class="nav-number">2.</span> <span class="nav-text">批量生成通用模块的模版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缩短gradle_build_task的时间"><span class="nav-number">3.</span> <span class="nav-text">缩短gradle build task的时间</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改gradle配置，"><span class="nav-number">3.1.</span> <span class="nav-text">修改gradle配置，</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#buck"><span class="nav-number">3.2.</span> <span class="nav-text">buck</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LayoutCast"><span class="nav-number">3.3.</span> <span class="nav-text">LayoutCast</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webview调试插件"><span class="nav-number">4.</span> <span class="nav-text">webview调试插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AndroidProxySetter"><span class="nav-number">5.</span> <span class="nav-text">AndroidProxySetter</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#u4F9D_u8D56_u6CE8_u5165DI_28Dependency_Injection_29"><span class="nav-number">1.</span> <span class="nav-text">依赖注入DI(Dependency Injection)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u6279_u91CF_u751F_u6210_u901A_u7528_u6A21_u5757_u7684_u6A21_u7248"><span class="nav-number">2.</span> <span class="nav-text">批量生成通用模块的模版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u7F29_u77EDgradle_build_task_u7684_u65F6_u95F4"><span class="nav-number">3.</span> <span class="nav-text">缩短gradle build task的时间</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#u4FEE_u6539gradle_u914D_u7F6E_uFF0C"><span class="nav-number">3.1.</span> <span class="nav-text">修改gradle配置，</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#buck"><span class="nav-number">3.2.</span> <span class="nav-text">buck</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LayoutCast"><span class="nav-number">3.3.</span> <span class="nav-text">LayoutCast</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webview_u8C03_u8BD5_u63D2_u4EF6"><span class="nav-number">4.</span> <span class="nav-text">webview调试插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AndroidProxySetter"><span class="nav-number">5.</span> <span class="nav-text">AndroidProxySetter</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

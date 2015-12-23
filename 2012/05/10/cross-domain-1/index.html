@@ -218,15 +218,15 @@
         <span itemprop="articleBody"><p>这是我三年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/165468542012410115229581/" target="_blank" rel="external">这里</a></p>
 <p>作为一个苦逼前端开发工程师，不得不面对各种cross，比如面对五花八门的浏览器我们必须cross browser，面对各种终端，我们必须cross device，在这么多年的前端开发经历中，在不同的域之间穿越中，遭受各种折磨，所以这次和大家分享的是cross domain。</p>
 <p>这次分享的cross domain，是包括所有跨域调用，无论是跨域获取数据，还是跨域跨frame调用，所以会分为两部分，这次会先分享跨域获取数据，跨域获取数据大概有以下方式。</p>
-<h3 id="jsonp方式">jsonp方式</h3><p>这是最简单，也是最实用的跨域获取数据方式，原理是在浏览器端通过生成script标签，并通过js callback的形式实现跨域访问，比如一个jsonp接口是这样：</p>
-<pre><code><span class="string">http:</span><span class="comment">//mail.163.com/someapp/jsonp?somequery=<span class="doctag"><span class="keyword">xxx</span></span>&amp;callback=fSomeMethod</span>
+<h3 id="jsonp_u65B9_u5F0F"><a href="#jsonp_u65B9_u5F0F" class="headerlink" title="jsonp方式"></a>jsonp方式</h3><p>这是最简单，也是最实用的跨域获取数据方式，原理是在浏览器端通过生成script标签，并通过js callback的形式实现跨域访问，比如一个jsonp接口是这样：</p>
+<pre><code>http://mail.163.com/someapp/jsonp?somequery=xxx&amp;callback=fSomeMethod
 </code></pre><p>然后服务器端会通过以下方式返回数据：</p>
-<pre><code><span class="function"><span class="title">fSomeMethod</span><span class="params">({返回的json数据对象})</span></span>
+<pre><code>fSomeMethod({返回的json数据对象})
 </code></pre><ul>
 <li>优点：实现简单，使用灵活，并且原生cross all browser</li>
 <li>缺点：只能get方式获取数据，某些浏览器会显示加载中提示</li>
 </ul>
-<h3 id="表单post方式">表单post方式</h3><p>这个方式会复杂一点点，原理是post表单到一个隐藏的iframe，然后iframe将数据post回来同域的一个url，这时候就可以直接调用同域的回调：</p>
+<h3 id="u8868_u5355post_u65B9_u5F0F"><a href="#u8868_u5355post_u65B9_u5F0F" class="headerlink" title="表单post方式"></a>表单post方式</h3><p>这个方式会复杂一点点，原理是post表单到一个隐藏的iframe，然后iframe将数据post回来同域的一个url，这时候就可以直接调用同域的回调：</p>
 <ul>
 <li><p>首先post表单到如：</p>
 <p> <a href="http://other.domain.com/someapp?somequery=xxx&amp;callback=fSomeMethod&amp;backurl=http://mail.163.com/proxy" target="_blank" rel="external">http://other.domain.com/someapp?somequery=xxx&amp;callback=fSomeMethod&amp;backurl=http://mail.163.com/proxy</a></p>
@@ -240,9 +240,9 @@
 </ul>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="apache"></span><br><span class="line"><span class="keyword">parent</span>.<span class="cbracket">$&#123;param.callback&#125;</span>(<span class="string">"返回的数据"</span>)</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>这样就完成整个跨域获取数据的过程<br><strong>优点：</strong>支持post方式，并且原生cross all browser<br><strong>缺点：</strong>实现有点复杂，并且流程有点曲折，需要两次请求，而且表单post方式会引起刷新提示的问题</p>
-<h3 id="服务器代理">服务器代理</h3><p>服务器代理方式跨域调用也是使用的比较广泛的方式，原理就是在服务器端来获取跨域数据，然后在同域里ajax方式或者其他方式返回给浏览器。<br><strong>优点：</strong>客户端实现简单，没有cross browser问题<br><strong>缺点：</strong>需要在服务器端实现模拟请求获取数据</p>
-<h3 id="html5的XDomainRequest">html5的XDomainRequest</h3><p>终于在html5迎来了对跨域的ajax，泪牛满脸啊，这下完全可以通过浏览器的原生方式跨域ajax获取数据，这里一个对浏览器的各种跨域ajax的测试：<br><a href="http://www.debugtheweb.com/test/teststreaming.aspx" target="_blank" rel="external">http://www.debugtheweb.com/test/teststreaming.aspx</a><br><strong>优点：</strong>浏览器原生支持跨域方式ajax请求<br><strong>缺点：</strong>只能在支持html5的高级浏览器中支持</p>
-<h3 id="flash_request">flash request</h3><p>这个是目前跨域请求最好的一个解决方案，建议在不能用jsonp的方式时候，都可以使用flash request方式，而且flash request可以配置一个安全策略，可以允许哪些域可以调用，然后被跨域的调用需要配置一个crossdomain.xml，允许可以被那个域的flash跨域调用，内容如下：</p>
+<h3 id="u670D_u52A1_u5668_u4EE3_u7406"><a href="#u670D_u52A1_u5668_u4EE3_u7406" class="headerlink" title="服务器代理"></a>服务器代理</h3><p>服务器代理方式跨域调用也是使用的比较广泛的方式，原理就是在服务器端来获取跨域数据，然后在同域里ajax方式或者其他方式返回给浏览器。<br><strong>优点：</strong>客户端实现简单，没有cross browser问题<br><strong>缺点：</strong>需要在服务器端实现模拟请求获取数据</p>
+<h3 id="html5_u7684XDomainRequest"><a href="#html5_u7684XDomainRequest" class="headerlink" title="html5的XDomainRequest"></a>html5的XDomainRequest</h3><p>终于在html5迎来了对跨域的ajax，泪牛满脸啊，这下完全可以通过浏览器的原生方式跨域ajax获取数据，这里一个对浏览器的各种跨域ajax的测试：<br><a href="http://www.debugtheweb.com/test/teststreaming.aspx" target="_blank" rel="external">http://www.debugtheweb.com/test/teststreaming.aspx</a><br><strong>优点：</strong>浏览器原生支持跨域方式ajax请求<br><strong>缺点：</strong>只能在支持html5的高级浏览器中支持</p>
+<h3 id="flash_request"><a href="#flash_request" class="headerlink" title="flash request"></a>flash request</h3><p>这个是目前跨域请求最好的一个解决方案，建议在不能用jsonp的方式时候，都可以使用flash request方式，而且flash request可以配置一个安全策略，可以允许哪些域可以调用，然后被跨域的调用需要配置一个crossdomain.xml，允许可以被那个域的flash跨域调用，内容如下：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0"?&gt;</span></span><br><span class="line"><span class="doctype">&lt;!DOCTYPE cross-domain-policy SYSTEM "http://www.adobe.com/xml/dtds/cross-domain-policy.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">cross-domain-policy</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="title">allow-access-from</span> <span class="attribute">domain</span>=<span class="value">"www.xxx.com"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">cross-domain-policy</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>这种方式的局限就是必须依赖flash，我们这边在邮箱曾经做过一个统计，99%的用户可以通过这种方式获取到数据，另外1%的用户可能是没有安装flash或者flash版本有问题。</p>
 <ul>
@@ -415,7 +415,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#jsonp方式"><span class="nav-number">1.</span> <span class="nav-text">jsonp方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表单post方式"><span class="nav-number">2.</span> <span class="nav-text">表单post方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器代理"><span class="nav-number">3.</span> <span class="nav-text">服务器代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#html5的XDomainRequest"><span class="nav-number">4.</span> <span class="nav-text">html5的XDomainRequest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flash_request"><span class="nav-number">5.</span> <span class="nav-text">flash request</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#jsonp_u65B9_u5F0F"><span class="nav-number">1.</span> <span class="nav-text">jsonp方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u8868_u5355post_u65B9_u5F0F"><span class="nav-number">2.</span> <span class="nav-text">表单post方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u670D_u52A1_u5668_u4EE3_u7406"><span class="nav-number">3.</span> <span class="nav-text">服务器代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#html5_u7684XDomainRequest"><span class="nav-number">4.</span> <span class="nav-text">html5的XDomainRequest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flash_request"><span class="nav-number">5.</span> <span class="nav-text">flash request</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

@@ -216,10 +216,10 @@
 
       
         <span itemprop="articleBody"><p>这是我三年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/1654685420121085355140/" target="_blank" rel="external">这里</a></p>
-<h3 id="为什么要使用Observer模式">为什么要使用Observer模式</h3><p>在大型的ajax项目前端开发中，模块分得很细，多个开发者负责不同的业务逻辑模块开发，会需要不同模块之间互相调用接口，在网易邮箱的前端开发中遇到过这样的情况也是家常便饭，虽然我们可以将公共调用的功能分离出来到一个“公共库”，然后开发者需要实现某个功能时，可以去“公共库”找相关的接口，然后在自己的代码中调用。</p>
+<h3 id="u4E3A_u4EC0_u4E48_u8981_u4F7F_u7528Observer_u6A21_u5F0F"><a href="#u4E3A_u4EC0_u4E48_u8981_u4F7F_u7528Observer_u6A21_u5F0F" class="headerlink" title="为什么要使用Observer模式"></a>为什么要使用Observer模式</h3><p>在大型的ajax项目前端开发中，模块分得很细，多个开发者负责不同的业务逻辑模块开发，会需要不同模块之间互相调用接口，在网易邮箱的前端开发中遇到过这样的情况也是家常便饭，虽然我们可以将公共调用的功能分离出来到一个“公共库”，然后开发者需要实现某个功能时，可以去“公共库”找相关的接口，然后在自己的代码中调用。</p>
 <p>但是如果接口有变更、或者新需求需要增加调用，就导致各个模块负责人耦合维护，这种方式在小型的项目没有大问题，不过项目越做越大后，就会导致模块之间耦合越来越大，维护成本越来越高，在新的网易邮箱版本里面，使用了Observer的设计模式实现模块之间的解耦。</p>
-<h3 id="Observer模式的定义">Observer模式的定义</h3><p>Observer（观察者模式）：定义对象间的一种一对多的依赖关系,以便当一个对象的状态发生改变时,所有依赖于它的对象都得到通知并自动刷新。</p>
-<h3 id="举例说明">举例说明</h3><p>先举个例子：邮箱中的收件箱模块和读信模块，分别是程序员A和程序员B负责，在旧的模式里，收件箱读取一封新邮件后，B会调用A的接口.setRead(sMailId)实现去掉该邮件未读标记，然后有一天，负责左侧导航的同事C说：产品增加一个需求，读取新邮件后，左侧导航的收件箱的未读数需要更新。这时，C发给B一个更新导航的接口，然后B就要修改代码，加上C提供的接口.updateNav()。</p>
+<h3 id="Observer_u6A21_u5F0F_u7684_u5B9A_u4E49"><a href="#Observer_u6A21_u5F0F_u7684_u5B9A_u4E49" class="headerlink" title="Observer模式的定义"></a>Observer模式的定义</h3><p>Observer（观察者模式）：定义对象间的一种一对多的依赖关系,以便当一个对象的状态发生改变时,所有依赖于它的对象都得到通知并自动刷新。</p>
+<h3 id="u4E3E_u4F8B_u8BF4_u660E"><a href="#u4E3E_u4F8B_u8BF4_u660E" class="headerlink" title="举例说明"></a>举例说明</h3><p>先举个例子：邮箱中的收件箱模块和读信模块，分别是程序员A和程序员B负责，在旧的模式里，收件箱读取一封新邮件后，B会调用A的接口.setRead(sMailId)实现去掉该邮件未读标记，然后有一天，负责左侧导航的同事C说：产品增加一个需求，读取新邮件后，左侧导航的收件箱的未读数需要更新。这时，C发给B一个更新导航的接口，然后B就要修改代码，加上C提供的接口.updateNav()。</p>
 <ul>
 <li>使用Observer模式后：</li>
 </ul>
@@ -399,7 +399,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要使用Observer模式"><span class="nav-number">1.</span> <span class="nav-text">为什么要使用Observer模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Observer模式的定义"><span class="nav-number">2.</span> <span class="nav-text">Observer模式的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#举例说明"><span class="nav-number">3.</span> <span class="nav-text">举例说明</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#u4E3A_u4EC0_u4E48_u8981_u4F7F_u7528Observer_u6A21_u5F0F"><span class="nav-number">1.</span> <span class="nav-text">为什么要使用Observer模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Observer_u6A21_u5F0F_u7684_u5B9A_u4E49"><span class="nav-number">2.</span> <span class="nav-text">Observer模式的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u4E3E_u4F8B_u8BF4_u660E"><span class="nav-number">3.</span> <span class="nav-text">举例说明</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

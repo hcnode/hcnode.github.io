@@ -218,15 +218,15 @@
         <span itemprop="articleBody"><p>这是我三年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/16546854201241045825663/" target="_blank" rel="external">这里</a></p>
 <p>在上一篇关于跨域获取数据中，苦逼的前端开发工程师，刚才解决了一个cross domain的问题，还没有来得及沉浸在其中喜悦之际，又迎来了另外一个cross domain的问题：邮箱出现双滚动啦。</p>
 <p>在页面中当需要加载外域app的iframe时候，最容易出现跨frame的cross domain问题，比如刚才那前端开发工程师遇到的双滚动的问题，在页面中放入一个外域的iframe，当iframe的高度大于iframe的页面的body高度时，就会出现滚动，这时候加上本身页面已经有一条滚动，那就出现经典的双滚动问题，如果iframe里面又嵌套另一个外域iframe，那可能会出现三滚动，继续嵌套..继续滚动..继续套..继续滚…，之所以出现这个问题，是因为外域的iframe不能直接调用:</p>
-<pre><code>parent<span class="class">.document</span><span class="class">.getElementById</span>(<span class="string">"iframe_id"</span>)<span class="class">.style</span><span class="class">.height</span> =   document<span class="class">.body</span><span class="class">.offsetHeight</span> + <span class="string">"px"</span>
+<pre><code>parent.document.getElementById(&quot;iframe_id&quot;).style.height =   document.body.offsetHeight + &quot;px&quot;
 </code></pre><p>这里就需要跨iframe进行cross domain，有以下提到的两个方式。<br>以下的例子会以这几个页面作为例子：<br>页面a:</p>
-<pre><code><span class="string">http:</span><span class="comment">//www.a.com/a.htm</span>
+<pre><code>http://www.a.com/a.htm
 </code></pre><p>页面b:</p>
-<pre><code><span class="string">http:</span><span class="comment">//www.b.com/b.htm</span>
+<pre><code>http://www.b.com/b.htm
 </code></pre><p>a的内容：</p>
-<pre><code><span class="tag">&lt;<span class="title">iframe</span> <span class="attribute">src</span>=<span class="value">"http://www.b.com/b.htm"</span> <span class="attribute">id</span>=<span class="value">"ifrm_b"</span>&gt;</span><span class="tag">&lt;/<span class="title">iframe</span>&gt;</span>
-</code></pre><h3 id="html5的postMessage方式">html5的postMessage方式</h3><p>首先介绍一个浏览器原生的跨域调用方式，在支持html5的高级浏览器，支持这种方式：</p>
-<pre><code><span class="tag">oWin</span><span class="class">.postMessage</span>(<span class="tag">oMessage</span>, <span class="tag">sTargetDomain</span>);
+<pre><code>&lt;iframe src=&quot;http://www.b.com/b.htm&quot; id=&quot;ifrm_b&quot;&gt;&lt;/iframe&gt;
+</code></pre><h3 id="html5_u7684postMessage_u65B9_u5F0F"><a href="#html5_u7684postMessage_u65B9_u5F0F" class="headerlink" title="html5的postMessage方式"></a>html5的postMessage方式</h3><p>首先介绍一个浏览器原生的跨域调用方式，在支持html5的高级浏览器，支持这种方式：</p>
+<pre><code>oWin.postMessage(oMessage, sTargetDomain);
 </code></pre><ul>
 <li>oWin为需要跨域调用的window对象</li>
 <li>oMessage为传送的数据</li>
@@ -241,7 +241,7 @@
 <li>优点：完美的跨frame跨域调用</li>
 <li>缺点：只支持html5的浏览器</li>
 </ul>
-<h3 id="代理iframe方式">代理iframe方式</h3><p>使用代理iframe的方式有两种，一种通过window.name方式跨域调用，一种是通过url参数的方式传递调用，不过两种方式的调用原理都是创建一个隐藏的iframe，iframe的url指向需要跨域的域名的一个代理页面，然后通过这个代理的iframe，和跨域的iframe通讯，因为这时代理的iframe和跨域的iframe完全同域，就可以畅通无阻进行。<br>在上面的例子加多一个代理页面c:<br>代理iframe c:<a href="http://www.b.com/c.htm" target="_blank" rel="external">http://www.b.com/c.htm</a></p>
+<h3 id="u4EE3_u7406iframe_u65B9_u5F0F"><a href="#u4EE3_u7406iframe_u65B9_u5F0F" class="headerlink" title="代理iframe方式"></a>代理iframe方式</h3><p>使用代理iframe的方式有两种，一种通过window.name方式跨域调用，一种是通过url参数的方式传递调用，不过两种方式的调用原理都是创建一个隐藏的iframe，iframe的url指向需要跨域的域名的一个代理页面，然后通过这个代理的iframe，和跨域的iframe通讯，因为这时代理的iframe和跨域的iframe完全同域，就可以畅通无阻进行。<br>在上面的例子加多一个代理页面c:<br>代理iframe c:<a href="http://www.b.com/c.htm" target="_blank" rel="external">http://www.b.com/c.htm</a></p>
 <ul>
 <li>在页面a加入以下函数：</li>
 </ul>
@@ -427,7 +427,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#html5的postMessage方式"><span class="nav-number">1.</span> <span class="nav-text">html5的postMessage方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代理iframe方式"><span class="nav-number">2.</span> <span class="nav-text">代理iframe方式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#html5_u7684postMessage_u65B9_u5F0F"><span class="nav-number">1.</span> <span class="nav-text">html5的postMessage方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u4EE3_u7406iframe_u65B9_u5F0F"><span class="nav-number">2.</span> <span class="nav-text">代理iframe方式</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
