@@ -175,6 +175,77 @@
           
           
             
+              <a class="post-title-link" href="/2013/10/19/stackoverflow-1/" itemprop="url">
+                (每周爆栈精选)javascript关于作用域的几个例子
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-10-19T17:19:44+08:00" content="2013-10-19">
+            2013-10-19
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2013/10/19/stackoverflow-1/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/19/stackoverflow-1/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/16546854201391951944863/" target="_blank" rel="external">这里</a></p>
+<p>来自爆栈<a href="http://stackoverflow.com/questions/500431/javascript-variable-scope" target="_blank" rel="external">这里</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 全局作用域变量定义</span></span><br><span class="line"><span class="keyword">var</span> a=<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 简单的例子：访问全局作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">one</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 简单的例子：访问的是局部作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">two</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">    alert(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 简单的例子：还是局部作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">three</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line">  alert(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 有点难度的例子：在函数内脚本块里面定义的局部变量，可以被函数内部访问的局部作用域的变量</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">four</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">        <span class="keyword">var</span> a=<span class="number">4</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    alert(a); <span class="comment">// alerts '4', not the global value of '1'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 有点难度的例子：对象属性作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Five</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.a = <span class="number">5</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 高级货: 闭包</span></span><br><span class="line"><span class="keyword">var</span> six = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> foo = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="comment">// javascript "闭包" 意思是我只能在这个函数里面访问到foo,</span></span><br><span class="line">        alert(foo);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 另外一个高级货: 基于prototype的作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Seven</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.a = <span class="number">7</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// [object].prototype.property 方式定义属性会在 [object].property 方式定义后丢失对应的属性</span></span><br><span class="line">Seven.prototype.a = -<span class="number">1</span>; <span class="comment">// 此值会被覆盖，因为构造函数会将a属性重新复制</span></span><br><span class="line">Seven.prototype.b = <span class="number">8</span>; <span class="comment">// 同理此b属性没有被覆盖，所以值为8</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 以上例子的值分别为 1-8</span></span><br><span class="line">one();</span><br><span class="line">two(<span class="number">2</span>);</span><br><span class="line">three();</span><br><span class="line">four();</span><br><span class="line">alert(<span class="keyword">new</span> Five().a);</span><br><span class="line">six();</span><br><span class="line">alert(<span class="keyword">new</span> Seven().a);</span><br><span class="line">alert(<span class="keyword">new</span> Seven().b);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">我补充几个高级货：</span><br><span class="line"></span><br><span class="line"><span class="comment">// this作用域的区别</span></span><br><span class="line"><span class="keyword">var</span> nine = <span class="number">9</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Nine</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	alert(<span class="keyword">this</span>.nine); <span class="comment">// this指向window的全局作用域</span></span><br><span class="line">&#125;</span><br><span class="line">Nine();</span><br><span class="line"><span class="comment">// 以上的直接调用Nine()的效果，但是this对象作用域可以变的</span></span><br><span class="line">Nine.call(&#123;nine : <span class="number">10</span>&#125;);<span class="comment">// this对象指向参数的对象</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 除了call和apply，还有另外一种方式调用会导致不同的this引用对象</span></span><br><span class="line"><span class="keyword">var</span> Eleven = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">var</span> bar = &#123;</span><br><span class="line">	Eleven : <span class="number">11</span>,</span><br><span class="line">	foo : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		alert(<span class="keyword">this</span>.Eleven)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">bar.foo();<span class="comment">// this指向bar对象</span></span><br><span class="line"><span class="keyword">var</span> foo = bar.foo;</span><br><span class="line">foo();<span class="comment">// this指向window</span></span><br><span class="line"><span class="comment">// 以上例子分别输出9-12</span></span><br></pre></td></tr></table></figure></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2013/10/18/stackoverflow-2/" itemprop="url">
                 (每周爆栈精选)不同环境中的事件句柄中的return false区别
               </a>
@@ -793,7 +864,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-count">17</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -807,7 +878,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

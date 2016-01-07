@@ -175,6 +175,116 @@
           
           
             
+              <a class="post-title-link" href="/2016/01/07/react-howto/" itemprop="url">
+                React-howto
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-01-07T14:30:47+08:00" content="2016-01-07">
+            2016-01-07
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2016/01/07/react-howto/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/07/react-howto/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>这是一篇很好的指导和学习React的介绍文章, 原文在<a href="https://github.com/petehunt/react-howto" target="_blank" rel="external">这里</a>.</p>
+<h1 id="react-howto"><a href="#react-howto" class="headerlink" title="react-howto"></a>react-howto</h1><p>如果你是一个React的初学者（或者是前端的初学者）你可能会对React的生态系统感到疑惑.原因是因为以下.</p>
+<ul>
+<li>因为历史原因, React最初的目的是给有经验的开发者或者专家使用</li>
+<li>React只会提供给facebook这种大型的项目使用, 并且facebook也是一直很好的使用React, 所以它不会专注解决“比facebook更小”的项目</li>
+<li>然后网络上到处充斥着各种React的劣质教程</li>
+</ul>
+<p>这篇文章的阅读者适合有经验的web前端开发工程师</p>
+<h2 id="u4E3A_u4EC0_u4E48_u8981_u76F8_u4FE1_u6211"><a href="#u4E3A_u4EC0_u4E48_u8981_u76F8_u4FE1_u6211" class="headerlink" title="为什么要相信我"></a>为什么要相信我</h2><p>网上有成千上万的关于React的建议的文章; 为什么要相信我的建议?</p>
+<p>因为我曾经是Facebook的React开源团队的其中一个成员, 我已离开Facebook并在一家创业公司任职, 所以我不会以facebook公司的员工名义和观点来评论和分享.</p>
+<h2 id="u5982_u4F55_u7406_u89E3React_u751F_u6001_u7CFB_u7EDF"><a href="#u5982_u4F55_u7406_u89E3React_u751F_u6001_u7CFB_u7EDF" class="headerlink" title="如何理解React生态系统"></a>如何理解React生态系统</h2><p>所有的软件都是建立在某些技术栈, 你需要理解这些技术栈然后去创建你的应用. 之所以围绕React生态系统的工具或者技术栈混乱的原因, 是因为总是没有被按照先后或者轻重顺序来学习.</p>
+<p>你需要按照这个顺序去学习React, <strong>不能跳过前面或者同时学习</strong></p>
+<ul>
+<li>React本身</li>
+<li><code>npm</code></li>
+<li>JavaScript “bundlers”</li>
+<li>ES6</li>
+<li>Routing</li>
+<li>Flux</li>
+<li>Immutable.js</li>
+<li>Relay, Falcor, etc</li>
+</ul>
+<p>然而: <strong>并不是以上技术栈都要学习才能成为一个高效的React开发者</strong> 只有当你遇到问题无法解决的时候, 你才需要继续看下一个技术栈</p>
+<h2 id="u5B66_u4E60React"><a href="#u5B66_u4E60React" class="headerlink" title="学习React"></a>学习React</h2><p>有一个常见的学习React的误解, 你可能以为当使用React时候需要浪费很多时间去使用或者配置工具或者环境, 在官方的文档里面, 你会发现快速使用React的例子<a href="https://facebook.github.io/react/docs/getting-started.html#quick-start-without-npm" target="_blank" rel="external">copy-paste HTML template</a>, 你可以将该页面保存成<code>.html</code>文件, 然后便可以立即打开运行React. <strong>不需要任何额外的工具, 并且在你很熟悉的使用React之前, 建议你不需要其他工具来辅助开发</strong></p>
+<p>我还是觉得学习React最好的方式还是通过官方教程<a href="https://facebook.github.io/react/docs/tutorial.html" target="_blank" rel="external">the official tutorial</a>学习</p>
+<h2 id="u5B66_u4E60_npm"><a href="#u5B66_u4E60_npm" class="headerlink" title="学习 npm"></a>学习 <code>npm</code></h2><p><code>npm</code> 是node.js的包管理工具, 并且也是当前前端开发工程师和设计师最喜欢的方式来分享他们的javascript代码. 它是基于<code>CommonJS</code>的模块化系统（如果你还不了解可以google或者baidu搜索一下 – 这个很重要哦）还可以让你安装和使用javascript写的命令行工具.</p>
+<p>大多数React生态系统里面的组件,库,或者工具都是以<code>CommonJS</code>的规范发布并且可以通过<code>npm</code>安装</p>
+<h2 id="u5B66_u4E60_JavaScript_bundlers"><a href="#u5B66_u4E60_JavaScript_bundlers" class="headerlink" title="学习 JavaScript bundlers"></a>学习 JavaScript bundlers</h2><p>对于大部分的使用<code>CommonJS</code>规范的模块（或者说npm的库）都不能直接在浏览器上面原生使用. 你必须使用一个叫“bundler”的工具去“bundle”模块, 从而成为一个个<code>.js</code>文件, 并且最终可以在页面的<code>&lt;script&gt;</code>标签引用.</p>
+<p><code>bundler</code>的工具可以使用<code>webpack</code>或者<code>browserify</code>. 它们都是很好的工具, 但是我更喜欢<code>webpack</code>, 因为可以使用它很方便开发大型的应用. 但是它的文档可能阅读起来有点费解, 你可以通过<a href="https://github.com/petehunt/react-webpack-template" target="_blank" rel="external">plug-and-play template for getting started</a> 或者看我写的这篇专门为复杂的React用例写的<a href="https://github.com/petehunt/webpack-howto" target="_blank" rel="external">how-to guide for webpack</a></p>
+<p>记住一点:<code>CommonJS</code> 使用 <code>require()</code> 函数来引用一个模块, 所以有些同学会觉得奇怪, 并且可能认为需要一个<code>require.js</code>的库提供这个函数来调用. 因为一些技术上的原因, 我建议避免使用<code>require.js</code>. 而且在一般React项目中很少会使用它.</p>
+<h2 id="u5B66_u4E60_ES6"><a href="#u5B66_u4E60_ES6" class="headerlink" title="学习 ES6"></a>学习 ES6</h2><p>除了JSX（这个你会在第一部分React基础学习到）, 你会在React的例子里面看到一些有趣的javascript语法. 这些都是ES6的语法, 因为它是最新的javascript版本, 所以你可能没有学过. 因为ES6是全新的javascript, 所以可能浏览器不支持, 所以“bundler”会将他们翻译成浏览器认识的javascript.</p>
+<p>如果你只是想使用React来实现并不打算使用ES6, <strong>你完全可以忽略ES6</strong>, 或者什么时候需要再去学习.</p>
+<h2 id="u5B66_u4E60_routing"><a href="#u5B66_u4E60_routing" class="headerlink" title="学习 routing"></a>学习 routing</h2><p>“Single-page applications”（单页面应用）在现在已经很常见. 只需要刷新一次, 当用户点击一个链接或者按钮, Javascript会更新地址栏的URL, 但是页面不会重新刷新. 地址栏的管理是由一个叫 <strong>router</strong> 的工具实现的. </p>
+<p>React生态系统最流行的router是<a href="https://github.com/rackt/react-router" target="_blank" rel="external">react-router</a>. 如果你要创建一个单页面应用, 你没有理由不使用它.</p>
+<p><strong>如果你不是创建一个单页面应用,千万不要使用它</strong>. </p>
+<h2 id="u5B66_u4E60_Flux"><a href="#u5B66_u4E60_Flux" class="headerlink" title="学习 Flux"></a>学习 Flux</h2><p>你应该听说过Flux. 网上有铺天盖地的关于Flux的误传.</p>
+<p>很多人开始创建一个React应用并且需要设计数据model, 然后他们认为需要使用Flux来完成. <strong>这是一个错误的方法使用Flux. Flux使用的时机必须是当你已经完成大量的Component组件的时候才开始使用</strong></p>
+<p>React组件按照一定的层级设计和整理. 大多数情况下, 你的数据model结构也是按照这种层级组合. 这种情况下, Flux不台适合你, 但是有些时候, 你的数据model结构并不是按照一定的层级组合. 当你的组件接受外来的<code>props</code>数据时, 或者你的组件开始变得复杂时, 这个时候, 你可以考虑使用Flux.</p>
+<p><strong>你会知道你是否需要使用Flux. 如果你不确定, 那意味着你暂时还不需要使用到它</strong></p>
+<p>如果你决定要使用Flux, 那么你可以使用最流行并且良好的文档的Flux库<a href="http://redux.js.org/" target="_blank" rel="external">Redux</a>, 当然还有其他很多Flux, 你可以尝试评估它们再决定使用哪个, 不过我建议你选择最流行那个就可以了.</p>
+<h2 id="u5B66_u4E60_Immutable-js"><a href="#u5B66_u4E60_Immutable-js" class="headerlink" title="学习 Immutable.js"></a>学习 Immutable.js</h2><p>当你创建React应用时, <a href="https://facebook.github.io/immutable-js/" target="_blank" rel="external">Immutable.js</a> 提供一系列的数据结构可以让你更好解决性能问题. 它是一个很棒的库, 在开发你的应用过程中你会喜欢上使用它, 但是这并不是必须的, 除非你发现需要进行性能上的提升.</p>
+<h2 id="u5B66_u4E60_Relay_2C_Falcor__u7B49"><a href="#u5B66_u4E60_Relay_2C_Falcor__u7B49" class="headerlink" title="学习 Relay, Falcor 等"></a>学习 Relay, Falcor 等</h2><p>这些技术和技巧可以减少Ajax请求的次数, 当然如果你没有大量Ajax请求的烦恼的话, 你不必依赖Relay 或者Falcor这些前沿的技术.</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/12/21/folder-gallery/" itemprop="url">
                 搬砖日记之 - 创建简单的相册系统
               </a>
@@ -878,77 +988,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2013/10/19/stackoverflow-1/" itemprop="url">
-                (每周爆栈精选)javascript关于作用域的几个例子
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2013-10-19T17:19:44+08:00" content="2013-10-19">
-            2013-10-19
-          </time>
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2013/10/19/stackoverflow-1/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/19/stackoverflow-1/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p>这是我2年前写的blog，原文在<a href="http://blog.163.com/harrychen66@126/blog/static/16546854201391951944863/" target="_blank" rel="external">这里</a></p>
-<p>来自爆栈<a href="http://stackoverflow.com/questions/500431/javascript-variable-scope" target="_blank" rel="external">这里</a></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 全局作用域变量定义</span></span><br><span class="line"><span class="keyword">var</span> a=<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 简单的例子：访问全局作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">one</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 简单的例子：访问的是局部作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">two</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">    alert(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 简单的例子：还是局部作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">three</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line">  alert(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 有点难度的例子：在函数内脚本块里面定义的局部变量，可以被函数内部访问的局部作用域的变量</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">four</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">        <span class="keyword">var</span> a=<span class="number">4</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    alert(a); <span class="comment">// alerts '4', not the global value of '1'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 有点难度的例子：对象属性作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Five</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.a = <span class="number">5</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 高级货: 闭包</span></span><br><span class="line"><span class="keyword">var</span> six = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> foo = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="comment">// javascript "闭包" 意思是我只能在这个函数里面访问到foo,</span></span><br><span class="line">        alert(foo);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 另外一个高级货: 基于prototype的作用域</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Seven</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.a = <span class="number">7</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// [object].prototype.property 方式定义属性会在 [object].property 方式定义后丢失对应的属性</span></span><br><span class="line">Seven.prototype.a = -<span class="number">1</span>; <span class="comment">// 此值会被覆盖，因为构造函数会将a属性重新复制</span></span><br><span class="line">Seven.prototype.b = <span class="number">8</span>; <span class="comment">// 同理此b属性没有被覆盖，所以值为8</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 以上例子的值分别为 1-8</span></span><br><span class="line">one();</span><br><span class="line">two(<span class="number">2</span>);</span><br><span class="line">three();</span><br><span class="line">four();</span><br><span class="line">alert(<span class="keyword">new</span> Five().a);</span><br><span class="line">six();</span><br><span class="line">alert(<span class="keyword">new</span> Seven().a);</span><br><span class="line">alert(<span class="keyword">new</span> Seven().b);</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">我补充几个高级货：</span><br><span class="line"></span><br><span class="line"><span class="comment">// this作用域的区别</span></span><br><span class="line"><span class="keyword">var</span> nine = <span class="number">9</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Nine</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	alert(<span class="keyword">this</span>.nine); <span class="comment">// this指向window的全局作用域</span></span><br><span class="line">&#125;</span><br><span class="line">Nine();</span><br><span class="line"><span class="comment">// 以上的直接调用Nine()的效果，但是this对象作用域可以变的</span></span><br><span class="line">Nine.call(&#123;nine : <span class="number">10</span>&#125;);<span class="comment">// this对象指向参数的对象</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 除了call和apply，还有另外一种方式调用会导致不同的this引用对象</span></span><br><span class="line"><span class="keyword">var</span> Eleven = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">var</span> bar = &#123;</span><br><span class="line">	Eleven : <span class="number">11</span>,</span><br><span class="line">	foo : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		alert(<span class="keyword">this</span>.Eleven)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">bar.foo();<span class="comment">// this指向bar对象</span></span><br><span class="line"><span class="keyword">var</span> foo = bar.foo;</span><br><span class="line">foo();<span class="comment">// this指向window</span></span><br><span class="line"><span class="comment">// 以上例子分别输出9-12</span></span><br></pre></td></tr></table></figure></span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -987,7 +1026,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-count">17</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1001,7 +1040,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
